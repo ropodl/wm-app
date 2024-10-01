@@ -32,8 +32,8 @@ const navitems = [
     title: "Users",
     subitems: [
       {
-        title: "Add Users",
-        routes: "/overview",
+        title: "All Users",
+        routes: "/users",
       },
     ],
   },
