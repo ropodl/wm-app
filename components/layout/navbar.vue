@@ -12,7 +12,7 @@ const navitems = [
   {
     icon: "mdi-view-dashboard",
     title: "Dashboard",
-    routes: "/",
+    routes: "/admin/",
   },
   {
     icon: "mdi-calendar-text",
@@ -20,10 +20,10 @@ const navitems = [
     subitems: [
       {
         title: "All Posts",
-        routes: "/posts",
+        routes: "/admin/posts",
       },{
         title: "Add Posts",
-        routes: "/posts/create",
+        routes: "/admin/posts/create",
       },
     ],
   },
@@ -33,7 +33,7 @@ const navitems = [
     subitems: [
       {
         title: "All Users",
-        routes: "/users",
+        routes: "/admin/users",
       },
     ],
   },

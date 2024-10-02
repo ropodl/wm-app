@@ -22,9 +22,9 @@ const form = ref({
     <v-row>
       <v-col cols="12" md="8">
         <v-text-field label="Post Title" v-model="form.title"></v-text-field>
-        <!-- <ClientOnly fallback-tag="div" fallback="Loading editor..."> -->
+        <ClientOnly fallback="Loading editor...">
           <QuillEditor v-model:content="form.content" theme="snow" />
-        <!-- </ClientOnly> -->
+        </ClientOnly>
       </v-col>
       <v-col cols="12" md="4">
         <v-card border flat class="mb-3">
@@ -65,7 +65,7 @@ const form = ref({
           </v-card-actions>
         </v-card>
 
-        <v-card border flat class="mb-3" :loading :disabled="loading">
+        <!-- <v-card border flat class="mb-3" :loading :disabled="loading">
           <v-card-title>Featured Image</v-card-title>
           <v-divider></v-divider>
           <v-card-text
@@ -104,7 +104,7 @@ const form = ref({
             <v-divider></v-divider>
             <v-card-text>{{ errors.message }}</v-card-text>
           </template>
-        </v-card>
+        </v-card> -->
       </v-col>
     </v-row>
   </v-container>
