@@ -34,6 +34,9 @@ const navitems = [
       {
         title: "All Users",
         routes: "/admin/users",
+      },{
+        title: "Add Users",
+        routes: "/admin/users/create",
       },
     ],
   },
