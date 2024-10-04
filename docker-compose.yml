@@ -1,0 +1,15 @@
+#To directly build and run docker imagefile using docker compose use 
+
+####  docker compose up ###
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.fe
+    container_name: frontend
+# you can modify first port section according to your need 
+    ports:
+      - 3000:3000
+
