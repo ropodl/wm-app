@@ -31,11 +31,9 @@ const vuetifyOpts = {
     },
   },
   defaults: {
-    global: {
       VBtn: {
         class: "text-none",
       },
-    },
   },
 };
 

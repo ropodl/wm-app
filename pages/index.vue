@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+definePageMeta({
+  layout: "user",
+})
+</script>
 <template>
   <v-container>
     <v-row>
