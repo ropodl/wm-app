@@ -4,6 +4,29 @@ definePageMeta({
 });
 
 const profileCompleteAlert = ref(true);
+
+const form = ref({
+  first_name: "",
+  last_name: "",
+  user_name: "",
+  mobile_no: "",
+  email_address: "",
+});
+
+const rules = ref({
+  first_name: [
+    (v)=> !!v || 'First Name is required',
+    v => (v && v.length > 2) || 'First Name must be 3 characters or more',
+  ],
+  last_name: [
+    (v)=> !!v || 'Last Name is required',
+    v => (v && v.length > 2) || 'Last Name must be 3 characters or more',
+  ],
+  user_name: [
+    (v)=> !!v || 'User Name is required',
+    v => (v && v.length > 2) || 'User Name must be 3 characters or more',
+  ],
+});
 </script>
 <template>
   <v-row>
@@ -21,12 +44,21 @@ const profileCompleteAlert = ref(true);
         </v-alert>
       </v-col>
     </template>
+
+  </v-row>
+  <v-row>
     <v-col cols="12" class="px-0 pb-0">
       <v-card-title class="pt-0">Profile</v-card-title>
+      {{ form }}
     </v-col>
     <v-col cols="12" md="3">
       <v-hover #default="{ props, isHovering }">
-        <v-card border rounded="lg" v-bind="props">
+        <v-card
+          border
+          rounded="lg"
+          v-bind="props"
+          style="position: sticky; top: 70px"
+        >
           <v-img src="https://randomuser.me/api/portraits/women/85.jpg">
             <v-overlay
               :model-value="isHovering"
@@ -44,25 +76,44 @@ const profileCompleteAlert = ref(true);
       <v-row>
         <v-col cols="12" md="6">
           <lazy-common-field-label>First Name</lazy-common-field-label>
-          <v-text-field hint="e.g John" persistent-hint></v-text-field>
+          <v-text-field
+            v-model="form.first_name"
+            persistent-hint
+            hint="e.g John"
+            :rules="rules.first_name"
+          ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
           <lazy-common-field-label>Last Name</lazy-common-field-label>
-          <v-text-field hint="e.g Doe" persistent-hint></v-text-field>
+          <v-text-field
+            v-model="form.last_name"
+            persistent-hint
+            hint="e.g Doe"
+            :rules="rules.last_name"
+          ></v-text-field>
         </v-col>
         <v-col cols="12">
           <lazy-common-field-label>User Name</lazy-common-field-label>
-          <v-text-field hint="e.g john.doe" persistent-hint></v-text-field>
+          <v-text-field
+            v-model="form.user_name"
+            persistent-hint
+            hint="e.g john.doe"
+          ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
           <lazy-common-field-label>Mobile Number</lazy-common-field-label>
-          <v-text-field hint="e.g 9851808472" persistent-hint></v-text-field>
+          <v-text-field
+            v-model="form.mobile_no"
+            persistent-hint
+            hint="e.g 9851808472"
+          ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
           <lazy-common-field-label>Email Address</lazy-common-field-label>
           <v-text-field
-            hint="e.g john.doe@example.com"
+            v-model="form.email_address"
             persistent-hint
+            hint="e.g john.doe@example.com"
           ></v-text-field>
         </v-col>
         <v-col cols="12" class="d-flex">
@@ -95,7 +146,6 @@ const profileCompleteAlert = ref(true);
                     >Change Password</v-btn
                   >
                 </template>
-
                 <template v-slot:default="{ isActive }">
                   <v-card title="Change Password">
                     <v-card-text class="pb-0">

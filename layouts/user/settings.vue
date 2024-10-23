@@ -21,7 +21,7 @@ const settings = ref([
           <v-card border flat>
             <v-list class="py-0">
               <template v-for="{ icon, title, to } in settings">
-                <v-list-item :title :prepend-icon="icon" :to></v-list-item>
+                <v-list-item color="primary" :title :prepend-icon="icon" :to></v-list-item>
               </template>
             </v-list>
           </v-card>
