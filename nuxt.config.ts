@@ -9,6 +9,13 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+  routeRules: {
+    '/**': {
+      headers: {
+        'tenant_id': 'tenant_test'
+      }
+    }
+  },
   modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@vueuse/nuxt"],
   vuetify: {
     vuetifyOptions: vuetifyOpts,

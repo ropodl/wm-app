@@ -1,12 +1,12 @@
 <script setup>
 useHead({
-  title:"Community Driven Waste Recycling"
-})
+  title: "Community Driven Waste Recycling",
+});
 </script>
 <template>
   <v-app>
     <NuxtLayout>
-        <v-main>
+      <v-main>
         <NuxtPage />
       </v-main>
     </NuxtLayout>
