@@ -34,6 +34,10 @@ const vuetifyOpts = {
       VBtn: {
         class: "text-none",
       },
+      VTextField: {
+        density: "comfortable",
+        variant: "outlined"
+      }
   },
 };
 

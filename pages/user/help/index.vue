@@ -12,7 +12,4 @@ definePageMeta({
     </v-row>
   </v-container>
 </template>
-
-<style>
-
-</style>
+<style></style>
