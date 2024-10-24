@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <admin-layout-navbar></admin-layout-navbar>
     <slot />
-  </div>
 </template>
 
 <script lang="ts" setup>

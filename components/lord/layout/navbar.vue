@@ -5,31 +5,14 @@ const navItems = [
   {
     icon: "mdi-view-dashboard",
     title: "Dashboard",
-    routes: "/user/",
-  },{
-    icon: "mdi-post-outline",
-    title: "Posts",
-    routes: "/user/posts",
+    routes: "/lord/",
   },
   {
-    icon: "mdi-calendar-text",
-    title: "Calendar and Events",
+    icon: "mdi-note-multiple-outline",
+    title: "Tenants",
     subitems: [
-      {
-        title: "Noticeboard",
-        routes: "/user/help",
-      },
-    ],
-  },
-  {
-    icon: "mdi-format-list-checks",
-    title: "Tasks",
-    subtitle: "Supervisor",
-    subitems: [
-      {
-        title: "overview",
-        routes: "/user/settings",
-      },
+      { title: "All Tenants", routes: "/lord/tenants" },
+      { title: "Add Tenant", routes: "/lord/tenants/create" },
     ],
   },
 ];
@@ -44,7 +27,7 @@ const bottomNavItems = ref([
     icon: "mdi-help-circle-outline",
     title: "Help",
     to: "/user/help",
-  }
+  },
 ]);
 
 const drawer = ref(true);
@@ -89,7 +72,8 @@ const toggleDrawer = () => {
                     </v-list-item>
                   </template>
                   <template v-if="subitem.miniitems">
-                    <v-list-item color="primary"
+                    <v-list-item
+                      color="primary"
                       rounded="lg"
                       v-for="mini in subitem.miniitems"
                       :to="mini.routes"
@@ -104,8 +88,8 @@ const toggleDrawer = () => {
               </template>
               <template v-else>
                 <v-list-item
-                exact
-                color="primary"
+                  exact
+                  color="primary"
                   rounded="lg"
                   :to="subitem.routes"
                 >
