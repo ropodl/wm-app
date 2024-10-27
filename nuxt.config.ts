@@ -9,15 +9,30 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
-  routeRules: {
-    '/**': {
-      headers: {
-        'tenant_id': 'tenant_test'
+  modules: ["nuxt-multi-tenancy","vuetify-nuxt-module", "@pinia/nuxt", "@vueuse/nuxt"],
+  multiTenancy: {
+    tenantDynamicRoute: 'site',
+    rootDomains: ["wm.local"],
+    sites: ["admin"]
+  },
+  vuetify: {
+    vuetifyOptions: vuetifyOpts,
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss : {
+          api: "modern"
+        }
       }
     }
   },
-  modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@vueuse/nuxt"],
-  vuetify: {
-    vuetifyOptions: vuetifyOpts,
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.APP_BASE_URL
+    }
+  },
+  experimental: {
+    viewTransition: true
   }
 });

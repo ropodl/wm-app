@@ -1,6 +1,17 @@
 <script setup>
 definePageMeta({
   layout: "guest",
+});
+
+const a = ref("")
+
+
+const test = () => {
+  const a = useRequest("version-check");
+  console.log(a.data);
+}
+onMounted(()=>{
+  test()
 })
 </script>
 <template>
@@ -12,5 +23,4 @@ definePageMeta({
     </v-row>
   </v-container>
 </template>
-
 <style></style>

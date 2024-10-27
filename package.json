@@ -12,12 +12,14 @@
   "dependencies": {
     "@vueup/vue-quill": "^1.2.0",
     "nuxt": "^3.13.2",
+    "sass": "^1.80.4",
     "vue": "3.5.12",
     "vue-router": "latest"
   },
   "devDependencies": {
     "@pinia/nuxt": "^0.5.5",
     "@vueuse/nuxt": "^11.1.0",
+    "nuxt-multi-tenancy": "^1.2.4",
     "vuetify-nuxt-module": "^0.18.3"
   }
 }

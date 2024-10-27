@@ -4,6 +4,10 @@ definePageMeta({
 })
 </script>
 <template>
+  <v-tabs >
+    <v-tab>A</v-tab>
+    <v-tab>B</v-tab>
+  </v-tabs>
   <v-container>
     <v-row>
       <v-col cols="12">
@@ -12,8 +16,4 @@ definePageMeta({
     </v-row>
   </v-container>
 </template>
-
-
-<style>
-
-</style>
+<style></style>

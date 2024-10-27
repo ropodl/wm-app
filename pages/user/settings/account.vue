@@ -15,16 +15,16 @@ const form = ref({
 
 const rules = ref({
   first_name: [
-    (v)=> !!v || 'First Name is required',
-    v => (v && v.length > 2) || 'First Name must be 3 characters or more',
+    (v) => !!v || "First Name is required",
+    (v) => (v && v.length > 2) || "First Name must be 3 characters or more",
   ],
   last_name: [
-    (v)=> !!v || 'Last Name is required',
-    v => (v && v.length > 2) || 'Last Name must be 3 characters or more',
+    (v) => !!v || "Last Name is required",
+    (v) => (v && v.length > 2) || "Last Name must be 3 characters or more",
   ],
   user_name: [
-    (v)=> !!v || 'User Name is required',
-    v => (v && v.length > 2) || 'User Name must be 3 characters or more',
+    (v) => !!v || "User Name is required",
+    (v) => (v && v.length > 2) || "User Name must be 3 characters or more",
   ],
 });
 </script>
@@ -44,7 +44,6 @@ const rules = ref({
         </v-alert>
       </v-col>
     </template>
-
   </v-row>
   <v-row>
     <v-col cols="12" class="px-0 pb-0">
