@@ -26,6 +26,6 @@ const callTenantCheck = async() =>{
     scrim="black"
     content-class="w-100 h-100 d-flex align-center justify-center"
   >
-    <v-progress-circular indeterminate size="120" color="primary" />
+    <v-progress-circular indeterminate color="primary" />
   </v-overlay>
 </template>
