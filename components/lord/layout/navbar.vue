@@ -5,14 +5,14 @@ const navItems = [
   {
     icon: "mdi-view-dashboard",
     title: "Dashboard",
-    routes: "/lord/",
+    routes: "/",
   },
   {
     icon: "mdi-note-multiple-outline",
     title: "Tenants",
     subitems: [
-      { title: "All Tenants", routes: "/lord/tenants" },
-      { title: "Add Tenant", routes: "/lord/tenants/create" },
+      { title: "All Tenants", routes: "/tenants" },
+      { title: "Add Tenant", routes: "/tenants/create" },
     ],
   },
 ];

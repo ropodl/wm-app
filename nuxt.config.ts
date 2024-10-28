@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   multiTenancy: {
     tenantDynamicRoute: 'site',
     rootDomains: ["wm.local"],
-    sites: ["admin"]
+    sites: ["lord"]
   },
   vuetify: {
     vuetifyOptions: vuetifyOpts,

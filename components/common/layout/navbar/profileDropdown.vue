@@ -10,19 +10,23 @@ defineProps({
   },
 });
 
-const emits = defineEmits(['logout'])
+const emits = defineEmits(["logout"]);
 </script>
 <template>
   <v-list-item
     height="60"
-    prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
     append-icon="mdi-chevron-down"
-    title="a"
-    subtitle="test"
+    title="User Name"
+    subtitle="Admin"
     variant="text"
     rounded="0"
     class="pr-0 py-0"
   >
+    <template #prepend>
+      <v-avatar rounded="lg">
+        <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+      </v-avatar>
+    </template>
     <template #append>
       <v-menu location="top">
         <template v-slot:activator="{ props }">
@@ -35,16 +39,14 @@ const emits = defineEmits(['logout'])
           ></v-btn>
         </template>
         <v-list>
+          <template v-for="{ icon, title, to } in items">
+            <v-list-item :prepend-icon="icon" :title :to />
+          </template>
           <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-            :value="index"
-          >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="emits('logout')">
-            <v-list-item-title>Log out</v-list-item-title>
-          </v-list-item>
+            prepend-icon="mdi-power"
+            title="Log Out"
+            @click="emits('logout')"
+          />
         </v-list>
       </v-menu>
     </template>

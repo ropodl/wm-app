@@ -44,13 +44,17 @@ const navItems = [
   },
 ];
 
-const bottomNavItems = [
+const profileItems = [
   {
     icon: "mdi-power",
-    title: "Sign Out",
+    title: "This is a test",
     router: "/",
   },
 ];
+
+const logout = () => {
+  console.log("log out from admin");
+}
 </script>
 <template>
   <v-app-bar app elevation="0" border="b" height="60">
@@ -66,7 +70,7 @@ const bottomNavItems = [
     <template v-slot:append>
       <v-divider></v-divider>
       <lazy-common-layout-navbar-profile-dropdown
-        :items="['test']"
+        :items="profileItems"
         @logout="logout"
       />
     </template>
