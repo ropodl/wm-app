@@ -38,7 +38,6 @@ const login = () => {
     body: form.value,
   })
     .then((res) => {
-      console.log(res);
       cookies.value = res.token;
     })
     .catch((err) => {

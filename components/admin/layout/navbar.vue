@@ -17,6 +17,7 @@ const navItems = [
   {
     icon: "mdi-calendar-text",
     title: "Posts",
+    subtitle: "Posts and Interests",
     subitems: [
       {
         title: "All Posts",
@@ -25,6 +26,19 @@ const navItems = [
       {
         title: "Add Posts",
         routes: "/admin/posts/create",
+      },
+    ],
+  },{
+    icon: "mdi-thumb-up",
+    title: "Interests",
+    subitems: [
+      {
+        title: "All Interest",
+        routes: "/admin/interest",
+      },
+      {
+        title: "Add Interest",
+        routes: "/admin/interest/create",
       },
     ],
   },

@@ -28,7 +28,6 @@ onMounted(() => {
 const callTenants = () => {
   $fetch("http://localhost:8000/api/v1/system/tenant/")
     .then((res) => {
-      console.log(res);
       items.value = res;
     })
     .catch((err) => {

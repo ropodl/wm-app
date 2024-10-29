@@ -15,6 +15,9 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
   ],
+  pinia: {
+    storesDirs: ['./stores/**/**']
+  },
   multiTenancy: {
     tenantDynamicRoute: "site",
     rootDomains: ["wm.local"],
@@ -34,7 +37,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseURL: process.env.APP_BASE_URL,
+      api: process.env.API_BASE_URL,
     },
   },
   experimental: {

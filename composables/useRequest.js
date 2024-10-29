@@ -1,25 +1,10 @@
-// export const useRequest = (url, method, query, params, body, headers, timeout, cache) => {
-  //   console.log(config);
-  //   const res = $fetch(url, {
-//     method: method ? method : "GET",
-//     query,
-//     params,
-//     body,
-//     headers,
-//     baseURL: config.public.baseURL,
-//     timeout,
-//     cache: 'default'
-//   })
-//   return ref(res.value)
-// }
-
 export const useRequest = (url,) => {
   const data = ref(null)
   const error = ref(null)
   const loading = ref(false)
 
   const config = useRuntimeConfig()
-  const baseURL = config.public.baseURL;
+  const baseURL = config.public.apiBaseURL;
 
   // Fetch (GET) data from the API
   const get = async (params = {}) => {
