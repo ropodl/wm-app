@@ -5,11 +5,11 @@ const navItems = [
   {
     icon: "mdi-view-dashboard",
     title: "Dashboard",
-    routes: "/user/",
+    routes: "/",
   },{
     icon: "mdi-post-outline",
     title: "Posts",
-    routes: "/user/posts",
+    routes: "/posts",
   },
   {
     icon: "mdi-calendar-text",
@@ -17,7 +17,7 @@ const navItems = [
     subitems: [
       {
         title: "Noticeboard",
-        routes: "/user/help",
+        routes: "/help",
       },
     ],
   },
@@ -28,7 +28,7 @@ const navItems = [
     subitems: [
       {
         title: "overview",
-        routes: "/user/settings",
+        routes: "/settings",
       },
     ],
   },
@@ -38,12 +38,12 @@ const bottomNavItems = ref([
   {
     icon: "mdi-bullhorn-outline",
     title: "Feedback",
-    to: "/user/feedback",
+    to: "/feedback",
   },
   {
     icon: "mdi-help-circle-outline",
     title: "Help",
-    to: "/user/help",
+    to: "/help",
   }
 ]);
 
@@ -100,8 +100,8 @@ const breadcrumb = computed(()=>{
           rounded="lg"
           prepend-icon="mdi-cog-outline"
           title="Settings"
-          to="/user/settings"
-          :active="route.fullPath.includes('/user/settings')"
+          to="/settings"
+          :active="route.fullPath.includes('/settings')"
         />
       </v-list>
       <v-divider></v-divider>

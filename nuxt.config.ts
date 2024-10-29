@@ -9,11 +9,16 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
-  modules: ["nuxt-multi-tenancy","vuetify-nuxt-module", "@pinia/nuxt", "@vueuse/nuxt"],
+  modules: [
+    "nuxt-multi-tenancy",
+    "vuetify-nuxt-module",
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+  ],
   multiTenancy: {
-    tenantDynamicRoute: 'site',
+    tenantDynamicRoute: "site",
     rootDomains: ["wm.local"],
-    sites: ["lord"]
+    sites: ["lord"],
   },
   vuetify: {
     vuetifyOptions: vuetifyOpts,
@@ -21,18 +26,18 @@ export default defineNuxtConfig({
   vite: {
     css: {
       preprocessorOptions: {
-        scss : {
-          api: "modern"
-        }
-      }
-    }
+        scss: {
+          api: "modern",
+        },
+      },
+    },
   },
   runtimeConfig: {
     public: {
-      baseURL: process.env.APP_BASE_URL
-    }
+      baseURL: process.env.APP_BASE_URL,
+    },
   },
   experimental: {
-    viewTransition: true
-  }
+    viewTransition: true,
+  },
 });

@@ -11,24 +11,11 @@ const navItems = [
     icon: "mdi-note-multiple-outline",
     title: "Tenants",
     subitems: [
-      { title: "All Tenants", routes: "/tenants" },
-      { title: "Add Tenant", routes: "/tenants/create" },
+      { title: "All Tenants", routes: "/tenant" },
+      { title: "Add Tenant", routes: "/tenant/create" },
     ],
   },
 ];
-
-const bottomNavItems = ref([
-  {
-    icon: "mdi-bullhorn-outline",
-    title: "Feedback",
-    to: "/user/feedback",
-  },
-  {
-    icon: "mdi-help-circle-outline",
-    title: "Help",
-    to: "/user/help",
-  },
-]);
 
 const profileNavItems = ref([
   {
@@ -59,7 +46,7 @@ const logout = () => {
 
     <template v-slot:append>
       <v-list class="pa-2" density="comfortable">
-        <template v-for="{ icon, title, to } in bottomNavItems">
+        <!-- <template v-for="{ icon, title, to } in bottomNavItems">
           <v-list-item
             color="primary"
             rounded="lg"
@@ -67,15 +54,15 @@ const logout = () => {
             :title
             :to
           />
-        </template>
-        <v-list-item
+        </template> -->
+        <!-- <v-list-item
           color="primary"
           rounded="lg"
           prepend-icon="mdi-cog-outline"
           title="Settings"
-          to="/user/settings"
-          :active="route.fullPath.includes('/user/settings')"
-        />
+          to="/settings"
+          :active="route.fullPath.includes('/settings')"
+        /> -->
       </v-list>
       <v-divider></v-divider>
       <lazy-common-layout-navbar-profile-dropdown

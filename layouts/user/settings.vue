@@ -3,12 +3,12 @@ const settings = ref([
   {
     icon: "mdi-palette-outline",
     title: "Apperance",
-    to: "/user/settings",
+    to: "/settings",
   },
   {
     icon: "mdi-account-outline",
     title: "Account",
-    to: "/user/settings/account",
+    to: "/settings/account",
   },
 ]);
 </script>
