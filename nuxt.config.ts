@@ -14,9 +14,11 @@ export default defineNuxtConfig({
     "vuetify-nuxt-module",
     "@pinia/nuxt",
     "@vueuse/nuxt",
+    "@formkit/auto-animate",
+    "pinia-plugin-persistedstate",
   ],
   pinia: {
-    storesDirs: ['./stores/**/**']
+    storesDirs: ["./stores/**/**"],
   },
   multiTenancy: {
     tenantDynamicRoute: "site",
@@ -42,5 +44,8 @@ export default defineNuxtConfig({
   },
   experimental: {
     viewTransition: true,
+  },
+  piniaPluginPersistedstate: {
+    storage: "localStorage"
   },
 });

@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
-  layout: "lord"
+  layout: "lord",
+  middleware: ["lord-auth"]
 })
 
 const form = ref({
@@ -16,7 +17,7 @@ const form = ref({
         <h1>Create Tenant</h1>
       </v-col>
       <v-col cols="12" md="8">
-            <lazy-common-field-label>Tenant Name</lazy-common-field-label>
+            <lazy-common-shared-field-label>Tenant Name</lazy-common-shared-field-label>
             <v-text-field></v-text-field>
             <v-text-field label="Tenant's Sub Domain name"></v-text-field>
             <v-text-field label="Tenant's Primary Email Address"></v-text-field>

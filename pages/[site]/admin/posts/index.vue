@@ -14,13 +14,15 @@ const headers = [
   { key: "action", title: "Actions" },
 ];
 
-const items = [
-  {
-    image:
-      "https://wuhpdygzsumkrgmakgqr.supabase.co/storage/v1/object/public/blogs/featured_image/2024/1/13/screenshot-from-2023-12-10-23-39-52.png",
-    title: "Waste Management portal",
-  },
-];
+const items = ref([])
+
+onMounted(()=>{
+  getPosts();
+})
+
+const getPosts = async() => {
+  items.value = await useAxios("post");
+}
 </script>
 <template>
   <v-container>

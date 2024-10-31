@@ -37,6 +37,9 @@ const vuetifyOpts = {
       VTextField: {
         density: "comfortable",
         variant: "outlined"
+      },
+      VTextarea: {
+        variant: "outlined"
       }
   },
 };

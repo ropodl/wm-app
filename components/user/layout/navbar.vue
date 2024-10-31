@@ -6,7 +6,8 @@ const navItems = [
     icon: "mdi-view-dashboard",
     title: "Dashboard",
     routes: "/",
-  },{
+  },
+  {
     icon: "mdi-post-outline",
     title: "Posts",
     routes: "/posts",
@@ -44,14 +45,16 @@ const bottomNavItems = ref([
     icon: "mdi-help-circle-outline",
     title: "Help",
     to: "/help",
-  }
+  },
 ]);
 
-const profileItems = ref([{
-  icon: "mdi-logout",
-  title: "Profile",
-  to: ""
-}])
+const profileItems = ref([
+  {
+    icon: "mdi-logout",
+    title: "Profile",
+    to: "",
+  },
+]);
 
 const drawer = ref(true);
 const toggleDrawer = () => {
@@ -60,23 +63,31 @@ const toggleDrawer = () => {
 
 const logout = () => {
   console.log("log out");
-}
+};
 
-const breadcrumb = computed(()=>{
-  return [{
-    title: "Home",
-    disabled: false,
-    to: "/user/"
-  }]
-})
+const breadcrumb = computed(() => {
+  return [
+    {
+      title: "Home",
+      disabled: false,
+      to: "/",
+    },
+  ];
+});
+
+const user = ref({
+  name: "asd",
+  role: "admin",
+  profile_pic: "https://randomuser.me/api/portraits/women/85.jpg",
+});
 </script>
 <template>
   <v-app-bar app elevation="0" border="b" height="60">
     <v-app-bar-nav-icon rounded="lg" @click="toggleDrawer" />
     <v-breadcrumbs :items="breadcrumb" class="text-decoration-none">
       <template v-slot:prepend>
-      <v-icon icon="mdi-home-outline"></v-icon>
-    </template>
+        <v-icon size="small" icon="mdi-home-outline"></v-icon>
+      </template>
     </v-breadcrumbs>
     <v-spacer></v-spacer>
     <v-btn icon="mdi-bell-outline" rounded="lg"></v-btn>
@@ -105,12 +116,16 @@ const breadcrumb = computed(()=>{
         />
       </v-list>
       <v-divider></v-divider>
-      <lazy-common-layout-navbar-profile-dropdown :items="profileItems" @logout="logout"/>
+      <lazy-common-layout-navbar-profile-dropdown
+        :user
+        :items="profileItems"
+        @logout="logout"
+      />
     </template>
   </v-navigation-drawer>
 </template>
 <style lang="scss">
-a.v-breadcrumbs-item--link{
+a.v-breadcrumbs-item--link {
   text-decoration: none;
 }
 </style>

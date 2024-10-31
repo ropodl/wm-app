@@ -74,7 +74,7 @@ const rules = ref({
     <v-col cols="12" md="9">
       <v-row>
         <v-col cols="12" md="6">
-          <lazy-common-field-label>First Name</lazy-common-field-label>
+          <lazy-common-shared-field-label>First Name</lazy-common-shared-field-label>
           <v-text-field
             v-model="form.first_name"
             persistent-hint
@@ -83,7 +83,7 @@ const rules = ref({
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <lazy-common-field-label>Last Name</lazy-common-field-label>
+          <lazy-common-shared-field-label>Last Name</lazy-common-shared-field-label>
           <v-text-field
             v-model="form.last_name"
             persistent-hint
@@ -92,7 +92,7 @@ const rules = ref({
           ></v-text-field>
         </v-col>
         <v-col cols="12">
-          <lazy-common-field-label>User Name</lazy-common-field-label>
+          <lazy-common-shared-field-label>User Name</lazy-common-shared-field-label>
           <v-text-field
             v-model="form.user_name"
             persistent-hint
@@ -100,7 +100,7 @@ const rules = ref({
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <lazy-common-field-label>Mobile Number</lazy-common-field-label>
+          <lazy-common-shared-field-label>Mobile Number</lazy-common-shared-field-label>
           <v-text-field
             v-model="form.mobile_no"
             persistent-hint
@@ -108,7 +108,7 @@ const rules = ref({
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <lazy-common-field-label>Email Address</lazy-common-field-label>
+          <lazy-common-shared-field-label>Email Address</lazy-common-shared-field-label>
           <v-text-field
             v-model="form.email_address"
             persistent-hint
@@ -148,16 +148,16 @@ const rules = ref({
                 <template v-slot:default="{ isActive }">
                   <v-card title="Change Password">
                     <v-card-text class="pb-0">
-                      <lazy-common-field-label
-                        >Current Password</lazy-common-field-label
+                      <lazy-common-shared-field-label
+                        >Current Password</lazy-common-shared-field-label
                       >
                       <v-text-field></v-text-field>
-                      <lazy-common-field-label
-                        >New Password</lazy-common-field-label
+                      <lazy-common-shared-field-label
+                        >New Password</lazy-common-shared-field-label
                       >
                       <v-text-field></v-text-field>
-                      <lazy-common-field-label
-                        >Confirm New Password</lazy-common-field-label
+                      <lazy-common-shared-field-label
+                        >Confirm New Password</lazy-common-shared-field-label
                       >
                       <v-text-field></v-text-field>
                     </v-card-text>

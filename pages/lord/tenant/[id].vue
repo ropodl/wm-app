@@ -1,12 +1,16 @@
+<script setup>
+definePageMeta({
+  layout: "lord",
+  middleware: ["lord-auth"]
+})
+
+</script>
 <template>
   <div>
     
   </div>
 </template>
 
-<script lang="ts" setup>
-
-</script>
 
 <style>
 

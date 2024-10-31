@@ -1,9 +1,8 @@
 <script setup>
+const lord = useLordUserStore();
+const { user } = storeToRefs(lord)
+
 defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
   items: {
     type: Object,
     required: true,
@@ -16,19 +15,19 @@ const emits = defineEmits(["logout"]);
   <v-list-item
     height="60"
     append-icon="mdi-chevron-down"
-    title="User Name"
-    subtitle="Admin"
+    :title="user.name"
+    :subtitle="user.email"
     variant="text"
     rounded="0"
     class="pr-0 py-0"
   >
     <template #prepend>
       <v-avatar rounded="lg">
-        <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+        <v-img :src="user.image"></v-img>
       </v-avatar>
     </template>
     <template #append>
-      <v-menu location="top">
+      <v-menu location="top right">
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"

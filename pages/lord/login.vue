@@ -1,6 +1,9 @@
 <script setup>
-const cookies = useCookie('token_lord')
+const lord = useLordUserStore();
+const cookies = useCookie("auth_token_lord");
 
+const show = ref(false);
+const loading = ref(false);
 const form = ref({
   email: "",
   password: "",
@@ -27,6 +30,7 @@ const submit = async () => {
   const { valid } = await formRef.value.validate();
 
   if (valid) {
+    loading.value = true;
     login();
   }
 };
@@ -39,29 +43,56 @@ const login = () => {
   })
     .then((res) => {
       cookies.value = res.token;
+      lord.setToken(res.token);
+      callMe(res.token);
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+const callMe = async (token) => {
+  await $fetch("http://localhost:8000/api/v1/system/auth/me", {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    console.log(lord, "call state");
+    lord.setUser(res);
+    navigateTo("/")
+  }).finally(()=>{
+    loading.value = false;
+  })
 };
 </script>
 <template>
   <v-container class="fill-height">
     <v-row justify="center" align="center">
       <v-col cols="12" md="4">
-        <v-form ref="formRef" fast-fail @click.prevent="submit">
+        <v-form ref="formRef" @submit.prevent="submit">
+          <v-card-title class="text-center px-0">Login</v-card-title>
           <v-card border flat>
-            <v-card-title>Login</v-card-title>
             <v-card-text class="pb-0">
-              <lazy-common-field-label>Email Address</lazy-common-field-label>
+              <lazy-common-shared-field-label
+                >Email Address</lazy-common-shared-field-label
+              >
               <v-text-field
                 v-model="form.email"
+                :loading
+                :disabled="loading"
                 :rules="rules.email"
               ></v-text-field>
-              <lazy-common-field-label>Password</lazy-common-field-label>
+              <lazy-common-shared-field-label
+                >Password</lazy-common-shared-field-label
+              >
               <v-text-field
                 v-model="form.password"
+                :type="show ? 'text' : 'password'"
                 :rules="rules.password"
+                :append-inner-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
+                :loading
+                :disabled="loading"
+                @click:append-inner="show = !show"
               ></v-text-field>
             </v-card-text>
             <v-card-actions>

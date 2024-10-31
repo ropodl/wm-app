@@ -66,6 +66,12 @@ const profileItems = [
   },
 ];
 
+const user = ref({
+  name: "asd",
+  role: "admin",
+  profile_pic: "https://randomuser.me/api/portraits/women/85.jpg",
+});
+
 const logout = () => {
   console.log("log out from admin");
 }
@@ -84,6 +90,7 @@ const logout = () => {
     <template v-slot:append>
       <v-divider></v-divider>
       <lazy-common-layout-navbar-profile-dropdown
+        :user
         :items="profileItems"
         @logout="logout"
       />

@@ -12,14 +12,16 @@
   "dependencies": {
     "@vueup/vue-quill": "^1.2.0",
     "nuxt": "^3.13.2",
-    "sass": "^1.80.4",
+    "sass": "1.80.5",
     "vue": "3.5.12",
     "vue-router": "latest"
   },
   "devDependencies": {
-    "@pinia/nuxt": "0.6.0",
-    "@vueuse/nuxt": "^11.1.0",
+    "@formkit/auto-animate": "^0.8.2",
+    "@pinia/nuxt": "0.6.1",
+    "@vueuse/nuxt": "11.2.0",
     "nuxt-multi-tenancy": "^1.2.4",
+    "pinia-plugin-persistedstate": "^4.1.2",
     "vuetify-nuxt-module": "^0.18.3"
   }
 }
