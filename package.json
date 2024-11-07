@@ -11,14 +11,15 @@
   },
   "dependencies": {
     "@vueup/vue-quill": "^1.2.0",
-    "nuxt": "^3.13.2",
-    "sass": "1.80.5",
+    "nuxt": "^3.14.159",
+    "sass": "1.80.6",
     "vue": "3.5.12",
     "vue-router": "latest"
   },
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.2",
-    "@pinia/nuxt": "0.6.1",
+    "@pinia/nuxt": "0.7.0",
+    "@sidebase/nuxt-auth": "^0.9.4",
     "@vueuse/nuxt": "11.2.0",
     "nuxt-multi-tenancy": "^1.2.4",
     "pinia-plugin-persistedstate": "^4.1.2",

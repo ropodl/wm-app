@@ -1,15 +1,17 @@
 <script setup>
-const { signIn, getSession } = useAuth()
-const cookies = useCookie("auth_token_lord");
+// const admin = useAdminUserStore();
+const { signIn } = useAuth();
+const runtimeConfig = useRuntimeConfig();
+const tenant = useTenant();
+console.log(useTenant() ? `tenant_${useTenant()}` : null);
 
-const lord = useLordUserStore();
-
+const cookies = useCookie("auth_token_tenant_user");
+const adminCookies = useCookie("auth_token_tenant_admin");
 const show = ref(false);
 const loading = ref(false);
 const form = ref({
   email: "",
   password: "",
-  role: "lord"
 });
 
 const rules = ref({
@@ -17,9 +19,9 @@ const rules = ref({
     (v) => !!v || "Email is required",
     (v) => (v && v.length >= 3) || "Email must be less than 3 characters",
     (v) =>
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        v
-      ) || "Email Address must be in a valid format",
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      v
+    ) || "Email Address must be in a valid format",
   ],
   password: [
     (v) => !!v || "Password is required",
@@ -31,54 +33,56 @@ const formRef = ref(null);
 
 const submit = async () => {
   const { valid } = await formRef.value.validate();
-
+  
   if (valid) {
     loading.value = true;
     login();
   }
 };
 
-const errors = ref([]);
-const login = async() => {
-  console.log("lets login");
-  await signIn(form.value,{
-    redirect: false
-  })
-
-  const session = await getSession();
-  console.log(session);
+async function getSessionWithHeaders(token) {
+  console.log(token);
   
-  // $fetch("http://localhost:8000/api/v1/system/auth/login", {
-  //   method: "POST",
-  //   body: form.value,
-  // })
-  //   .then((res) => {
-  //     cookies.value = res.token;
-  //     lord.setToken(res.token);
-  //     callMe(res.token);
-  //   })
-  //   .catch((err) => {
-  //     errors.value = err.response._data.error;
-  //     console.log(errors.value);
-  //     loading.value = false;
-  //   });
-};
+  // const token = useCookie('token').value; // Retrieve JWT token from cookie (or wherever it's stored)
 
-const callMe = async (token) => {
-  await $fetch("http://localhost:8000/api/v1/system/auth/me", {
+  const response = await $fetch(`${runtimeConfig.public.api}session/`, {
+    method: "GET",
     headers: {
-      authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
+      'asd':'asd',
+      'tenant_id': `tenant_${tenant}`
+    }
+  });
+
+
+
+
+  if (response.ok) {
+    const data = await response.json();
+    user.value = data.user;
+    role.value = data.user?.role;
+    tenant.value = data.user?.tenant;
+  } else {
+    // Handle session fetch error
+    console.error("Failed to fetch session");
+  }
+}
+
+const login = async () => {
+  await signIn(
+    form.value,
+    {
+      redirect: false,
     },
-  })
-    .then((res) => {
-      console.log(lord, "call state");
-      lord.setUser(res);
-      navigateTo("/");
-    })
-    .finally(() => {
-      loading.value = false;
-    });
+    {},
+    {
+      tenant_id: `tenant_${tenant}`,
+    }
+  );
+  await getSession();
 };
+// await getSessionWithHeaders(token);
+
 </script>
 <template>
   <v-container class="fill-height">
@@ -96,28 +100,24 @@ const callMe = async (token) => {
                 :loading
                 :disabled="loading"
                 :rules="rules.email"
-                :error-messages="errors"
-                @update:model-value="errors = ''"
               ></v-text-field>
               <lazy-common-shared-field-label
                 >Password</lazy-common-shared-field-label
               >
               <v-text-field
                 v-model="form.password"
-                :append-inner-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
-                :disabled="loading"
-                :error-messages="errors"
-                :loading
                 :type="show ? 'text' : 'password'"
                 :rules="rules.password"
+                :append-inner-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
+                :loading
+                :disabled="loading"
                 @click:append-inner="show = !show"
-                @update:model-value="errors = ''"
               ></v-text-field>
             </v-card-text>
             <v-card-actions>
-              <v-btn block color="primary" variant="tonal" type="submit">
-                Sign In
-              </v-btn>
+              <v-btn block color="primary" variant="tonal" type="submit"
+                >Sign In</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-form>
@@ -125,3 +125,4 @@ const callMe = async (token) => {
     </v-row>
   </v-container>
 </template>
+<style></style>

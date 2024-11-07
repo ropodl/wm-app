@@ -1,10 +1,9 @@
 <script setup>
 const route = useRoute();
-console.log(useTenant(),"why");
-
 
 definePageMeta({
   layout: "admin",
+  middleware: ['admin-auth']
 });
 
 const form = ref({

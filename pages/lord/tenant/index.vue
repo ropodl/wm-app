@@ -27,7 +27,7 @@ onMounted(() => {
 });
 
 const callTenants = () => {
-  $fetch("http://localhost:8000/api/v1/system/tenant/")
+  useAxios("system/tenant")
     .then((res) => {
       items.value = res;
     })

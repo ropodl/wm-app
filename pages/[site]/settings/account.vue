@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "user-settings",
+  middleware: ['user-auth']
 });
 
 const profileCompleteAlert = ref(true);

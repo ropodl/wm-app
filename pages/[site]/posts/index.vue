@@ -1,19 +1,28 @@
 <script setup>
 definePageMeta({
-  layout: "user"
+  layout: "user-post",
+  middleware: ['user-auth']
+});
+
+const latest = ref([]);
+
+onMounted(()=>{
+  getLatest();
 })
+
+const getLatest = async() => {
+  latest.value = await useAxios("post/latest");
+  console.log(latest.value);
+}
 </script>
 <template>
-  <v-tabs >
-    <v-tab>A</v-tab>
-    <v-tab>B</v-tab>
-  </v-tabs>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <h1>Posts</h1>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-row>
+    <v-col v-for="{title, featuredImage, slug} in latest.posts">
+      <v-card border flat color="transparent" :to="`/posts/${slug}`" :ripple="false">
+        <v-card-title>{{ title }}</v-card-title>
+          <v-img height="250" :src="featuredImage.url"></v-img>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 <style></style>

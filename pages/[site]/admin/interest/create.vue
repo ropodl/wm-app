@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "admin",
+  middleware: ['admin-auth']
 });
 
 const form = ref({

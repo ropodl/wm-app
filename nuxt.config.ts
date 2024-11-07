@@ -1,6 +1,8 @@
 import vuetifyOpts from "./utils/vuetify.js";
+import authOpts from "./utils/auth.js"
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: true,
   compatibilityDate: "2024-04-03",
   devtools: {
     enabled: true,
@@ -15,7 +17,8 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "@formkit/auto-animate",
-    "pinia-plugin-persistedstate",
+    "pinia-plugin-persistedstate/nuxt",
+    "@sidebase/nuxt-auth",
   ],
   pinia: {
     storesDirs: ["./stores/**/**"],
@@ -46,6 +49,7 @@ export default defineNuxtConfig({
     viewTransition: true,
   },
   piniaPluginPersistedstate: {
-    storage: "localStorage"
+    storage: "localStorage",
   },
+  auth: authOpts
 });

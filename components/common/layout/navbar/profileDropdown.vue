@@ -1,8 +1,9 @@
 <script setup>
-const lord = useLordUserStore();
-const { user } = storeToRefs(lord)
-
 defineProps({
+  user: {
+    type: Object,
+    required: true,
+  },
   items: {
     type: Object,
     required: true,
@@ -23,7 +24,7 @@ const emits = defineEmits(["logout"]);
   >
     <template #prepend>
       <v-avatar rounded="lg">
-        <v-img :src="user.image"></v-img>
+        <v-img :src="user.image.url"></v-img>
       </v-avatar>
     </template>
     <template #append>

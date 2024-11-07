@@ -1,5 +1,5 @@
 <script setup>
-const cookies = useCookie("auth_token_lord");
+const lord = useLordUserStore();
 
 const navItems = [
   {
@@ -28,14 +28,6 @@ const profileNavItems = ref([
 const drawer = ref(true);
 const toggleDrawer = () => {
   drawer.value = !drawer.value;
-};
-
-const logout = () => {
-  cookies.value = null;
-  localStorage.removeItem("lord-user");
-  navigateTo("/login", {
-    replace: true,
-  });
 };
 </script>
 <template>
@@ -70,8 +62,9 @@ const logout = () => {
       </v-list>
       <v-divider></v-divider>
       <lazy-common-layout-navbar-profile-dropdown
+        :user="lord.user"
         :items="profileNavItems"
-        @logout="logout"
+        @logout="lord.logOut()"
       />
     </template>
   </v-navigation-drawer>

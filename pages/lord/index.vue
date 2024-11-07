@@ -1,7 +1,6 @@
 <script setup>
 definePageMeta({
-  layout: "lord",
-  middleware: ["lord-auth"]
+  layout: "lord"
 })
 </script>
 <template>
