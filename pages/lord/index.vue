@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
-  layout: "lord"
+  layout: "lord",
+  auth: true
 })
 </script>
 <template>

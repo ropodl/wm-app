@@ -1,7 +1,8 @@
 <script setup>
+const admin = useAdminUserStore();
 definePageMeta({
   layout: "admin",
-  middleware: ['admin-auth']
+  middleware: ["admin-auth"],
 });
 
 const headers = [
@@ -10,20 +11,24 @@ const headers = [
     key: "image",
     sortable: false,
     title: "Featured Image",
+    width: 180,
   },
   { key: "title", title: "Title" },
-  { key: "action", title: "Actions" },
+  { key: "action", title: "Actions", sortable: false, width: 150 },
 ];
 
-const items = ref([])
+const items = ref([]);
+const pagination = ref({});
 
-onMounted(()=>{
+onMounted(() => {
   getPosts();
-})
+});
 
-const getPosts = async() => {
-  items.value = await useAxios("post");
-}
+const getPosts = async () => {
+  const res = await useAxios("post/latest");
+  items.value = res.posts;
+  pagination.value = res.pagination;
+};
 </script>
 <template>
   <v-container>
@@ -38,7 +43,11 @@ const getPosts = async() => {
     <v-row>
       <v-col cols="12">
         <v-card border rounded="lg">
-          <v-data-table :headers :items>
+          <v-data-table
+            :headers
+            :items
+            :items-per-page="pagination.itemsPerPage"
+          >
             <template v-slot:item.image="{ item }">
               <div>
                 <v-img
@@ -46,7 +55,7 @@ const getPosts = async() => {
                   width="160"
                   class="border rounded-lg"
                   :aspect-ratio="16 / 9"
-                  :src="item.image"
+                  :src="item.image?.url"
                 ></v-img>
               </div>
             </template>
@@ -56,9 +65,7 @@ const getPosts = async() => {
                   <v-list-item-title class="font-weight-bold">
                     {{ item.title }}
                   </v-list-item-title>
-                  <v-list-item-subtitle>
-                    <!-- {{ item.excerpt }} -->
-                  </v-list-item-subtitle>
+                  <v-list-item-subtitle> </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
             </template>
@@ -69,13 +76,16 @@ const getPosts = async() => {
                 color="success"
                 rounded="lg"
                 icon="mdi-pencil"
+                :to="`/admin/posts/${item.id}`"
               ></v-btn>
-              <v-btn
+              <template v-if="admin.user.role === 'admin'">
+                <v-btn
                 variant="tonal"
                 color="error"
                 rounded="lg"
                 icon="mdi-delete"
-              ></v-btn>
+                ></v-btn>
+              </template>
             </template>
           </v-data-table>
         </v-card>

@@ -24,7 +24,7 @@ const emits = defineEmits(["logout"]);
   >
     <template #prepend>
       <v-avatar rounded="lg">
-        <v-img :src="user.image.url"></v-img>
+        <v-img :src="user.image?.url"></v-img>
       </v-avatar>
     </template>
     <template #append>

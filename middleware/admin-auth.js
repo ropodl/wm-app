@@ -1,17 +1,13 @@
 import { useAdminUserStore } from "~/stores/admin/user";
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  // const token = useCookie("auth_token_tenant_admin");
-  // const adminUser = useAdminUserStore();
+  const token = useCookie("auth_token");
+  const admin = useAdminUserStore();
 
-  // const checkAdminRole = (arg) => {
-  //   return arg.some((role)=> arg.includes(role)
-  //   )
-  // }
+  console.log(admin.user);
 
-  // if (!token.value && checkAdminRole(['','user'])) {
-  //   return navigateTo("/auth/login", {
-  //     replace: true,
-  //   });
-  // }
+  if(!admin.user && !token){
+    navigateTo("/login")
+  }
+  
 });

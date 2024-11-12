@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   form: {
-    type: Object,
+    type: [Object, undefined],
     required: true,
   },
 });
@@ -29,9 +29,9 @@ const onFileChange = (event) => {
         </template>
       </v-tooltip>
     </v-card-title>
-    <template v-if="form.image">
+    <template v-if="form.image?.url">
       <v-hover #default="{ props, isHovering }">
-        <v-img v-bind="props" cover height="200" :src="url">
+        <v-img v-bind="props" cover height="200" :src="form.image.url || url">
           <template v-if="isHovering">
             <div
               class="fill-height d-flex justify-center align-center"

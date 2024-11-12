@@ -4,13 +4,18 @@ definePageMeta({
   middleware: ['user-auth']
 });
 
-const {
-  params: { id },
-} = useRoute();
+const route = useRoute();
+
+const post = ref({})
+onMounted(()=>{
+  useAxios(`/post/${route.params.id}`).then((res)=>{
+    post.value = res
+  })
+})
 </script>
 <template>
   <div>
-    {{ id }}
+    {{ post }}
   </div>
 </template>
 

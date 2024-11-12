@@ -11,4 +11,8 @@ export default {
         getSession: { path: "session", method: "get" },
       },
     },
+    sessionRefresh: {
+      enablePeriodically: false,
+      enableOnWindowFocus: false,
+    }
   }

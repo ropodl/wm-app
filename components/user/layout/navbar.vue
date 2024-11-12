@@ -1,5 +1,8 @@
 <script setup>
+const user = useUserStore();
 const route = useRoute();
+
+console.log(user);
 
 const navItems = [
   {
@@ -63,6 +66,7 @@ const toggleDrawer = () => {
 
 const logout = () => {
   console.log("log out");
+  user.logOut();
 };
 
 const breadcrumb = computed(() => {
@@ -73,12 +77,6 @@ const breadcrumb = computed(() => {
       to: "/",
     },
   ];
-});
-
-const user = ref({
-  name: "asd",
-  role: "admin",
-  profile_pic: "https://randomuser.me/api/portraits/women/85.jpg",
 });
 </script>
 <template>
@@ -117,7 +115,7 @@ const user = ref({
       </v-list>
       <v-divider></v-divider>
       <lazy-common-layout-navbar-profile-dropdown
-        :user
+        :user="user.user"
         :items="profileItems"
         @logout="logout"
       />

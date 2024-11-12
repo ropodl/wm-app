@@ -1,5 +1,5 @@
 <script setup>
-const { signIn, getSession } = useAuth()
+const { signIn, getSession } = useAuth();
 const cookies = useCookie("auth_token_lord");
 
 const lord = useLordUserStore();
@@ -9,7 +9,7 @@ const loading = ref(false);
 const form = ref({
   email: "",
   password: "",
-  role: "lord"
+  role: "lord",
 });
 
 const rules = ref({
@@ -39,44 +39,29 @@ const submit = async () => {
 };
 
 const errors = ref([]);
-const login = async() => {
-  console.log("lets login");
-  await signIn(form.value,{
+const login = async () => {
+  await signIn(form.value, {
     redirect: false
   })
-
-  const session = await getSession();
-  console.log(session);
-  
-  // $fetch("http://localhost:8000/api/v1/system/auth/login", {
-  //   method: "POST",
-  //   body: form.value,
-  // })
-  //   .then((res) => {
-  //     cookies.value = res.token;
-  //     lord.setToken(res.token);
-  //     callMe(res.token);
-  //   })
-  //   .catch((err) => {
-  //     errors.value = err.response._data.error;
-  //     console.log(errors.value);
-  //     loading.value = false;
-  //   });
-};
-
-const callMe = async (token) => {
-  await $fetch("http://localhost:8000/api/v1/system/auth/me", {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
     .then((res) => {
-      console.log(lord, "call state");
-      lord.setUser(res);
-      navigateTo("/");
+      console.log(res);
+      lord.setToken(res);
+    })
+    .catch((err) => {
+      errors.value = err.response?._data.error;
     })
     .finally(() => {
       loading.value = false;
+    });
+
+  await getSession()
+    .then((res) => {
+      console.log(res.role, "session");
+      if (res.role === "lord") navigateTo("/");
+      else navigateTo("/404");
+    })
+    .catch((err) => {
+      console.log(err, "error");
     });
 };
 </script>

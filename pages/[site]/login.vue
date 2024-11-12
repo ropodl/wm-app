@@ -1,12 +1,8 @@
 <script setup>
-// const admin = useAdminUserStore();
-const { signIn } = useAuth();
-const runtimeConfig = useRuntimeConfig();
-const tenant = useTenant();
-console.log(useTenant() ? `tenant_${useTenant()}` : null);
+const admin = useAdminUserStore();
+const user = useUserStore();
+const token = useCookie("auth_token");
 
-const cookies = useCookie("auth_token_tenant_user");
-const adminCookies = useCookie("auth_token_tenant_admin");
 const show = ref(false);
 const loading = ref(false);
 const form = ref({
@@ -19,9 +15,9 @@ const rules = ref({
     (v) => !!v || "Email is required",
     (v) => (v && v.length >= 3) || "Email must be less than 3 characters",
     (v) =>
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      v
-    ) || "Email Address must be in a valid format",
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        v
+      ) || "Email Address must be in a valid format",
   ],
   password: [
     (v) => !!v || "Password is required",
@@ -33,56 +29,48 @@ const formRef = ref(null);
 
 const submit = async () => {
   const { valid } = await formRef.value.validate();
-  
+
   if (valid) {
     loading.value = true;
     login();
   }
 };
 
-async function getSessionWithHeaders(token) {
-  console.log(token);
-  
-  // const token = useCookie('token').value; // Retrieve JWT token from cookie (or wherever it's stored)
-
-  const response = await $fetch(`${runtimeConfig.public.api}session/`, {
-    method: "GET",
-    headers: {
-      // Authorization: `Bearer ${token}`,
-      'asd':'asd',
-      'tenant_id': `tenant_${tenant}`
-    }
-  });
-
-
-
-
-  if (response.ok) {
-    const data = await response.json();
-    user.value = data.user;
-    role.value = data.user?.role;
-    tenant.value = data.user?.tenant;
-  } else {
-    // Handle session fetch error
-    console.error("Failed to fetch session");
-  }
-}
-
 const login = async () => {
-  await signIn(
-    form.value,
-    {
-      redirect: false,
-    },
-    {},
-    {
-      tenant_id: `tenant_${tenant}`,
-    }
-  );
-  await getSession();
+  $fetch("http://localhost:8000/api/v1/auth/login", {
+    method: "POST",
+    body: form.value,
+  })
+    .then((res) => {
+      token.value = res.token;
+      $fetch("http://localhost:8000/api/v1/auth/session", {
+        headers: {
+          Authorization: `Bearer ${res.token}`,
+        },
+      }).then((res) => {
+        if (res.role === "user") {
+          navigateTo("/", {
+            replace: true,
+          });
+          user.setUser(res);
+          user.setRole("user");
+        } else if (["admin","editor"].includes(res.role)) {
+          navigateTo("/admin/", {
+            replace: true,
+          });
+          admin.setUser(res);
+          admin.setRole("admin");
+        } else {
+          navigateTo("/404", {
+            replace: true,
+          });
+        }
+      });
+    })
+    .catch((err) => {
+      console.log("error occured while fetching token", err);
+    });
 };
-// await getSessionWithHeaders(token);
-
 </script>
 <template>
   <v-container class="fill-height">

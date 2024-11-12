@@ -10,18 +10,40 @@ const tabs = ref([
     value: "recommended",
   },
 ]);
+
+const computedTab = computed(() => {
+  if (tab.value === "recommended") return "/posts/recommended";
+  else return "/posts";
+});
+
+onMounted(()=>{
+  callAllInterest();
+})
+
+const interests = ref([])
+const callAllInterest = () => {
+  useAxios('interest')
+  .then((res)=>{
+    interests.value = res.interests;
+    pagination.value = res.pagination;
+  })
+}
 </script>
 <template>
   <v-main>
     <NuxtLayout name="user">
-      <v-container class="pa-0">
+      <v-container fluid class="pa-0">
         <v-row no-gutters>
           <v-col cols="12" md="8">
-            <div class="position-sticky bg-background" style="top: 61px;z-index:1000">
+            <div
+              class="position-sticky bg-background"
+              style="top: 61px; z-index: 1000"
+            >
               <v-tabs v-model="tab" grow :transition="false">
-                <template v-for="{ title, value } in tabs">
-                  <v-tab :transition="false" :value="value">{{ title }}</v-tab>
-                </template>
+                <v-tab :transition="false" to="/posts">Latest</v-tab>
+                <v-tab :transition="false" to="/posts/recommendation">
+                  Recommended
+                </v-tab>
               </v-tabs>
               <v-divider></v-divider>
             </div>
@@ -40,7 +62,7 @@ const tabs = ref([
               rounded="0"
               style="height: calc(100vh - 61px); top: 61px"
             >
-              <v-card-title>This is a test</v-card-title>
+              <v-card-title>More Interests</v-card-title>
             </v-card>
           </v-col>
         </v-row>

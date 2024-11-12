@@ -1,7 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "lord",
-  middleware: ["lord-auth"]
+  auth: true
 })
 
 const headers = [

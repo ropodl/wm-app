@@ -3,7 +3,7 @@ const route = useRoute();
 
 definePageMeta({
   layout: "admin",
-  middleware: ['admin-auth']
+  middleware: ["admin-auth"],
 });
 
 const form = ref({
@@ -12,7 +12,7 @@ const form = ref({
   excerpt: "",
   content: "",
   image: null,
-  tags: [],
+  interests: [],
   status: "Draft",
 });
 
@@ -22,30 +22,33 @@ const getInterests = async () => {
 };
 
 onMounted(() => {
+  useAxios(`/post/${route.params.id}`).then((res)=>{
+    console.log(res);
+    form.value = res
+  });
   getInterests();
 });
 
-const submit = async() => {
+const submit = async () => {
   const formData = new FormData();
   for (const key in form.value) {
     const value = form.value[key];
     formData.append(key, value);
   }
-  console.log(formData)
-  const res = await useAxios("post",{
-    method: "POST",
-    body: formData,
-    headers: "tenant_test"
-  })
+  const res = await useAxios(`post/${route.params.id}`, {
+    method: "PATCH",
+    body: formData
+  });
   console.log(res);
-}
+};
 </script>
 <template>
   <v-form ref="formRef" @submit.prevent="submit">
     <v-container>
       <v-row>
         <v-col cols="12">
-          <h1>Add Posts</h1>
+          <h1>Update Posts</h1>
+          {{ form }}
         </v-col>
       </v-row>
       <v-row>
@@ -55,10 +58,10 @@ const submit = async() => {
           >
           <v-text-field v-model="form.title"></v-text-field>
           <lazy-common-shared-field-label
-            >Tags</lazy-common-shared-field-label
+            >Interests</lazy-common-shared-field-label
           >
           <v-autocomplete
-            v-model="form.tags"
+            v-model="form.interests"
             chips
             item-value="id"
             multiple
@@ -118,3 +121,5 @@ const submit = async() => {
     </v-container>
   </v-form>
 </template>
+
+<style></style>

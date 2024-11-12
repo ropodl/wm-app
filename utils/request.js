@@ -1,11 +1,5 @@
-const getToken = () => {
-  const cookies = useCookie("auth_token_tenant_user");
-  const adminCookies = useCookie("auth_token_tenant_admin");
-
-  if(cookies.value) return cookies.value
-  else return adminCookies.value;
-};
 export const useAxios = async (url, opts = {}) => {
+  const cookie = useCookie("auth_token");
   const config = useRuntimeConfig();
   console.log(opts);
   try {
@@ -19,11 +13,10 @@ export const useAxios = async (url, opts = {}) => {
       headers: {
         ...opts?.headers,
         tenant_id: useTenant() ? `tenant_${useTenant()}`: null,
-        authorization: getToken(),
+        authorization: `Bearer ${cookie.value}`,
       },
       immediate: true,
     });
-    console.log(res);
     return res;
   } catch (err) {
     console.error("Error fetching data:", err);
