@@ -1,6 +1,9 @@
 <script setup>
 const admin = useAdminUserStore();
 const user = useUserStore();
+const runtimeConfig = useRuntimeConfig();
+const snackbar = useSnackbarStore();
+
 const token = useCookie("auth_token");
 
 const show = ref(false);
@@ -37,13 +40,13 @@ const submit = async () => {
 };
 
 const login = async () => {
-  $fetch("http://localhost:8000/api/v1/auth/login", {
+  $fetch(`${runtimeConfig.public.api}auth/login`, {
     method: "POST",
     body: form.value,
   })
     .then((res) => {
       token.value = res.token;
-      $fetch("http://localhost:8000/api/v1/auth/session", {
+      $fetch(`${runtimeConfig.public.api}auth/session`, {
         headers: {
           Authorization: `Bearer ${res.token}`,
         },
@@ -54,7 +57,7 @@ const login = async () => {
           });
           user.setUser(res);
           user.setRole("user");
-        } else if (["admin","editor"].includes(res.role)) {
+        } else if (["admin", "editor"].includes(res.role)) {
           navigateTo("/admin/", {
             replace: true,
           });
@@ -68,7 +71,10 @@ const login = async () => {
       });
     })
     .catch((err) => {
-      console.log("error occured while fetching token", err);
+      snackbar.setSnackbar(err.response._data.error, "error");
+    })
+    .finally(() => {
+      loading.value = false;
     });
 };
 </script>

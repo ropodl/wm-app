@@ -1,33 +1,18 @@
 <script setup>
 const tab = ref("latest");
-const tabs = ref([
-  {
-    title: "Latest",
-    value: "latest",
-  },
-  {
-    title: "Recomended",
-    value: "recommended",
-  },
-]);
+const pagination = ref({});
 
-const computedTab = computed(() => {
-  if (tab.value === "recommended") return "/posts/recommended";
-  else return "/posts";
+onMounted(() => {
+  callAllInterest();
 });
 
-onMounted(()=>{
-  callAllInterest();
-})
-
-const interests = ref([])
+const interests = ref([]);
 const callAllInterest = () => {
-  useAxios('interest')
-  .then((res)=>{
+  useAxios("interest").then((res) => {
     interests.value = res.interests;
     pagination.value = res.pagination;
-  })
-}
+  });
+};
 </script>
 <template>
   <v-main>
@@ -55,14 +40,19 @@ const callAllInterest = () => {
           </v-col>
           <v-col cols="12" md="4">
             <v-card
-              border="s"
               flat
+              border="s"
               class="position-sticky"
               color="transparent"
               rounded="0"
-              style="height: calc(100vh - 61px); top: 61px"
+              style="height: calc(100vh - 61px); top: 61px; overflow-y: scroll"
             >
               <v-card-title>More Interests</v-card-title>
+              <v-card-text>
+                <template v-for="item in interests">
+                  <v-chip class="mb-3 mr-3">{{ item.title }}</v-chip>
+                </template>
+              </v-card-text>
             </v-card>
           </v-col>
         </v-row>

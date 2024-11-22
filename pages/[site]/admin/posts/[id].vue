@@ -12,19 +12,19 @@ const form = ref({
   excerpt: "",
   content: "",
   image: null,
-  interests: [],
+  tags: [],
   status: "Draft",
 });
 
-const interests = ref([]);
+const tags = ref([]);
 const getInterests = async () => {
-  interests.value = await useAxios("interest");
+  tags.value = await useAxios("interest");
 };
 
 onMounted(() => {
-  useAxios(`/post/${route.params.id}`).then((res)=>{
+  useAxios(`/post/${route.params.id}`).then((res) => {
     console.log(res);
-    form.value = res
+    form.value = res;
   });
   getInterests();
 });
@@ -35,11 +35,17 @@ const submit = async () => {
     const value = form.value[key];
     formData.append(key, value);
   }
-  const res = await useAxios(`post/${route.params.id}`, {
+  console.log(formData);
+  await useAxios(`post/${route.params.id}`, {
     method: "PATCH",
-    body: formData
-  });
-  console.log(res);
+    body: formData,
+  })
+    .then((res) => {
+      console.log(res,'res');
+    })
+    .catch((err) => {
+      console.log(err,'err');
+    });
 };
 </script>
 <template>
@@ -48,7 +54,6 @@ const submit = async () => {
       <v-row>
         <v-col cols="12">
           <h1>Update Posts</h1>
-          {{ form }}
         </v-col>
       </v-row>
       <v-row>
@@ -60,13 +65,15 @@ const submit = async () => {
           <lazy-common-shared-field-label
             >Interests</lazy-common-shared-field-label
           >
-          <v-autocomplete
-            v-model="form.interests"
+          {{ form.tags }}
+          <v-select
+            v-model="form.tags"
             chips
-            item-value="id"
             multiple
+            item-value="id"
+            item-title="title"
             variant="outlined"
-            :items="interests.interests"
+            :items="tags.interests"
           />
           <lazy-common-shared-field-label
             >Excerpt</lazy-common-shared-field-label
@@ -78,13 +85,13 @@ const submit = async () => {
           />
         </v-col>
         <v-col cols="12" md="4">
-          <lazy-common-shared-image-upload v-model="form.image" :form />
+          <lazy-common-shared-image-upload :form />
           <v-card border flat class="mb-3">
             <v-card-title>Actions</v-card-title>
             <v-divider></v-divider>
             <v-card-text>
               <span class="font-weight-bold">Status:&nbsp;</span>
-              {{ form.status ? "Published" : "Draft" }}
+              {{ form.status === "Published" ? "Published" : "Draft" }}
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>

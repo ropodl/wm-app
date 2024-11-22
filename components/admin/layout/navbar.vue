@@ -29,7 +29,8 @@ const navItems = [
         routes: "/admin/posts/create",
       },
     ],
-  },{
+  },
+  {
     icon: "mdi-thumb-up",
     title: "Interests",
     subitems: [
@@ -57,6 +58,21 @@ const navItems = [
       },
     ],
   },
+  {
+    icon: "mdi-forum",
+    title: "Forums",
+    subtitle: "Forums and Threads",
+    subitems: [
+      {
+        title: "All Forums",
+        routes: "/admin/forums",
+      },
+      {
+        title: "Add Posts",
+        routes: "/admin/forums/create",
+      },
+    ],
+  },
 ];
 
 const profileItems = [
@@ -70,7 +86,7 @@ const profileItems = [
 const logout = () => {
   console.log("log out from admin");
   admin.logOut();
-}
+};
 </script>
 <template>
   <v-app-bar app elevation="0" border="b" height="60">

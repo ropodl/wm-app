@@ -25,7 +25,7 @@ const getRecommendation = async () => {
   <v-row>
     <template v-for="({ post }, index) in recommendation">
       <v-col cols="12" md="6">
-        {{ post }}
+        <!-- {{ post }} -->
         <v-card
           border
           flat
@@ -34,7 +34,7 @@ const getRecommendation = async () => {
           :ripple="false"
         >
           <v-card-title>{{ post.title }}</v-card-title>
-          <v-img height="250" :src="post.image?.url"></v-img>
+          <v-img cover height="250" :src="post.image?.url"></v-img>
         </v-card>
       </v-col>
     </template>

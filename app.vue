@@ -4,18 +4,21 @@ useHead({
 });
 
 const snackbar = useSnackbarStore();
+const { snackbar: toast } = storeToRefs(snackbar);
 </script>
 <template>
   <v-app>
     <NuxtLayout>
       <v-main>
+        <!-- <v-btn @click="snackbar.setSnackbar('test', 'error')"></v-btn> -->
         <NuxtPage />
       </v-main>
       <v-snackbar
-        v-model="snackbar.snackbar.show"
+        v-model="toast.show"
         location="bottom right"
+        :color="toast.color"
       >
-        {{ snackbar.snackbar.title }}
+        {{ toast.text }}
       </v-snackbar>
     </NuxtLayout>
   </v-app>

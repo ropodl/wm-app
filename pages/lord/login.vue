@@ -1,5 +1,5 @@
 <script setup>
-const { signIn, getSession } = useAuth();
+const runtimeConfig = useRuntimeConfig();
 const cookies = useCookie("auth_token_lord");
 
 const lord = useLordUserStore();
@@ -40,28 +40,31 @@ const submit = async () => {
 
 const errors = ref([]);
 const login = async () => {
-  await signIn(form.value, {
-    redirect: false
+  $fetch(`${runtimeConfig.public.api}auth/login`, {
+    method: "POST",
+    body: form.value,
   })
     .then((res) => {
-      console.log(res);
-      lord.setToken(res);
+      $fetch(`${runtimeConfig.public.api}auth/session`, {
+        headers: {
+          Authorization: `Bearer ${res.token}`,
+        },
+      })
+        .then((res) => {
+          if (res.role === "lord") {
+            lord.setToken(res);
+            navigateTo("/");
+          } else navigateTo("/404");
+        })
+        .catch((err) => {
+          console.log(err, "error");
+        });
     })
     .catch((err) => {
       errors.value = err.response?._data.error;
     })
     .finally(() => {
       loading.value = false;
-    });
-
-  await getSession()
-    .then((res) => {
-      console.log(res.role, "session");
-      if (res.role === "lord") navigateTo("/");
-      else navigateTo("/404");
-    })
-    .catch((err) => {
-      console.log(err, "error");
     });
 };
 </script>

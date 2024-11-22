@@ -17,16 +17,11 @@ const navItems = [
   },
   {
     icon: "mdi-calendar-text",
-    title: "Calendar and Events",
-    subitems: [
-      {
-        title: "Noticeboard",
-        routes: "/help",
-      },
-    ],
+    title: "Forum",
+    routes: "/forum"
   },
   {
-    icon: "mdi-format-list-checks",
+    icon: "mdi-globe",
     title: "Tasks",
     subtitle: "Supervisor",
     subitems: [

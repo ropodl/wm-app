@@ -1,9 +1,10 @@
 <script setup>
 const route = useRoute();
+const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "admin",
-  middleware: ['admin-auth']
+  middleware: ["admin-auth"],
 });
 
 const form = ref({
@@ -25,20 +26,24 @@ onMounted(() => {
   getInterests();
 });
 
-const submit = async() => {
+const submit = async () => {
   const formData = new FormData();
   for (const key in form.value) {
     const value = form.value[key];
     formData.append(key, value);
   }
-  console.log(formData)
-  const res = await useAxios("post",{
+  await useAxios("post", {
     method: "POST",
     body: formData,
-    headers: "tenant_test"
   })
-  console.log(res);
-}
+    .then((res) => {
+      setSnackbar("Post created successfully");
+      navigateTo(`/admin/posts/${res.id}`)
+    })
+    .catch((err) => {
+      setSnackbar(err.response._data.error, "error");
+    });
+};
 </script>
 <template>
   <v-form ref="formRef" @submit.prevent="submit">
@@ -54,9 +59,8 @@ const submit = async() => {
             >Post Title</lazy-common-shared-field-label
           >
           <v-text-field v-model="form.title"></v-text-field>
-          <lazy-common-shared-field-label
-            >Tags</lazy-common-shared-field-label
-          >
+          <lazy-common-shared-field-label>Tags</lazy-common-shared-field-label>
+          {{form.tags}}
           <v-autocomplete
             v-model="form.tags"
             chips

@@ -4,7 +4,7 @@ export const useSnackbarStore = defineStore("snackbarStore", () => {
   const snackbar = ref({
     show: false,
     text: "",
-    color: "success",
+    color: "",
   });
 
   function setSnackbar(text,color){

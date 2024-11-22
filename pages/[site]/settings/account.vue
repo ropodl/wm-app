@@ -1,33 +1,42 @@
 <script setup>
+const user = useUserStore();
 definePageMeta({
   layout: "user-settings",
-  middleware: ['user-auth']
+  middleware: ["user-auth"],
 });
 
 const profileCompleteAlert = ref(true);
 
 const form = ref({
-  first_name: "",
-  last_name: "",
+  name: "",
   user_name: "",
-  mobile_no: "",
-  email_address: "",
+  phone_no: "",
+  email: "",
 });
 
 const rules = ref({
-  first_name: [
+  name: [
     (v) => !!v || "First Name is required",
     (v) => (v && v.length > 2) || "First Name must be 3 characters or more",
-  ],
-  last_name: [
-    (v) => !!v || "Last Name is required",
-    (v) => (v && v.length > 2) || "Last Name must be 3 characters or more",
   ],
   user_name: [
     (v) => !!v || "User Name is required",
     (v) => (v && v.length > 2) || "User Name must be 3 characters or more",
   ],
 });
+
+onMounted(() => {
+  callProfileInfo();
+});
+
+const callProfileInfo = () => {
+  useAxios(`/user/${user.user.id}`).then((res) => {
+    form.value.name = res.name;
+    form.value.user_name = res.user_name;
+    form.value.phone_no = res.phone_number;
+    form.value.email = res.email;
+  });
+};
 </script>
 <template>
   <v-row>
@@ -49,7 +58,6 @@ const rules = ref({
   <v-row>
     <v-col cols="12" class="px-0 pb-0">
       <v-card-title class="pt-0">Profile</v-card-title>
-      {{ form }}
     </v-col>
     <v-col cols="12" md="3">
       <v-hover #default="{ props, isHovering }">
@@ -59,7 +67,7 @@ const rules = ref({
           v-bind="props"
           style="position: sticky; top: 70px"
         >
-          <v-img src="https://randomuser.me/api/portraits/women/85.jpg">
+          <v-img :src="user.user?.image.url">
             <v-overlay
               :model-value="isHovering"
               contained
@@ -75,25 +83,20 @@ const rules = ref({
     <v-col cols="12" md="9">
       <v-row>
         <v-col cols="12" md="6">
-          <lazy-common-shared-field-label>First Name</lazy-common-shared-field-label>
+          <lazy-common-shared-field-label
+            >Full Name</lazy-common-shared-field-label
+          >
           <v-text-field
-            v-model="form.first_name"
+            v-model="form.name"
             persistent-hint
-            hint="e.g John"
-            :rules="rules.first_name"
+            hint="e.g John Doe"
+            :rules="rules.name"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <lazy-common-shared-field-label>Last Name</lazy-common-shared-field-label>
-          <v-text-field
-            v-model="form.last_name"
-            persistent-hint
-            hint="e.g Doe"
-            :rules="rules.last_name"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12">
-          <lazy-common-shared-field-label>User Name</lazy-common-shared-field-label>
+          <lazy-common-shared-field-label
+            >User Name</lazy-common-shared-field-label
+          >
           <v-text-field
             v-model="form.user_name"
             persistent-hint
@@ -101,17 +104,21 @@ const rules = ref({
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <lazy-common-shared-field-label>Mobile Number</lazy-common-shared-field-label>
+          <lazy-common-shared-field-label
+            >Phone Number</lazy-common-shared-field-label
+          >
           <v-text-field
-            v-model="form.mobile_no"
+            v-model="form.phone_no"
             persistent-hint
-            hint="e.g 9851808472"
+            hint="e.g 98XXXXXXXX"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <lazy-common-shared-field-label>Email Address</lazy-common-shared-field-label>
+          <lazy-common-shared-field-label
+            >Email Address</lazy-common-shared-field-label
+          >
           <v-text-field
-            v-model="form.email_address"
+            v-model="form.email"
             persistent-hint
             hint="e.g john.doe@example.com"
           ></v-text-field>

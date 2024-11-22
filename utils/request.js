@@ -1,7 +1,6 @@
 export const useAxios = async (url, opts = {}) => {
   const cookie = useCookie("auth_token");
   const config = useRuntimeConfig();
-  console.log(opts);
   try {
     const res = await $fetch(url, {
       key: String(Math.random()),
