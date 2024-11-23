@@ -10,12 +10,12 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    "nuxt-multi-tenancy",
     "vuetify-nuxt-module",
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "@formkit/auto-animate",
-    "pinia-plugin-persistedstate/nuxt"
+    "pinia-plugin-persistedstate/nuxt",
+    "nuxt-multi-tenancy",
   ],
   pinia: {
     storesDirs: ["./stores/**/**"],

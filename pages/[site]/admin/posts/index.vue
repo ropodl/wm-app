@@ -80,10 +80,10 @@ const getPosts = async () => {
               ></v-btn>
               <template v-if="admin.user.role === 'admin'">
                 <v-btn
-                variant="tonal"
-                color="error"
-                rounded="lg"
-                icon="mdi-delete"
+                  variant="tonal"
+                  color="error"
+                  rounded="lg"
+                  icon="mdi-delete"
                 ></v-btn>
               </template>
             </template>

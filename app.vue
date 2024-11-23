@@ -27,4 +27,14 @@ const { snackbar: toast } = storeToRefs(snackbar);
 .list-style-none {
   list-style: none;
 }
+.v-img:not(.v-parallax) {
+  transition: all 0.2s;
+}
+.v-img:not(.v-parallax) .v-img__img {
+  transform: scale(1);
+  transition: all 0.2s;
+}
+.v-img:not(.v-parallax).zoom-image .v-img__img {
+  transform: scale(1.2);
+}
 </style>

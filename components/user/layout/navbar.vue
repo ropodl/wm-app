@@ -16,8 +16,8 @@ const navItems = [
     routes: "/posts",
   },
   {
-    icon: "mdi-calendar-text",
-    title: "Forum",
+    icon: "mdi-forum",
+    title: "Forums",
     routes: "/forum"
   },
   {
