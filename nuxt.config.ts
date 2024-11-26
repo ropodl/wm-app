@@ -20,11 +20,6 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ["./stores/**/**"],
   },
-  multiTenancy: {
-    tenantDynamicRoute: "site",
-    rootDomains: ["wm.local"],
-    sites: ["lord"],
-  },
   vuetify: {
     vuetifyOptions: vuetifyOpts,
   },
@@ -47,5 +42,10 @@ export default defineNuxtConfig({
   },
   piniaPluginPersistedstate: {
     storage: "localStorage",
+  },
+  multiTenancy: {
+    tenantDynamicRoute: "site",
+    rootDomains: ["wm.local"],
+    sites: ["lord"],
   },
 });

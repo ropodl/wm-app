@@ -19,18 +19,7 @@ const navItems = [
     icon: "mdi-forum",
     title: "Forums",
     routes: "/forum"
-  },
-  {
-    icon: "mdi-globe",
-    title: "Tasks",
-    subtitle: "Supervisor",
-    subitems: [
-      {
-        title: "overview",
-        routes: "/settings",
-      },
-    ],
-  },
+  }
 ];
 
 const bottomNavItems = ref([

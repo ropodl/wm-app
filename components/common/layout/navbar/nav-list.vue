@@ -52,7 +52,6 @@ defineProps({
             </template>
             <template v-else>
               <v-list-item
-                exact
                 color="primary"
                 rounded="lg"
                 :to="subitem.routes"

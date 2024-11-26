@@ -33,7 +33,7 @@ const toggleDrawer = () => {
 <template>
   <v-app-bar app elevation="0" border="b" height="60">
     <v-app-bar-nav-icon rounded="lg" @click="toggleDrawer" />
-    <v-breadcrumbs :items="['home', 'test']"></v-breadcrumbs>
+    System Admin
     <v-spacer></v-spacer>
     <v-btn icon="mdi-bell-outline" rounded="lg"></v-btn>
   </v-app-bar>

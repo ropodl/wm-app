@@ -68,7 +68,7 @@ const navItems = [
         routes: "/admin/forums",
       },
       {
-        title: "Add Posts",
+        title: "Add Forums",
         routes: "/admin/forums/create",
       },
     ],

@@ -34,18 +34,38 @@ const submit = async () => {
           <h1>Create Tenant</h1>
         </v-col>
         <v-col cols="12" md="8">
-          <lazy-common-shared-field-label
-            >Tenant Name</lazy-common-shared-field-label
-          >
-          <v-text-field v-model="form.name"></v-text-field>
-          <lazy-common-shared-field-label
-            >Tenant's Sub Domain name</lazy-common-shared-field-label
-          >
-          <v-text-field v-model="form.sub"></v-text-field>
-          <lazy-common-shared-field-label
-            >Tenant's Primary Email Address</lazy-common-shared-field-label
-          >
-          <v-text-field v-model="form.email"></v-text-field>
+          <v-row>
+            <v-col cols="12">
+              <lazy-common-shared-field-label
+                >Tenant Name</lazy-common-shared-field-label
+              >
+              <v-text-field
+                v-model="form.name"
+                persistent-hint
+                hint="e.g. newroad"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <lazy-common-shared-field-label
+                >Tenant's Sub Domain name</lazy-common-shared-field-label
+              >
+              <v-text-field
+                v-model="form.sub"
+                persistent-hint
+                hint="newroad"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <lazy-common-shared-field-label
+                >Tenant's Primary Email Address</lazy-common-shared-field-label
+              >
+              <v-text-field
+                v-model="form.email"
+                persistent-hint
+                hint="john.doe@admin.com"
+              ></v-text-field>
+            </v-col>
+          </v-row>
         </v-col>
         <v-col cols="12" md="4">
           <lazy-common-shared-actions :form />
