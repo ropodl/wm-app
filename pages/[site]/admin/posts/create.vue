@@ -60,7 +60,6 @@ const submit = async () => {
           >
           <v-text-field v-model="form.title"></v-text-field>
           <lazy-common-shared-field-label>Tags</lazy-common-shared-field-label>
-          {{form.tags}}
           <v-autocomplete
             v-model="form.tags"
             chips

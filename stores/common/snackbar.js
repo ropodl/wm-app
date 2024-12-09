@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+// import { defineStore } from "pinia";
 
 export const useSnackbarStore = defineStore("snackbarStore", () => {
   const snackbar = ref({
@@ -7,7 +7,7 @@ export const useSnackbarStore = defineStore("snackbarStore", () => {
     color: "",
   });
 
-  function setSnackbar(text,color){
+  function setSnackbar(text, color) {
     snackbar.value.show = true;
     snackbar.value.text = text;
     snackbar.value.color = color;
@@ -15,6 +15,6 @@ export const useSnackbarStore = defineStore("snackbarStore", () => {
 
   return {
     snackbar,
-    setSnackbar
-  }
+    setSnackbar,
+  };
 });

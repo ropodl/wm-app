@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia'
+// import { defineStore } from 'pinia'
 
-export const useInterestStore = defineStore('interest',()=>{
+export const useInterestStore = defineStore("interest", () => {
   const interests = ref([]);
 
   return { interests };
-})
+});

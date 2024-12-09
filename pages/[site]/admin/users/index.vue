@@ -1,7 +1,6 @@
 <script setup>
 definePageMeta({
-  layout: "admin",
-  middleware: ['admin-auth']
+  layout: "admin"
 });
 
 const headers = [

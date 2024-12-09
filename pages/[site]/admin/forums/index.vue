@@ -5,28 +5,29 @@ definePageMeta({
 });
 
 const headers = ref([
-  { title: "Image", key: "image" },
+  { title: "Image", key: "image", sortable: false, width: 180 },
   {
     title: "Forum's Name",
     key: "name",
-  },{
+  },
+  {
     title: "Actions",
     key: "action",
     sortable: false,
-    width: 150
-  }
+    width: 150,
+  },
 ]);
 
-onMounted(()=>{
+onMounted(() => {
   getAllForums();
-})
+});
 
-const items = ref([])
-const getAllForums = async() => {
-  await useAxios('/forums').then((res)=>{
+const items = ref([]);
+const getAllForums = async () => {
+  await useAxios("/forums").then((res) => {
     items.value = res.forums;
-  })
-}
+  });
+};
 </script>
 <template>
   <v-container>
@@ -39,6 +40,28 @@ const getAllForums = async() => {
       <v-col cols="12">
         <v-card border rounded="lg">
           <v-data-table :headers :items>
+            <template v-slot:item.image="{ item }">
+              <div>
+                <v-img
+                  cover
+                  width="160"
+                  class="border rounded-lg"
+                  :aspect-ratio="16 / 9"
+                  :src="item.image?.url"
+                  :alt="item.image.name"
+                ></v-img>
+              </div>
+            </template>
+            <template v-slot:item.name="{ item }">
+              <v-list lines="three">
+                <v-list-item class="pl-0">
+                  <v-list-item-title>
+                    {{ item.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle> </v-list-item-subtitle>
+                </v-list-item>
+              </v-list>
+            </template>
             <template v-slot:item.action="{ item }">
               <v-btn
                 class="mr-2"

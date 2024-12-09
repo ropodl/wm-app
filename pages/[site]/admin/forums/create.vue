@@ -6,7 +6,7 @@ definePageMeta({
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" md="4">
+      <v-col cols="12">
         <div class="text-h4 font-weight-bold">Create Forum</div>
       </v-col>
     </v-row>

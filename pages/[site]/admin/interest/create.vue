@@ -1,7 +1,6 @@
 <script setup>
 definePageMeta({
-  layout: "admin",
-  middleware: ['admin-auth']
+  layout: "admin"
 });
 
 const form = ref({
@@ -15,14 +14,10 @@ const submit = async () => {
   const { valid } = await formRef.value.validate();
 
   if (valid) {
-    const a = await useAxios("interest", {
+    await useAxios("interest", {
       method: "POST",
-      body: form.value,
-      headers: {
-        tenant_id: "tenant_test",
-      },
+      body: form.value
     });
-    console.log(a, "test");
   }
 };
 </script>
@@ -41,7 +36,6 @@ const submit = async () => {
             class="pb-3"
             hint="e.g Renewables, Non Renewables"
           ></v-text-field>
-          {{form.description}}
           <lazy-common-shared-quill-editor v-model:content="form.description" />
         </v-col>
         <v-col cols="12" md="4">

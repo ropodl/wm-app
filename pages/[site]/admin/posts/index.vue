@@ -62,7 +62,7 @@ const getPosts = async () => {
             <template v-slot:item.title="{ item }">
               <v-list lines="three">
                 <v-list-item class="pl-0">
-                  <v-list-item-title class="font-weight-bold">
+                  <v-list-item-title>
                     {{ item.title }}
                   </v-list-item-title>
                   <v-list-item-subtitle> </v-list-item-subtitle>
