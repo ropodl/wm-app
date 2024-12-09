@@ -3,8 +3,7 @@ const route = useRoute();
 const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
-  layout: "admin",
-  middleware: ["admin-auth"],
+  layout: "admin"
 });
 
 const form = ref({

@@ -11,7 +11,7 @@ export const useAxios = async (url, opts = {}) => {
       body: opts?.body,
       headers: {
         ...opts?.headers,
-        tenant_id: useTenant() ? `tenant_${useTenant()}`: null,
+        tenant_id: useTenant() ? `tenant_${useTenant()}` : null,
         authorization: `Bearer ${cookie.value}`,
       },
       immediate: true,
