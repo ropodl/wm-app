@@ -64,7 +64,6 @@ const submit = async () => {
           <lazy-common-shared-field-label
             >Interests</lazy-common-shared-field-label
           >
-          {{ form.tags }}
           <v-select
             v-model="form.tags"
             chips
