@@ -1,5 +1,6 @@
 <script setup>
 const admin = useAdminUserStore();
+const { setSnackbar } = useSnackbarStore();
 definePageMeta({
   layout: "admin",
 });
@@ -26,6 +27,17 @@ const items = ref([]);
 const getAllForums = async () => {
   await useAxios("/forums").then((res) => {
     items.value = res.forums;
+  });
+};
+
+const deleteItem = async (item, active) => {
+  console.log(item.id);
+  await useAxios(`/forums/${item.id}`,{
+    method: "DELETE"
+  }).then((res) => {
+    setSnackbar(res.message, "success");
+    getAllForums();
+    active.value = false;
   });
 };
 </script>
@@ -72,12 +84,46 @@ const getAllForums = async () => {
                 :to="`/admin/forums/${item.id}`"
               ></v-btn>
               <template v-if="admin.user.role === 'admin'">
-                <v-btn
-                  variant="tonal"
-                  color="error"
-                  rounded="lg"
-                  icon="mdi-delete"
-                ></v-btn>
+                <v-dialog scrim="black" width="500">
+                  <template v-slot:activator="{ props: dialog }">
+                    <v-btn
+                      v-bind="dialog"
+                      variant="tonal"
+                      color="error"
+                      rounded="lg"
+                      icon="mdi-delete"
+                    ></v-btn>
+                  </template>
+                  <template v-slot:default="{ isActive }">
+                    <v-card border flat title="Delete Forum">
+                      <v-card-text
+                        >Are you sure, you want to delete forum name
+                        <span class="text-red">{{ item.name }}</span
+                        >?</v-card-text
+                      >
+                      <v-card-actions class="pt-0">
+                        <v-row>
+                          <v-col cols="6">
+                            <v-btn
+                              block
+                              text="Close Dialog"
+                              @click="isActive.value = false"
+                            ></v-btn>
+                          </v-col>
+                          <v-col cols="6">
+                            <v-btn
+                              block
+                              variant="flat"
+                              color="primary"
+                              text="Close Dialog"
+                              @click="deleteItem(item, isActive)"
+                            ></v-btn>
+                          </v-col>
+                        </v-row>
+                      </v-card-actions>
+                    </v-card>
+                  </template>
+                </v-dialog>
               </template>
             </template>
           </v-data-table>

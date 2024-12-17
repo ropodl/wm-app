@@ -2,9 +2,9 @@
 defineProps({
   navItems: {
     type: Object,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
 <template>
   <v-list>
@@ -18,7 +18,7 @@ defineProps({
         <v-list-group :prepend-icon="navitem.icon">
           <template v-slot:activator="{ props }">
             <!-- with dropdown -->
-            <v-list-item rounded="lg" v-bind="props">
+            <v-list-item density="compact" rounded="lg" v-bind="props">
               <v-list-item-title>
                 {{ navitem.title }}
               </v-list-item-title>
@@ -28,7 +28,12 @@ defineProps({
             <template v-if="subitem.miniitems">
               <v-list-group>
                 <template v-slot:activator="{ props }">
-                  <v-list-item color="primary" rounded="lg" v-bind="props">
+                  <v-list-item
+                    density="density"
+                    color="primary"
+                    rounded="lg"
+                    v-bind="props"
+                  >
                     <!-- child's option -->
                     <v-list-item-title>
                       {{ subitem.title }}
@@ -38,6 +43,7 @@ defineProps({
                 <template v-if="subitem.miniitems">
                   <v-list-item
                     color="primary"
+                    density="compact"
                     rounded="lg"
                     v-for="mini in subitem.miniitems"
                     :to="mini.routes"
@@ -53,6 +59,7 @@ defineProps({
             <template v-else>
               <v-list-item
                 color="primary"
+                density="compact"
                 rounded="lg"
                 :to="subitem.routes"
               >

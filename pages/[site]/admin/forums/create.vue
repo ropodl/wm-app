@@ -1,5 +1,6 @@
 <script setup>
 const route = useRoute();
+const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "admin",
@@ -22,7 +23,8 @@ const submit = async () => {
     method: "POST",
     body: formData,
   }).then((res) => {
-    console.log(res);
+    setSnackbar("Post created successfully", "success");
+    navigateTo(`/admin/forums/${res.id}`);
   });
 };
 </script>
