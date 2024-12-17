@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     storage: "localStorage",
   },
   multiTenancy: {
-    // tenantDynamicRoute: "site",
+    tenantDynamicRoute: "site",
     rootDomains: ["wm.local"],
     sites: ["lord"],
   },
