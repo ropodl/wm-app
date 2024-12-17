@@ -1,8 +1,8 @@
 <script setup>
 definePageMeta({
   layout: "user",
-  middleware: ['user-auth']
-})
+  middleware: ["user-auth"],
+});
 </script>
 <template>
   <v-app>
@@ -22,7 +22,8 @@ definePageMeta({
             <v-card outlined>
               <v-card-title>Total R-waste Collection</v-card-title>
               <v-card-text>
-                <h3>50 kg</h3>
+                <!-- Display the fetched total waste -->
+                <h3>{{ totalWaste }} kg</h3>
                 <p>Total waste collected this month</p>
               </v-card-text>
             </v-card>
@@ -57,64 +58,116 @@ definePageMeta({
           </v-col>
         </v-row>
 
-
-
         <!-- Action Buttons -->
         <v-row>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/campaing' }"> Create Recycling Campaign</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/campaing' }"
+            >
+              Create Recycling Campaign</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/recyclingguide' }"> Begineer Recycling Guide</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/recyclingguide' }"
+            >
+              Begineer Recycling Guide</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/posts' }">View Posts</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/posts' }"
+              >View Posts</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/progress' }">Your Recycling Progress</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/progress' }"
+              >Your Recycling Progress</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green"   @click="createCampaign" :to="{ path: '/badges' }">Achievements & Badges</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/badges' }"
+              >Achievements & Badges</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/feedback' }">View Feedback</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/feedback' }"
+              >View Feedback</v-btn
+            >
           </v-col>
         </v-row>
 
-    <v-row>
-      <v-col md="4">
-        <v-card outlined>
-         <v-card-title>Scheduled Recycling Actions</v-card-title>
-         <v-card-text>
-           <p>Next Drop-off: 15th Dec, 2024</p>
-           <br>
-           <v-btn block outlined color="blue">Manage Schedule</v-btn>
-         </v-card-text>
-        </v-card>
-      </v-col>
-      
-      <v-col md="4">
-        <v-card outlined>
-         <v-card-title>Community Forum</v-card-title>
-         <v-card-text>
-          <p>Your Last Post: "How can we encourage recycling in local schools?"</p>
-          <br>
-          <v-btn block outlined color="blue" @click="createCampaign" :to="{ path: '/forum' }">Go to Forum</v-btn>
-         </v-card-text>
-        </v-card>
-      </v-col>
+        <v-row>
+          <v-col md="4">
+            <v-card outlined>
+              <v-card-title>Scheduled Recycling Actions</v-card-title>
+              <v-card-text>
+                <p>Next Drop-off: 15th Dec, 2024</p>
+                <br />
+                <v-btn block outlined color="blue">Manage Schedule</v-btn>
+              </v-card-text>
+            </v-card>
+          </v-col>
 
-      <v-col md="4">
-       <v-card outlined>
-        <v-card-title>Upcoming Events</v-card-title>
-        <v-card-text>
-          <p>Event: "Sustainability Summit" - December 15, 2024</p>
-          <br>
-            <v-btn block outlined color="blue">Join Event</v-btn>
-       </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+          <v-col md="4">
+            <v-card outlined>
+              <v-card-title>Community Forum</v-card-title>
+              <v-card-text>
+                <p>
+                  Your Last Post: "How can we encourage recycling in local
+                  schools?"
+                </p>
+                <br />
+                <v-btn
+                  block
+                  outlined
+                  color="blue"
+                  @click="createCampaign"
+                  :to="{ path: '/forum' }"
+                  >Go to Forum</v-btn
+                >
+              </v-card-text>
+            </v-card>
+          </v-col>
+
+          <v-col md="4">
+            <v-card outlined>
+              <v-card-title>Upcoming Events</v-card-title>
+              <v-card-text>
+                <p>Event: "Sustainability Summit" - December 15, 2024</p>
+                <br />
+                <v-btn block outlined color="blue">Join Event</v-btn>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
 
         <!-- Bottom Stats -->
         <v-row>
@@ -148,4 +201,32 @@ definePageMeta({
   </v-app>
 </template>
 
+<script>
+import axios from "axios";
 
+export default {
+  data() {
+    return {
+      totalWaste: 0, // Initial value for total waste
+    };
+  },
+  created() {
+    this.fetchWasteData(); // Fetch data when the component is created
+  },
+  methods: {
+    async fetchWasteData() {
+      try {
+        // Make an API call to the backend to fetch waste collection data
+        const response = await axios.get(
+          "http://localhost:3000/api/waste-collection"
+        );
+
+        // Update the totalWaste variable with the response data
+        this.totalWaste = response.data.total;
+      } catch (error) {
+        console.error("Error fetching waste data:", error);
+      }
+    },
+  },
+};
+</script>
