@@ -18,7 +18,6 @@ const callAllInterest = () => {
 };
 
 const addUserInterest = (id) => {
-  console.log(user);
   useAxios(`interest/add-user-interest`, {
     method: "PATCH",
     query: {
