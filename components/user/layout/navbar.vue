@@ -2,8 +2,6 @@
 const user = useUserStore();
 const route = useRoute();
 
-console.log(user);
-
 const navItems = [
   {
     icon: "mdi-view-dashboard",
@@ -66,21 +64,17 @@ const breadcrumb = computed(() => {
 <template>
   <v-app-bar app elevation="0" border="b" height="60">
     <v-app-bar-nav-icon rounded="lg" @click="toggleDrawer" />
-    <v-breadcrumbs :items="breadcrumb" class="text-decoration-none">
+    User Dashboard
+    <!-- <v-breadcrumbs :items="breadcrumb" class="text-decoration-none">
       <template v-slot:prepend>
         <v-icon size="small" icon="mdi-home-outline"></v-icon>
       </template>
-    </v-breadcrumbs>
+    </v-breadcrumbs> -->
     <v-spacer></v-spacer>
-    <!-- User Avatar -->
-    <v-avatar size="30">
-      <img src="/components/user/layout/images/unnamed.jpg" alt="User Image" />
-    </v-avatar>
     <v-btn icon="mdi-bell-outline" rounded="lg"></v-btn>
   </v-app-bar>
   <v-navigation-drawer v-model="drawer">
     <lazy-common-layout-navbar-nav-list class="pa-2" :nav-items="navItems" />
-
     <template v-slot:append>
       <v-list class="pa-2" density="comfortable">
         <template v-for="{ icon, title, to } in bottomNavItems">

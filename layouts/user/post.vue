@@ -1,4 +1,7 @@
 <script setup>
+const user = useUserStore();
+const { setSnackbar } = useSnackbarStore();
+
 const tab = ref("latest");
 const pagination = ref({});
 
@@ -11,6 +14,19 @@ const callAllInterest = () => {
   useAxios("interest").then((res) => {
     interests.value = res.interests;
     pagination.value = res.pagination;
+  });
+};
+
+const addUserInterest = (id) => {
+  console.log(user);
+  useAxios(`interest/add-user-interest`, {
+    method: "PATCH",
+    query: {
+      user_id: `${user.user.id}`,
+      interest_id: `${id}`,
+    },
+  }).then((res) => {
+    setSnackbar(res.message, "success");
   });
 };
 </script>
@@ -49,8 +65,14 @@ const callAllInterest = () => {
             >
               <v-card-title>More Interests</v-card-title>
               <v-card-text>
-                <template v-for="item in interests">
-                  <v-chip class="mb-3 mr-3">{{ item.title }}</v-chip>
+                <template v-for="{ id, title } in interests">
+                  <v-chip
+                    class="mb-3 mr-3"
+                    @click="addUserInterest(id)"
+                    append-icon="mdi-plus"
+                  >
+                    {{ title }}
+                  </v-chip>
                 </template>
               </v-card-text>
             </v-card>
