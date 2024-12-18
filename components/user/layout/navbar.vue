@@ -1,6 +1,7 @@
 <script setup>
 const user = useUserStore();
 const route = useRoute();
+const fullscreen = useIsFullScreen();
 
 const navItems = [
   {
@@ -42,8 +43,12 @@ const profileItems = ref([
 ]);
 
 const drawer = ref(true);
+
 const toggleDrawer = () => {
   drawer.value = !drawer.value;
+};
+const toggleFullScreen = () => {
+  fullscreen.value.toggle();
 };
 
 const logout = () => {
@@ -71,7 +76,27 @@ const breadcrumb = computed(() => {
       </template>
     </v-breadcrumbs> -->
     <v-spacer></v-spacer>
-    <v-btn icon="mdi-bell-outline" rounded="lg"></v-btn>
+    <!-- <v-btn icon="mdi-bell-outline" rounded="lg"></v-btn> -->
+    <v-tooltip
+          theme="light"
+          location="bottom"
+          :text="
+            fullscreen.isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'
+          "
+        >
+          <template v-slot:activator="{ props }">
+            <v-btn
+              v-bind="props"
+              icon
+              rounded="0"
+              height="50"
+              @click="toggleFullScreen"
+            >
+              <v-icon :icon="`mdi-fullscreen${fullscreen.isFullscreen ? '-exit': ''}`">
+              </v-icon>
+            </v-btn>
+          </template>
+        </v-tooltip>
   </v-app-bar>
   <v-navigation-drawer v-model="drawer">
     <lazy-common-layout-navbar-nav-list class="pa-2" :nav-items="navItems" />

@@ -20,8 +20,52 @@ const getAllThreads = async () => {
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" class="pb-0">
+      <v-col cols="12" md="6" class="pb-0">
         <h1>Threads</h1>
+      </v-col>
+      <v-col cols="12" md="6" class="pb-0">
+        <div class="d-flex">
+          <v-spacer></v-spacer>
+          <v-dialog scrim="black" width="500">
+            <template v-slot:activator="{ props: activatorProps }">
+              <v-btn
+                v-bind="activatorProps"
+                text="Create New Thread"
+                variant="flat"
+              ></v-btn>
+            </template>
+
+            <template v-slot:default="{ isActive }">
+              <v-form @submit.prevent="submit">
+                <v-card border title="Create New Thread">
+                  <v-card-text>
+                    <lazy-common-shared-field-label
+                      >Title</lazy-common-shared-field-label
+                    >
+                    <v-text-field
+                      persistent-hint
+                      hint="e.g. recycleable materials"
+                    ></v-text-field>
+                    <lazy-common-shared-field-label
+                      >Description</lazy-common-shared-field-label
+                    >
+                    <v-text-field
+                      persistent-hint
+                      hint="e.g. lorem ipsum"
+                    ></v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      text="Submit"
+                      @click="isActive.value = false"
+                    ></v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-form>
+            </template>
+          </v-dialog>
+        </div>
       </v-col>
       <template v-for="{ id, title, author, createdAt } in threads">
         <v-col cols="12" class="pb-0">

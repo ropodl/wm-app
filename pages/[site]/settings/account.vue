@@ -37,6 +37,14 @@ const callProfileInfo = () => {
     form.value.email = res.email;
   });
 };
+
+const passwordForm = ref({
+  current: "",
+  newer: "",
+});
+const submit = () => {
+  console.log("test");
+};
 </script>
 <template>
   <v-row>
@@ -155,41 +163,47 @@ const callProfileInfo = () => {
                 </template>
                 <template v-slot:default="{ isActive }">
                   <v-card title="Change Password">
-                    <v-card-text class="pb-0">
-                      <lazy-common-shared-field-label
-                        >Current Password</lazy-common-shared-field-label
-                      >
-                      <v-text-field></v-text-field>
-                      <lazy-common-shared-field-label
-                        >New Password</lazy-common-shared-field-label
-                      >
-                      <v-text-field></v-text-field>
-                      <lazy-common-shared-field-label
-                        >Confirm New Password</lazy-common-shared-field-label
-                      >
-                      <v-text-field></v-text-field>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-row>
-                        <v-col cols="6" class="pt-0">
-                          <v-btn
-                            block
-                            color="error"
-                            text="Close Dialog"
-                            @click="isActive.value = false"
-                          ></v-btn>
-                        </v-col>
-                        <v-col cols="6" class="pt-0">
-                          <v-btn
-                            block
-                            variant="tonal"
-                            color="primary"
-                            text="Close Dialog"
-                            @click="isActive.value = false"
-                          ></v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-card-actions>
+                    <v-form @submit.prevent="submit">
+                      <v-card-text class="pb-0">
+                        <lazy-common-shared-field-label
+                          >Current Password</lazy-common-shared-field-label
+                        >
+                        <v-text-field
+                          v-model="passwordForm.current"
+                        ></v-text-field>
+                        <lazy-common-shared-field-label
+                          >New Password</lazy-common-shared-field-label
+                        >
+                        <v-text-field
+                          v-model="passwordForm.newer"
+                        ></v-text-field>
+                        <lazy-common-shared-field-label
+                          >Confirm New Password</lazy-common-shared-field-label
+                        >
+                        <v-text-field></v-text-field>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-row>
+                          <v-col cols="6" class="pt-0">
+                            <v-btn
+                              block
+                              color="error"
+                              text="Cancel"
+                              @click="isActive.value = false"
+                            ></v-btn>
+                          </v-col>
+                          <v-col cols="6" class="pt-0">
+                            <v-btn
+                              block
+                              type="submit"
+                              variant="tonal"
+                              color="primary"
+                              text="Save"
+                            ></v-btn>
+                          </v-col>
+                        </v-row>
+                      </v-card-actions>
+                    </v-form>
                   </v-card>
                 </template>
               </v-dialog>

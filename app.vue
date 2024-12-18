@@ -3,11 +3,14 @@ useHead({
   title: "Community Driven Waste Recycling",
 });
 
+const app = ref();
+useIsFullScreen(app);
+
 const snackbar = useSnackbarStore();
 const { snackbar: toast } = storeToRefs(snackbar);
 </script>
 <template>
-  <v-app>
+  <v-app ref="app">
     <NuxtLayout>
       <v-main>
         <!-- <v-btn @click="snackbar.setSnackbar('test', 'error')"></v-btn> -->
