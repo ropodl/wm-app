@@ -1,7 +1,6 @@
 <script setup>
 definePageMeta({
   layout: "guest",
-  auth: false
 });
 </script>
 <template>
