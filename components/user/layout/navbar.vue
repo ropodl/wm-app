@@ -1,6 +1,7 @@
 <script setup>
 const user = useUserStore();
 const route = useRoute();
+const apperance = useApperanceStore();
 const fullscreen = useIsFullScreen();
 
 const navItems = [
@@ -17,8 +18,8 @@ const navItems = [
   {
     icon: "mdi-forum",
     title: "Forums",
-    routes: "/forum"
-  }
+    routes: "/forum",
+  },
 ];
 
 const bottomNavItems = ref([
@@ -78,30 +79,30 @@ const breadcrumb = computed(() => {
     <v-spacer></v-spacer>
     <!-- <v-btn icon="mdi-bell-outline" rounded="lg"></v-btn> -->
     <v-tooltip
-          theme="light"
-          location="bottom"
-          :text="
-            fullscreen.isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'
-          "
+      theme="light"
+      location="bottom"
+      :text="fullscreen.isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'"
+    >
+      <template v-slot:activator="{ props }">
+        <v-btn
+          v-bind="props"
+          icon
+          rounded="0"
+          height="50"
+          @click="toggleFullScreen"
         >
-          <template v-slot:activator="{ props }">
-            <v-btn
-              v-bind="props"
-              icon
-              rounded="0"
-              height="50"
-              @click="toggleFullScreen"
-            >
-              <v-icon :icon="`mdi-fullscreen${fullscreen.isFullscreen ? '-exit': ''}`">
-              </v-icon>
-            </v-btn>
-          </template>
-        </v-tooltip>
+          <v-icon
+            :icon="`mdi-fullscreen${fullscreen.isFullscreen ? '-exit' : ''}`"
+          >
+          </v-icon>
+        </v-btn>
+      </template>
+    </v-tooltip>
   </v-app-bar>
   <v-navigation-drawer v-model="drawer">
     <lazy-common-layout-navbar-nav-list class="pa-2" :nav-items="navItems" />
     <template v-slot:append>
-      <v-list class="pa-2" density="comfortable">
+      <v-list class="pa-2" :density="apperance.compact">
         <template v-for="{ icon, title, to } in bottomNavItems">
           <v-list-item
             color="primary"

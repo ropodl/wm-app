@@ -2,7 +2,8 @@
 const route = useRoute();
 
 definePageMeta({
-  layout: "admin"
+  layout: "admin",
+  middleware: ["admin-auth"]
 })
 
 const form = ref({

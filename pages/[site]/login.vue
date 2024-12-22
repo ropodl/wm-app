@@ -77,6 +77,21 @@ const login = async () => {
       loading.value = false;
     });
 };
+
+onMounted(() => {
+  if (user.user.id) {
+    console.log("user");
+    navigateTo("/", {
+      replace: true,
+    })} else if (admin.user.id) {
+      console.log(admin.user,"admin");
+      navigateTo("/admin/", {
+        replace: true,
+      });
+    }
+    // console.log(user.user.id);
+    // console.log("hi");
+  });
 </script>
 <template>
   <v-container class="fill-height">

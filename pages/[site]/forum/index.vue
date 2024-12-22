@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "user-forum",
+  middleware: ["user-auth"]
 });
 
 onMounted(() => {

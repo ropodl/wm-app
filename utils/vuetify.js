@@ -2,7 +2,7 @@ import colors from "vuetify/util/colors";
 
 const vuetifyOpts = {
   theme: {
-    defaultTheme: "dark",
+    defaultTheme: "light",
     themes: {
       light: {
         dark: false,
@@ -31,16 +31,16 @@ const vuetifyOpts = {
     },
   },
   defaults: {
-      VBtn: {
-        class: "text-none",
-      },
-      VTextField: {
-        density: "comfortable",
-        variant: "outlined"
-      },
-      VTextarea: {
-        variant: "outlined"
-      }
+    VBtn: {
+      class: "text-none",
+    },
+    VTextField: {
+      density: "comfortable",
+      variant: "outlined",
+    },
+    VTextarea: {
+      variant: "outlined",
+    },
   },
 };
 

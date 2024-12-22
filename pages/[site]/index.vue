@@ -1,18 +1,18 @@
 <script setup>
+const user = useUserStore();
+
 definePageMeta({
   layout: "user",
-  middleware: ['user-auth']
-})
+  middleware: ["user-auth"],
+});
 </script>
 <template>
   <v-app>
-    <!-- Main Content -->
     <v-main>
       <v-container fluid>
-        <!-- Header -->
         <v-row>
           <v-col>
-            <h2>Welcome, Adhi</h2>
+            <h2>Welcome, {{ user.user.name }}</h2>
           </v-col>
         </v-row>
 
@@ -57,64 +57,116 @@ definePageMeta({
           </v-col>
         </v-row>
 
-
-
         <!-- Action Buttons -->
         <v-row>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/campaing' }"> Create Recycling Campaign</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/campaing' }"
+            >
+              Create Recycling Campaign</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/recyclingguide' }"> Begineer Recycling Guide</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/recyclingguide' }"
+            >
+              Begineer Recycling Guide</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/posts' }">View Posts</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/posts' }"
+              >View Posts</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/progress' }">Your Recycling Progress</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/progress' }"
+              >Your Recycling Progress</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green"   @click="createCampaign" :to="{ path: '/badges' }">Achievements & Badges</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/badges' }"
+              >Achievements & Badges</v-btn
+            >
           </v-col>
           <v-col md="4">
-            <v-btn block outlined color="green" @click="createCampaign" :to="{ path: '/feedback' }">View Feedback</v-btn>
+            <v-btn
+              block
+              outlined
+              color="green"
+              @click="createCampaign"
+              :to="{ path: '/feedback' }"
+              >View Feedback</v-btn
+            >
           </v-col>
         </v-row>
 
-    <v-row>
-      <v-col md="4">
-        <v-card outlined>
-         <v-card-title>Scheduled Recycling Actions</v-card-title>
-         <v-card-text>
-           <p>Next Drop-off: 15th Dec, 2024</p>
-           <br>
-           <v-btn block outlined color="blue">Manage Schedule</v-btn>
-         </v-card-text>
-        </v-card>
-      </v-col>
-      
-      <v-col md="4">
-        <v-card outlined>
-         <v-card-title>Community Forum</v-card-title>
-         <v-card-text>
-          <p>Your Last Post: "How can we encourage recycling in local schools?"</p>
-          <br>
-          <v-btn block outlined color="blue" @click="createCampaign" :to="{ path: '/forum' }">Go to Forum</v-btn>
-         </v-card-text>
-        </v-card>
-      </v-col>
+        <v-row>
+          <v-col md="4">
+            <v-card outlined>
+              <v-card-title>Scheduled Recycling Actions</v-card-title>
+              <v-card-text>
+                <p>Next Drop-off: 15th Dec, 2024</p>
+                <br />
+                <v-btn block outlined color="blue">Manage Schedule</v-btn>
+              </v-card-text>
+            </v-card>
+          </v-col>
 
-      <v-col md="4">
-       <v-card outlined>
-        <v-card-title>Upcoming Events</v-card-title>
-        <v-card-text>
-          <p>Event: "Sustainability Summit" - December 15, 2024</p>
-          <br>
-            <v-btn block outlined color="blue">Join Event</v-btn>
-       </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+          <v-col md="4">
+            <v-card outlined>
+              <v-card-title>Community Forum</v-card-title>
+              <v-card-text>
+                <p>
+                  Your Last Post: "How can we encourage recycling in local
+                  schools?"
+                </p>
+                <br />
+                <v-btn
+                  block
+                  outlined
+                  color="blue"
+                  @click="createCampaign"
+                  :to="{ path: '/forum' }"
+                  >Go to Forum</v-btn
+                >
+              </v-card-text>
+            </v-card>
+          </v-col>
+
+          <v-col md="4">
+            <v-card outlined>
+              <v-card-title>Upcoming Events</v-card-title>
+              <v-card-text>
+                <p>Event: "Sustainability Summit" - December 15, 2024</p>
+                <br />
+                <v-btn block outlined color="blue">Join Event</v-btn>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
 
         <!-- Bottom Stats -->
         <v-row>
@@ -147,5 +199,3 @@ definePageMeta({
     </v-main>
   </v-app>
 </template>
-
-

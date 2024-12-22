@@ -1,4 +1,6 @@
 <script setup>
+const apperance = useApperanceStore();
+
 const settings = ref([
   {
     icon: "mdi-palette-outline",
@@ -18,10 +20,15 @@ const settings = ref([
     <v-container>
       <v-row>
         <v-col cols="12" md="3">
-          <v-card border flat>
-            <v-list class="py-0">
+          <v-card border flat class="position-sticky" style="top: 70px">
+            <v-list class="py-0" :density="apperance.compact">
               <template v-for="{ icon, title, to } in settings">
-                <v-list-item color="primary" :title :prepend-icon="icon" :to></v-list-item>
+                <v-list-item
+                  color="primary"
+                  :title
+                  :prepend-icon="icon"
+                  :to
+                ></v-list-item>
               </template>
             </v-list>
           </v-card>

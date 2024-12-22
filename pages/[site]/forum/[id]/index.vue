@@ -2,8 +2,10 @@
 import { formatTimeAgo } from "@vueuse/core";
 
 const route = useRoute();
+
 definePageMeta({
   layout: "user",
+  middleware: ["user-auth"]
 });
 
 onMounted(() => {

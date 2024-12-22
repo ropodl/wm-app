@@ -1,9 +1,11 @@
 <script setup>
 definePageMeta({
-  layout: "user"
+  layout: "user",
+  middleware: ["user-auth"]
 });
 
 const route = useRoute();
+const appearance = useApperanceStore();
 
 const post = ref({});
 onMounted(() => {
@@ -17,20 +19,24 @@ onMounted(() => {
 });
 </script>
 <template>
-  <v-card border="b" flat rounded="0" height="450">
+  <v-card border="b" flat rounded="0" height="450"
+  >
     <template v-if="post.image?.url">
       <v-img cover :src="post.image.url" :alt="post.image.name">
         <div
           class="d-flex align-end h-100"
-          style="
-            background: linear-gradient(
-              180deg,
-              rgba(0, 0, 0, 0) 70%,
-              rgba(1, 1, 1, 0.9)
-            ) !important;
-          "
+          :class="appearance.dark ? 'dark-overlay' : 'light-overlay'"
         >
-          <v-card-text class="text-h4">{{ post.title }}</v-card-text>
+          <div>
+            <v-card-text class="text-h4 pb-0">{{ post.title }}</v-card-text>
+            <v-card-text>
+              <template v-for="({ title },index) in post.tags">
+                <v-chip :class="post.tags.length-1 <= index+1 ? 'mr-3':''">
+                  {{ title }}
+                </v-chip>
+              </template>
+            </v-card-text>
+          </div>
         </div>
       </v-img>
     </template>
@@ -45,4 +51,3 @@ onMounted(() => {
     </v-row>
   </v-container>
 </template>
-<style></style>

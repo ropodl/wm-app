@@ -4,6 +4,7 @@ const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "admin",
+  middleware: ["admin-auth"]
 });
 
 const form = ref({

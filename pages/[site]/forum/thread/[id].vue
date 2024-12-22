@@ -3,6 +3,7 @@ const route = useRoute();
 
 definePageMeta({
   layout: "user",
+  middleware: ["user-auth"]
 });
 
 onMounted(() => {

@@ -73,15 +73,14 @@ const navItems = [
       },
     ],
   },
-];
-
-const profileItems = [
   {
-    icon: "mdi-power",
-    title: "This is a test",
-    router: "/",
+    icon: "mdi-cog",
+    title: "Forum Settings",
+    routes: "/admin/forums",
   },
 ];
+
+const profileItems = [];
 
 const logout = () => {
   console.log("log out from admin");

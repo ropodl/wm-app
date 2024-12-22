@@ -1,4 +1,6 @@
 <script setup>
+const apperance = useApperanceStore();
+
 defineProps({
   navItems: {
     type: Object,
@@ -18,7 +20,11 @@ defineProps({
         <v-list-group :prepend-icon="navitem.icon">
           <template v-slot:activator="{ props }">
             <!-- with dropdown -->
-            <v-list-item density="compact" rounded="lg" v-bind="props">
+            <v-list-item
+              :density="apperance.compact"
+              rounded="lg"
+              v-bind="props"
+            >
               <v-list-item-title>
                 {{ navitem.title }}
               </v-list-item-title>
@@ -29,7 +35,7 @@ defineProps({
               <v-list-group>
                 <template v-slot:activator="{ props }">
                   <v-list-item
-                    density="density"
+                    :density="apperance.compact"
                     color="primary"
                     rounded="lg"
                     v-bind="props"
@@ -43,7 +49,7 @@ defineProps({
                 <template v-if="subitem.miniitems">
                   <v-list-item
                     color="primary"
-                    density="compact"
+                    :density="apperance.compact"
                     rounded="lg"
                     v-for="mini in subitem.miniitems"
                     :to="mini.routes"
@@ -59,7 +65,7 @@ defineProps({
             <template v-else>
               <v-list-item
                 color="primary"
-                density="compact"
+                :density="apperance.compact"
                 rounded="lg"
                 :to="subitem.routes"
               >
@@ -73,7 +79,12 @@ defineProps({
         </v-list-group>
       </template>
       <template v-else>
-        <v-list-item color="primary" rounded="lg" :to="navitem.routes">
+        <v-list-item
+          color="primary"
+          :density="apperance.compact"
+          rounded="lg"
+          :to="navitem.routes"
+        >
           <template v-slot:prepend>
             <v-icon :icon="navitem['icon']"></v-icon>
           </template>

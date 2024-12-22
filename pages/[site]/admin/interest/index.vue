@@ -1,7 +1,9 @@
 <script setup>
 const admin = useAdminUserStore();
+
 definePageMeta({
-  layout: "admin"
+  layout: "admin",
+  middleware: ["admin-auth"]
 });
 
 const headers = [

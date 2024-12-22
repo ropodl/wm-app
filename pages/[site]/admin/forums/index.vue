@@ -1,8 +1,10 @@
 <script setup>
 const admin = useAdminUserStore();
 const { setSnackbar } = useSnackbarStore();
+
 definePageMeta({
   layout: "admin",
+  middleware: ["admin-auth"]
 });
 
 const headers = ref([

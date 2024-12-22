@@ -17,17 +17,17 @@ const callAllInterest = () => {
   });
 };
 
-const addUserInterest = (id) => {
-  useAxios(`interest/add-user-interest`, {
-    method: "PATCH",
-    query: {
-      user_id: `${user.user.id}`,
-      interest_id: `${id}`,
-    },
-  }).then((res) => {
-    setSnackbar(res.message, "success");
-  });
-};
+// const addUserInterest = (id) => {
+//   useAxios(`interest/add-user-interest`, {
+//     method: "PATCH",
+//     query: {
+//       user_id: `${user.user.id}`,
+//       interest_id: `${id}`,
+//     },
+//   }).then((res) => {
+//     setSnackbar(res.message, "success");
+//   });
+// };
 </script>
 <template>
   <v-main>

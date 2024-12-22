@@ -1,4 +1,4 @@
-// import { defineStore } from "pinia";
+import { defineStore } from "pinia";
 
 export const useUserStore = defineStore(
   "user-store",
@@ -16,11 +16,15 @@ export const useUserStore = defineStore(
       role.value = value;
     }
 
+    function getRole() {
+      return user.value.role;
+    }
+
     function logOut() {
       navigateTo("/login", {
         replace: true,
       });
-      user.value = {};
+      localStorage.removeItem("user-store");
       role.value = "";
       token.value = "";
       cookie.value = null;
@@ -31,6 +35,7 @@ export const useUserStore = defineStore(
       token,
       setUser,
       setRole,
+      getRole,
       logOut,
     };
   },

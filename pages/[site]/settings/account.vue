@@ -233,7 +233,7 @@ const submit = () => {
                 </template>
 
                 <template v-slot:default="{ isActive }">
-                  <v-card title="Delete Account">
+                  <v-card border title="Delete Account">
                     <v-card-text>
                       <span class="text-error">
                         Are you sure you want to delete your account?
@@ -246,7 +246,7 @@ const submit = () => {
                       <v-row>
                         <v-col cols="6" class="pt-0">
                           <v-btn
-                            block
+                            block variant="tonal"
                             color="success"
                             @click="isActive.value = false"
                           >

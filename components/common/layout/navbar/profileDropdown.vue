@@ -39,8 +39,10 @@ const emits = defineEmits(["logout"]);
           ></v-btn>
         </template>
         <v-list density="compact">
-          <template v-for="{ icon, title, to } in items">
-            <v-list-item :prepend-icon="icon" :title :to />
+          <template v-if="items">
+            <template v-for="{ icon, title, to } in items">
+              <v-list-item :prepend-icon="icon" :title :to />
+            </template>
           </template>
           <v-list-item
             prepend-icon="mdi-power"
