@@ -34,7 +34,7 @@ const callAllInterest = () => {
     <NuxtLayout name="user">
       <v-container fluid class="pa-0">
         <v-row no-gutters>
-          <v-col cols="12" md="8">
+          <v-col cols="12">
             <div
               class="position-sticky bg-background"
               style="top: 61px; z-index: 1000"
@@ -53,7 +53,7 @@ const callAllInterest = () => {
               </v-layout>
             </v-card-text>
           </v-col>
-          <v-col cols="12" md="4">
+          <!-- <v-col cols="12" md="4">
             <v-card
               flat
               border="s"
@@ -75,7 +75,7 @@ const callAllInterest = () => {
                 </template>
               </v-card-text>
             </v-card>
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-container>
     </NuxtLayout>

@@ -6,7 +6,7 @@ export const useApperanceStore = defineStore(
     const theme = useTheme();
 
     const dark = ref(false);
-    const compact = ref("default");
+    const density = ref("default");
 
     watch(dark, (val) => {
       theme.global.name.value = val ? "dark" : "light";
@@ -14,7 +14,7 @@ export const useApperanceStore = defineStore(
 
     return {
       dark,
-      compact,
+      density,
     };
   },
   {

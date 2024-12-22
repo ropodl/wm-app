@@ -35,13 +35,7 @@ const bottomNavItems = ref([
   },
 ]);
 
-const profileItems = ref([
-  {
-    icon: "mdi-logout",
-    title: "Profile",
-    to: "",
-  },
-]);
+const profileItems = ref([]);
 
 const drawer = ref(true);
 
@@ -102,7 +96,7 @@ const breadcrumb = computed(() => {
   <v-navigation-drawer v-model="drawer">
     <lazy-common-layout-navbar-nav-list class="pa-2" :nav-items="navItems" />
     <template v-slot:append>
-      <v-list class="pa-2" :density="apperance.compact">
+      <v-list class="pa-2" :density="apperance.density">
         <template v-for="{ icon, title, to } in bottomNavItems">
           <v-list-item
             color="primary"

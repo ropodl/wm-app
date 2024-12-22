@@ -1,6 +1,6 @@
 <script setup>
+const appearance = useApperanceStore();
 const user = useUserStore();
-console.log(user.user);
 
 definePageMeta({
   layout: "user-post",
@@ -23,19 +23,41 @@ const getRecommendation = async () => {
 </script>
 <template>
   <v-row>
-    <template v-for="({ post }, index) in recommendation">
-      <v-col cols="12" md="6">
-        <!-- {{ post }} -->
-        <v-card
-          border
-          flat
-          color="transparent"
-          :to="`/posts/${post._id}`"
-          :ripple="false"
-        >
-          <v-card-title>{{ post.title }}</v-card-title>
-          <v-img cover height="250" :src="post.image?.url"></v-img>
-        </v-card>
+    <template v-for="{ post, similarity } in recommendation">
+      <v-col cols="12" md="4">
+        <v-hover v-slot="{ isHovering, props }">
+          <v-card
+            border
+            flat
+            color="transparent"
+            :to="`/posts/${post._id}`"
+            :ripple="false"
+            v-bind="props"
+          >
+            <v-img
+              cover
+              rounded="sm"
+              height="150"
+              :class="isHovering ? 'zoom-image' : ''"
+              :src="post.image?.url"
+            >
+              <v-card
+                height="150"
+                class="d-flex align-end"
+                :class="appearance.dark ? 'dark-overlay' : 'light-overlay'"
+              >
+                <v-chip
+                  rounded="lg"
+                  class="position-absolute top-0 right-0 rounded-t-0 rounded-e-0"
+                  >{{ similarity.toFixed(2) }}</v-chip
+                >
+                <v-card-text class="font-weight-bold">
+                  {{ post.title }}
+                </v-card-text>
+              </v-card>
+            </v-img>
+          </v-card>
+        </v-hover>
       </v-col>
     </template>
   </v-row>

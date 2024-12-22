@@ -21,7 +21,7 @@ const settings = ref([
       <v-row>
         <v-col cols="12" md="3">
           <v-card border flat class="position-sticky" style="top: 70px">
-            <v-list class="py-0" :density="apperance.compact">
+            <v-list class="py-0" :density="apperance.density">
               <template v-for="{ icon, title, to } in settings">
                 <v-list-item
                   color="primary"

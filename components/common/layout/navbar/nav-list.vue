@@ -21,7 +21,7 @@ defineProps({
           <template v-slot:activator="{ props }">
             <!-- with dropdown -->
             <v-list-item
-              :density="apperance.compact"
+              :density="apperance.density"
               rounded="lg"
               v-bind="props"
             >
@@ -35,7 +35,7 @@ defineProps({
               <v-list-group>
                 <template v-slot:activator="{ props }">
                   <v-list-item
-                    :density="apperance.compact"
+                    :density="apperance.density"
                     color="primary"
                     rounded="lg"
                     v-bind="props"
@@ -49,7 +49,7 @@ defineProps({
                 <template v-if="subitem.miniitems">
                   <v-list-item
                     color="primary"
-                    :density="apperance.compact"
+                    :density="apperance.density"
                     rounded="lg"
                     v-for="mini in subitem.miniitems"
                     :to="mini.routes"
@@ -65,7 +65,7 @@ defineProps({
             <template v-else>
               <v-list-item
                 color="primary"
-                :density="apperance.compact"
+                :density="apperance.density"
                 rounded="lg"
                 :to="subitem.routes"
               >
@@ -81,7 +81,7 @@ defineProps({
       <template v-else>
         <v-list-item
           color="primary"
-          :density="apperance.compact"
+          :density="apperance.density"
           rounded="lg"
           :to="navitem.routes"
         >
@@ -96,4 +96,3 @@ defineProps({
     </template>
   </v-list>
 </template>
-<style></style>

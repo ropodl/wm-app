@@ -1,11 +1,12 @@
 <script setup>
-definePageMeta({
-  layout: "user",
-  middleware: ["user-auth"]
-});
-
 const route = useRoute();
 const appearance = useApperanceStore();
+const user = useUserStore();
+
+definePageMeta({
+  layout: "user",
+  middleware: ["user-auth"],
+});
 
 const post = ref({});
 onMounted(() => {
@@ -19,8 +20,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <v-card border="b" flat rounded="0" height="450"
-  >
+  <v-card border="b" flat rounded="0" height="450">
     <template v-if="post.image?.url">
       <v-img cover :src="post.image.url" :alt="post.image.name">
         <div
@@ -30,10 +30,12 @@ onMounted(() => {
           <div>
             <v-card-text class="text-h4 pb-0">{{ post.title }}</v-card-text>
             <v-card-text>
-              <template v-for="({ title },index) in post.tags">
-                <v-chip :class="post.tags.length-1 <= index+1 ? 'mr-3':''">
-                  {{ title }}
-                </v-chip>
+              <template v-for="({ _id, title }, index) in post.tags">
+                {{ user.user.interests.includes(_id) }}
+                <v-chip
+                  :text="title"
+                  :class="post.tags.length - 1 <= index + 1 ? 'mr-3' : ''"
+                />
               </template>
             </v-card-text>
           </div>

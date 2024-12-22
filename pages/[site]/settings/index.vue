@@ -26,7 +26,7 @@ definePageMeta({
           >
             <template #append>
               <v-select
-                v-model="apperance.compact"
+                v-model="apperance.density"
                 hide-details
                 class="pt-3"
                 density="compact"
