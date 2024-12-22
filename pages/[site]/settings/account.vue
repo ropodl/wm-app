@@ -75,7 +75,7 @@ const submit = () => {
           v-bind="props"
           style="position: sticky; top: 70px"
         >
-          <v-img :src="user.user?.image.url">
+          <v-img :src="user.user?.image?.url">
             <v-overlay
               :model-value="isHovering"
               contained

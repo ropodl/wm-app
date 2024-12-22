@@ -1,4 +1,6 @@
 <script setup>
+const { setSnackbar } = useSnackbarStore();
+
 definePageMeta({
   layout: "user",
   middleware: ["user-auth"],
@@ -8,24 +10,47 @@ const form = ref({
   title: "",
   suggestions: "",
   ratings: {
-    ui: "",
-    navigation: "",
-    performance: "",
-    content: "",
+    ui: null,
+    navigation: null,
+    performance: null,
+    content: null,
   },
 });
 
+const formRules = {
+  title: [
+    (v) => !!v || "Subject is required",
+    (v) => (v && v.length > 10) || "Subject must be 10 characters or more",
+  ],
+  suggestions: [
+    (v) => !!v || "Suggestions is required",
+    (v) => (v && v.length > 3) || "Suggestions must be 3 characters or more",
+  ],
+  ui: [(v) => !!v || "UI Ratings is required"],
+  navigation: [(v) => v !== null || "Navigation Ratings is required"],
+  performance: [(v) => !!v || "Performance Ratings is required"],
+  content: [(v) => !!v || "Content Ratings is required"],
+};
+
+const formRef = ref(null);
+
 const submit = async () => {
-  await useAxios("feedback/create", {
-    method: "POST",
-    body: form.value,
-  }).then((res) => {
-    console.log(res);
-  });
+  const { valid } = await formRef.value.validate();
+
+  if (valid) {
+    await useAxios("feedback/create", {
+      method: "POST",
+      body: form.value,
+    }).then((res) => {
+      // console.log(res);
+      setSnackbar(res.message, "success");
+      formRef.value.reset();
+    });
+  }
 };
 </script>
 <template>
-  <v-form @submit.prevent="submit">
+  <v-form ref="formRef" @submit.prevent="submit">
     <v-container>
       <v-row>
         <v-col cols="12">
@@ -39,11 +64,12 @@ const submit = async () => {
           <v-row>
             <v-col cols="12" md="6">
               <lazy-common-shared-field-label
-                >Title</lazy-common-shared-field-label
+                >Subject</lazy-common-shared-field-label
               >
               <v-text-field
                 v-model="form.title"
                 persistent-hint
+                :rules="formRules.title"
                 hint="e.g Lorem ipsum"
               ></v-text-field>
             </v-col>
@@ -55,6 +81,7 @@ const submit = async () => {
               <v-textarea
                 v-model="form.suggestions"
                 persistent-hint
+                :rules="formRules.suggestions"
                 hint="e.g Lorem ipsum"
               ></v-textarea>
             </v-col>
@@ -66,7 +93,8 @@ const submit = async () => {
               <v-rating
                 v-model="form.ratings.ui"
                 persistent-hint
-                hint="e.g Lorem ipsum"
+                :rules="formRules.ui"
+                required
               ></v-rating>
             </v-col>
             <v-col cols="12" md="6"></v-col>
@@ -76,8 +104,8 @@ const submit = async () => {
               >
               <v-rating
                 v-model="form.ratings.navigation"
-                persistent-hint
-                hint="e.g Lorem ipsum"
+                :rules="formRules.navigation"
+                required
               ></v-rating>
             </v-col>
             <v-col cols="12" md="6"></v-col>
@@ -88,7 +116,8 @@ const submit = async () => {
               <v-rating
                 v-model="form.ratings.performance"
                 persistent-hint
-                hint="e.g Lorem ipsum"
+                :rules="formRules.performance"
+                required
               ></v-rating>
             </v-col>
             <v-col cols="12" md="6"></v-col>
@@ -99,7 +128,8 @@ const submit = async () => {
               <v-rating
                 v-model="form.ratings.content"
                 persistent-hint
-                hint="e.g Lorem ipsum"
+                :rules="formRules.content"
+                required
               ></v-rating>
             </v-col>
           </v-row>

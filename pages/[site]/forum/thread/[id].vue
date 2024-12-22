@@ -1,4 +1,5 @@
 <script setup>
+const user = useUserStore();
 const route = useRoute();
 
 definePageMeta({
@@ -25,6 +26,23 @@ const getThreadComments = async () => {
     pagination.value = res.pagination;
   });
 };
+
+const form = ref({
+  content: "",
+});
+
+const submit = () => {
+  useAxios(`/forums/threads/${route.params.id}/comments`, {
+    method: "POST",
+    body: form.value,
+    query: {
+      author_id: user.user.id,
+    },
+  }).then((res) => {
+    // console.log(res);
+    getThreadComments();
+  });
+};
 </script>
 <template>
   <v-container>
@@ -37,8 +55,8 @@ const getThreadComments = async () => {
       </v-col>
       <v-col cols="12">
         {{ comments }}
-        <template v-for="{ author, content } in comments">
-          <v-list border flat rounded="lg">
+        <template v-for="{ id, author, content } in comments" :key="id">
+          <v-list border flat class="mb-3" rounded="lg">
             <v-list-item
               :prepend-avatar="author.image?.url"
               :title="author.name"
@@ -46,6 +64,10 @@ const getThreadComments = async () => {
             />
           </v-list>
         </template>
+        <v-form @submit.prevent="submit">
+          <v-textarea v-model="form.content"></v-textarea>
+          <v-btn type="submit">Submit</v-btn>
+        </v-form>
       </v-col>
     </v-row>
   </v-container>
