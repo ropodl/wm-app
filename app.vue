@@ -12,15 +12,15 @@ const apperance = useApperanceStore();
 
 const { snackbar: toast } = storeToRefs(snackbar);
 
-onMounted(()=>{
-  if(apperance.dark) theme.global.name.value = apperance.dark ? "dark" : "light";
-})
+onMounted(() => {
+  if (apperance.dark)
+    theme.global.name.value = apperance.dark ? "dark" : "light";
+});
 </script>
 <template>
   <v-app ref="app">
     <NuxtLayout>
       <v-main>
-        <!-- <v-btn @click="snackbar.setSnackbar('test', 'error')"></v-btn> -->
         <NuxtPage />
       </v-main>
       <v-snackbar

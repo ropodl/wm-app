@@ -2,7 +2,7 @@
 const admin = useAdminUserStore();
 definePageMeta({
   layout: "admin",
-  middleware: ["admin-auth"]
+  middleware: ["admin-auth"],
 });
 
 const headers = [
@@ -19,15 +19,18 @@ const headers = [
 
 const items = ref([]);
 const pagination = ref({});
+const loading = ref(true);
 
 onMounted(() => {
   getPosts();
 });
 
 const getPosts = async () => {
-  const res = await useAxios("post/latest");
-  items.value = res.posts;
-  pagination.value = res.pagination;
+  useAxios("post/latest").then((res) => {
+    items.value = res.posts;
+    pagination.value = res.pagination;
+    loading.value = false;
+  });
 };
 </script>
 <template>
@@ -42,10 +45,11 @@ const getPosts = async () => {
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-card border rounded="lg">
+        <v-card border flat rounded="lg">
           <v-data-table
             :headers
             :items
+            :loading
             :items-per-page="pagination.itemsPerPage"
           >
             <template v-slot:item.image="{ item }">

@@ -76,7 +76,7 @@ const navItems = [
   {
     icon: "mdi-cog",
     title: "Forum Settings",
-    routes: "/admin/forums",
+    routes: "/admin/forums/settings",
   },
 ];
 

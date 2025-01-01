@@ -2,6 +2,7 @@
 const route = useRoute();
 const appearance = useApperanceStore();
 const user = useUserStore();
+const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "user",
@@ -18,6 +19,18 @@ onMounted(() => {
     post.value = res;
   });
 });
+
+const addToUserInterest = (id) => {
+  useAxios(`interest/add-user-interest`, {
+    method: "PATCH",
+    query: {
+      user_id: `${user.user.id}`,
+      interest_id: `${id}`,
+    },
+  }).then((res) => {
+    setSnackbar(res.message, "success");
+  });
+};
 </script>
 <template>
   <v-card border="b" flat rounded="0" height="450">
@@ -29,12 +42,17 @@ onMounted(() => {
         >
           <div>
             <v-card-text class="text-h4 pb-0">{{ post.title }}</v-card-text>
+            {{ user.user.interests }}
             <v-card-text>
-              <template v-for="({ _id, title }, index) in post.tags">
+              <template v-for="({ _id, title }, index) in post.tags" :key="_id">
                 {{ user.user.interests.includes(_id) }}
                 <v-chip
                   :text="title"
                   :class="post.tags.length - 1 <= index + 1 ? 'mr-3' : ''"
+                  :append-icon="
+                    user.user.interests.includes(_id) ? '' : 'mdi-plus'
+                  "
+                  @click="addToUserInterest(_id)"
                 />
               </template>
             </v-card-text>

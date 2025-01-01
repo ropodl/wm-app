@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 export const useApperanceStore = defineStore(
-  "apperanceStore",
+  "apperance-store",
   () => {
     const theme = useTheme();
 

@@ -4,7 +4,7 @@ const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "admin",
-  middleware: ["admin-auth"]
+  middleware: ["admin-auth"],
 });
 
 const headers = ref([
@@ -34,8 +34,8 @@ const getAllForums = async () => {
 
 const deleteItem = async (item, active) => {
   console.log(item.id);
-  await useAxios(`/forums/${item.id}`,{
-    method: "DELETE"
+  await useAxios(`/forums/${item.id}`, {
+    method: "DELETE",
   }).then((res) => {
     setSnackbar(res.message, "success");
     getAllForums();
@@ -52,7 +52,7 @@ const deleteItem = async (item, active) => {
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-card border rounded="lg">
+        <v-card border flat rounded="lg">
           <v-data-table :headers :items>
             <template v-slot:item.image="{ item }">
               <div>
