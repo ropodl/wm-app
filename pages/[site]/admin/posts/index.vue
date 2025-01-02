@@ -6,15 +6,20 @@ definePageMeta({
 });
 
 const headers = [
-  {
-    align: "start",
-    key: "image",
-    sortable: false,
-    title: "Featured Image",
-    width: 180,
-  },
   { key: "title", title: "Title" },
-  { key: "action", title: "Actions", sortable: false, width: 150 },
+  {
+    key: "status",
+    title: "Status",
+    sortable: false,
+    width: 100,
+  },
+  {
+    key: "action",
+    title: "Actions",
+    sortable: false,
+    align: "center",
+    width: 140,
+  },
 ];
 
 const items = ref([]);
@@ -35,61 +40,65 @@ const getPosts = async () => {
 </script>
 <template>
   <v-container>
-    <v-row justify="space-between">
+    <v-row justify="space-between" align="center">
       <v-col cols="12" md="4">
         <div class="text-h4 font-weight-bold">All Posts</div>
       </v-col>
       <v-col cols="12" md="2">
-        <v-btn variant="tonal">Add New Post</v-btn>
+        <div class="d-flex justify-end">
+          <v-btn variant="tonal" color="white" rounded="lg">New Post</v-btn>
+        </div>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-card border flat rounded="lg">
+        <v-card>
           <v-data-table
             :headers
             :items
             :loading
             :items-per-page="pagination.itemsPerPage"
           >
-            <template v-slot:item.image="{ item }">
-              <div>
-                <v-img
-                  cover
-                  width="160"
-                  class="border rounded-lg"
-                  :aspect-ratio="16 / 9"
-                  :src="item.image?.url"
-                ></v-img>
-              </div>
-            </template>
-            <template v-slot:item.title="{ item }">
-              <v-list lines="three">
-                <v-list-item class="pl-0">
-                  <v-list-item-title>
-                    {{ item.title }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle> </v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
+            <template v-slot:item.status="{ item }">
+              <v-chip
+                variant="text"
+                class="w-100 pa-0"
+                :color="item.status === 'Draft' ? 'warning' : 'success'"
+                >{{ item.status }}</v-chip
+              >
             </template>
             <template v-slot:item.action="{ item }">
               <v-btn
-                class="mr-2"
-                variant="tonal"
-                color="success"
+                class="mr-1"
+                variant="text"
                 rounded="lg"
+                size="small"
                 icon="mdi-pencil"
                 :to="`/admin/posts/${item.id}`"
               ></v-btn>
               <template v-if="admin.user.role === 'admin'">
                 <v-btn
-                  variant="tonal"
-                  color="error"
+                  variant="text"
                   rounded="lg"
+                  size="small"
                   icon="mdi-delete"
                 ></v-btn>
               </template>
+              <!-- <v-menu>
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    flat
+                    icon="mdi-dots-horizontal"
+                    color="transparent"
+                    size="small"
+                    v-bind="props"
+                  />
+                </template>
+                <v-list border class="py-0" density="compact">
+                  <v-list-item title="Edit" :to="`/admin/posts/${item.id}`" />
+                  <v-list-item title="Delete" to="/a" />
+                </v-list>
+              </v-menu> -->
             </template>
           </v-data-table>
         </v-card>

@@ -3,7 +3,7 @@ const admin = useAdminUserStore();
 
 definePageMeta({
   layout: "admin",
-  middleware: ["admin-auth"]
+  middleware: ["admin-auth"],
 });
 
 const headers = [
@@ -14,6 +14,7 @@ const headers = [
 
 const items = ref([]);
 const pagination = ref({});
+const loading = ref(true);
 
 onMounted(() => {
   getInterests();
@@ -23,6 +24,7 @@ const getInterests = async () => {
   const res = await useAxios("interest");
   items.value = res.interests;
   pagination.value = res.pagination;
+  loading.value = false;
 };
 </script>
 <template>
@@ -34,47 +36,27 @@ const getInterests = async () => {
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-card border rounded="lg">
+        <v-card>
           <v-data-table
             :headers
             :items
+            :loading
             :items-per-page="pagination.itemsPerPage"
           >
-            <template v-slot:item.image="{ item }">
-              <div>
-                <v-img
-                  cover
-                  width="160"
-                  class="border rounded-lg"
-                  :aspect-ratio="16 / 9"
-                  :src="item.image?.url"
-                ></v-img>
-              </div>
-            </template>
-            <template v-slot:item.title="{ item }">
-              <v-list lines="three">
-                <v-list-item class="pl-0">
-                  <v-list-item-title>
-                    {{ item.title }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle> </v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
-            </template>
             <template v-slot:item.action="{ item }">
               <v-btn
-                class="mr-2"
-                variant="tonal"
-                color="success"
+                class="mr-1"
+                variant="text"
                 rounded="lg"
                 icon="mdi-pencil"
+                size="small"
                 :to="`/admin/interest/${item.id}`"
               ></v-btn>
               <template v-if="admin.user.role === 'admin'">
                 <v-btn
-                  variant="tonal"
-                  color="error"
+                  variant="text"
                   rounded="lg"
+                  size="small"
                   icon="mdi-delete"
                 ></v-btn>
               </template>

@@ -8,7 +8,7 @@ definePageMeta({
 });
 
 const headers = ref([
-  { title: "Image", key: "image", sortable: false, width: 180 },
+  // { title: "Image", key: "image", sortable: false, width: 180 },
   {
     title: "Forum's Name",
     key: "name",
@@ -54,34 +54,15 @@ const deleteItem = async (item, active) => {
       <v-col cols="12">
         <v-card border flat rounded="lg">
           <v-data-table :headers :items>
-            <template v-slot:item.image="{ item }">
-              <div>
-                <v-img
-                  cover
-                  width="160"
-                  class="border rounded-lg"
-                  :aspect-ratio="16 / 9"
-                  :src="item.image?.url"
-                  :alt="item.image.name"
-                ></v-img>
-              </div>
-            </template>
             <template v-slot:item.name="{ item }">
-              <v-list lines="three">
-                <v-list-item class="pl-0">
-                  <v-list-item-title>
-                    {{ item.name }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle> </v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
+              {{ item.name }}
             </template>
             <template v-slot:item.action="{ item }">
               <v-btn
-                class="mr-2"
-                variant="tonal"
-                color="success"
+                class="mr-1"
+                variant="text"
                 rounded="lg"
+                size="small"
                 icon="mdi-pencil"
                 :to="`/admin/forums/${item.id}`"
               ></v-btn>
@@ -90,8 +71,8 @@ const deleteItem = async (item, active) => {
                   <template v-slot:activator="{ props: dialog }">
                     <v-btn
                       v-bind="dialog"
-                      variant="tonal"
-                      color="error"
+                      variant="text"
+                      size="small"
                       rounded="lg"
                       icon="mdi-delete"
                     ></v-btn>

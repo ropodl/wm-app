@@ -7,7 +7,7 @@ const vuetifyOpts = {
       light: {
         dark: false,
         colors: {
-          primary: "#ff7a03",
+          primary: colors.shades.white,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -19,7 +19,7 @@ const vuetifyOpts = {
       dark: {
         dark: true,
         colors: {
-          primary: "#ff7a03",
+          primary: colors.shades.white,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -33,6 +33,13 @@ const vuetifyOpts = {
   defaults: {
     VBtn: {
       class: "text-none",
+      rounded: "lg",
+    },
+    VCard: {
+      border: true,
+      flat: true,
+      rounded: "lg",
+      color: "rgb(var(--v-theme-background))",
     },
     VTextField: {
       density: "comfortable",
@@ -40,6 +47,10 @@ const vuetifyOpts = {
     },
     VTextarea: {
       variant: "outlined",
+    },
+    VDataTable: {
+      class: "bg-transparent",
+      hover: true,
     },
   },
 };

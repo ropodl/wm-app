@@ -1,4 +1,6 @@
 <script setup>
+const apperance = useApperanceStore();
+
 defineProps({
   user: {
     type: Object,
@@ -38,7 +40,7 @@ const emits = defineEmits(["logout"]);
             icon="mdi-dots-vertical"
           ></v-btn>
         </template>
-        <v-list density="compact">
+        <v-list border :density="apperance.density" class="py-0">
           <template v-if="items">
             <template v-for="{ icon, title, to } in items">
               <v-list-item :prepend-icon="icon" :title :to />

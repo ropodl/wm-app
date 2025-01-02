@@ -1,7 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "admin",
-  middleware: ["admin-auth"]
+  middleware: ["admin-auth"],
 });
 
 const headers = [
@@ -20,7 +20,7 @@ const items = [
     image:
       "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShaggyMullet&accessoriesType=Wayfarers&hairColor=SilverGray&facialHairType=MoustacheFancy&facialHairColor=BrownDark&clotheType=BlazerShirt&eyeType=Surprised&eyebrowType=FlatNatural&mouthType=Eating&skinColor=DarkBrown",
     name: "Admin admin",
-    role: "admin"
+    role: "admin",
   },
 ];
 </script>
@@ -29,7 +29,7 @@ const items = [
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-card border rounded="lg">
+        <v-card border flat rounded="lg">
           <v-data-table :headers :items>
             <template v-slot:item.user="{ item }">
               <v-list-item
@@ -44,5 +44,3 @@ const items = [
     </v-row>
   </v-container>
 </template>
-
-<style></style>
