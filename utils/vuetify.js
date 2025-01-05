@@ -7,7 +7,7 @@ const vuetifyOpts = {
       light: {
         dark: false,
         colors: {
-          primary: colors.shades.white,
+          primary: colors.shades.black,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -48,7 +48,7 @@ const vuetifyOpts = {
     VTextarea: {
       variant: "outlined",
     },
-    VDataTable: {
+    VDataTableServer: {
       class: "bg-transparent",
       hover: true,
     },

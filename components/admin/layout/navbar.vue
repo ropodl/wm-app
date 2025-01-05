@@ -4,21 +4,14 @@ const apperance = useApperanceStore();
 
 const drawer = ref(true);
 
-defineProps({
-  navitems: {
-    type: Object,
-    default: {},
-  },
-});
-
 const navItems = [
   {
-    icon: "mdi-view-dashboard",
+    icon: "mdi-view-dashboard-outline",
     title: "Dashboard",
     routes: "/admin/",
   },
   {
-    icon: "mdi-calendar-text",
+    icon: "mdi-calendar-text-outline",
     title: "Posts",
     subtitle: "Posts and Interests",
     subitems: [
@@ -33,7 +26,7 @@ const navItems = [
     ],
   },
   {
-    icon: "mdi-thumb-up",
+    icon: "mdi-thumb-up-outline",
     title: "Interests",
     subitems: [
       {
@@ -47,7 +40,7 @@ const navItems = [
     ],
   },
   {
-    icon: "mdi-forum",
+    icon: "mdi-forum-outline",
     title: "Forums",
     subtitle: "Forums and Threads",
     subitems: [
@@ -62,7 +55,7 @@ const navItems = [
     ],
   },
   {
-    icon: "mdi-cog",
+    icon: "mdi-cog-outline",
     title: "Forum Settings",
     routes: "/admin/forums/settings",
   },
@@ -92,9 +85,10 @@ const profileItems = [
 ];
 
 const logout = () => {
-  console.log("log out from admin");
   admin.logOut();
 };
+
+const search = ref(false);
 </script>
 <template>
   <v-app-bar
@@ -115,51 +109,17 @@ const logout = () => {
         <v-btn rounded="0" height="50">CBWRP</v-btn>
       </v-col>
       <v-col cols="12" sm="4" md="4" class="pa-0">
-        <!-- <v-autocomplete
-          hide-details
-          variant="outlined"
-          density="compact"
-          rounded="lg"
-          placeholder="Search..."
-          menu-icon=""
-          height="35"
-          style="margin-inline-end: 4px"
-        ></v-autocomplete> -->
-        <v-overlay
-          persistent
-          no-click-animation
-          scrim="black"
-          content-class="d-flex align-center justify-center w-100 h-100"
-        >
-          <template #activator="{ isActive, props }">
-            <v-btn v-bind="props" border :ripple="false" height="35">
-              <span class="mr-12">Search...</span>
-              <v-card-text class="d-flex align-center pe-0 py-0">
-                <v-icon
-                  class="mr-1"
-                  size="small"
-                  icon="mdi-apple-keyboard-command"
-                />
-                + k</v-card-text
-              >
-            </v-btn>
-          </template>
-          <v-card width="500">
-            <v-card-title class="pa-0">
-              <v-text-field
-                autofocus
-                autocomplete="off"
-                hide-details
-                prepend-inner-icon="mdi-magnify"
-                variant="text"
-                placeholder="Type a command or search..."
-                clearable
-              ></v-text-field>
-            </v-card-title>
-            <v-divider />
-            <v-card-text> results </v-card-text>
-          </v-card>
-        </v-overlay>
+        <v-btn border :ripple="false" height="35" @click="search = true">
+          <span class="mr-12">Search...</span>
+          <v-card-text class="d-flex align-center pe-0 py-0">
+            <v-icon
+              class="mr-1"
+              size="small"
+              icon="mdi-apple-keyboard-command"
+            />
+            + k</v-card-text
+          >
+        </v-btn>
       </v-col>
       <v-col cols="12" sm="4" md="4" class="pa-0">
         <div class="d-flex justify-end">
@@ -174,6 +134,7 @@ const logout = () => {
       </v-col>
     </v-row>
   </v-app-bar>
+  <lazy-common-shared-search-bar v-model="search" :navItems :profileItems />
   <v-navigation-drawer
     v-model="drawer"
     color="rgba(var(--v-theme-background),0.8)"

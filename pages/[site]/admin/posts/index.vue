@@ -23,15 +23,23 @@ const headers = [
 ];
 
 const items = ref([]);
-const pagination = ref({});
+const pagination = ref({
+  totalPage: 1,
+  totalItems: 0,
+  itemsPerPage: 10,
+  currentPage: 1,
+});
 const loading = ref(true);
 
-onMounted(() => {
-  getPosts();
-});
-
-const getPosts = async () => {
-  useAxios("post/latest").then((res) => {
+const loadPosts = async ({ page, itemsPerPage, sortBy }) => {
+  console.log(sortBy);
+  useAxios("post/latest", {
+    query: {
+      page,
+      itemsPerPage,
+      sortBy: [{ order: "desc", key: "updatedAt" }],
+    },
+  }).then((res) => {
     items.value = res.posts;
     pagination.value = res.pagination;
     loading.value = false;
@@ -53,11 +61,13 @@ const getPosts = async () => {
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-data-table
+          <v-data-table-server
             :headers
             :items
             :loading
             :items-per-page="pagination.itemsPerPage"
+            :items-length="pagination.totalItems"
+            @update:options="loadPosts"
           >
             <template v-slot:item.status="{ item }">
               <v-chip
@@ -84,23 +94,8 @@ const getPosts = async () => {
                   icon="mdi-delete"
                 ></v-btn>
               </template>
-              <!-- <v-menu>
-                <template v-slot:activator="{ props }">
-                  <v-btn
-                    flat
-                    icon="mdi-dots-horizontal"
-                    color="transparent"
-                    size="small"
-                    v-bind="props"
-                  />
-                </template>
-                <v-list border class="py-0" density="compact">
-                  <v-list-item title="Edit" :to="`/admin/posts/${item.id}`" />
-                  <v-list-item title="Delete" to="/a" />
-                </v-list>
-              </v-menu> -->
             </template>
-          </v-data-table>
+          </v-data-table-server>
         </v-card>
       </v-col>
     </v-row>

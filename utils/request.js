@@ -7,7 +7,14 @@ export const useAxios = async (url, opts = {}) => {
       baseURL: config.public.api,
       method: opts.method || "GET",
       params: opts?.params,
-      query: opts?.query,
+      query: {
+        ...opts?.query,
+        ...(opts.query?.sortBy && {
+          sortBy: `${opts.query.sortBy[0]?.order === "asc" ? "" : "-"}${
+            opts.query.sortBy[0]?.key
+          }`,
+        }),
+      },
       body: opts?.body,
       headers: {
         ...opts?.headers,

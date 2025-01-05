@@ -26,9 +26,11 @@ onMounted(() => {
 });
 
 const items = ref([]);
+const pagination = ref({});
 const getAllForums = async () => {
   await useAxios("/forums").then((res) => {
     items.value = res.forums;
+    pagination.value = res.pagination;
   });
 };
 
@@ -52,11 +54,13 @@ const deleteItem = async (item, active) => {
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-card border flat rounded="lg">
-          <v-data-table :headers :items>
-            <template v-slot:item.name="{ item }">
-              {{ item.name }}
-            </template>
+        <v-card>
+          <v-data-table-server
+            :headers
+            :items
+            :items-per-page="pagination.itemsPerPage"
+            :items-length="pagination.totalPage"
+          >
             <template v-slot:item.action="{ item }">
               <v-btn
                 class="mr-1"
@@ -79,40 +83,36 @@ const deleteItem = async (item, active) => {
                   </template>
                   <template v-slot:default="{ isActive }">
                     <v-card border flat title="Delete Forum">
-                      <v-card-text
-                        >Are you sure, you want to delete forum name
-                        <span class="text-red">{{ item.name }}</span
-                        >?</v-card-text
-                      >
-                      <v-card-actions class="pt-0">
-                        <v-row>
-                          <v-col cols="6">
-                            <v-btn
-                              block
-                              text="Close Dialog"
-                              @click="isActive.value = false"
-                            ></v-btn>
-                          </v-col>
-                          <v-col cols="6">
-                            <v-btn
-                              block
-                              variant="flat"
-                              color="primary"
-                              text="Close Dialog"
-                              @click="deleteItem(item, isActive)"
-                            ></v-btn>
-                          </v-col>
-                        </v-row>
+                      <v-card-text>
+                        Are you sure, you want to delete forum with name<br />"<span
+                          class="text-red"
+                        >
+                          {{ item.name }}</span
+                        >"?
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-btn
+                          border
+                          class="px-6"
+                          text="Cancel"
+                          @click="isActive.value = false"
+                        ></v-btn>
+                        <v-btn
+                          variant="flat"
+                          color="primary"
+                          class="px-6"
+                          text="Continue"
+                          @click="deleteItem(item, isActive)"
+                        ></v-btn>
                       </v-card-actions>
                     </v-card>
                   </template>
                 </v-dialog>
               </template>
             </template>
-          </v-data-table>
+          </v-data-table-server>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
-<style></style>
