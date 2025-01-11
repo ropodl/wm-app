@@ -45,15 +45,24 @@ const addToUserInterest = (id) => {
             {{ user.user.interests }}
             <v-card-text>
               <template v-for="({ _id, title }, index) in post.tags" :key="_id">
-                {{ user.user.interests.includes(_id) }}
-                <v-chip
-                  :text="title"
-                  :class="post.tags.length - 1 <= index + 1 ? 'mr-3' : ''"
-                  :append-icon="
-                    user.user.interests.includes(_id) ? '' : 'mdi-plus'
-                  "
-                  @click="addToUserInterest(_id)"
-                />
+                <!-- {{ user.user.interests.includes(_id) }} -->
+                <v-tooltip
+                  theme="light"
+                  text="Click + to follow interests"
+                  location="top"
+                >
+                  <template v-slot:activator="{ props }">
+                    <v-chip
+                      :text="title"
+                      :class="post.tags.length - 1 <= index + 1 ? 'mr-3' : ''"
+                      :append-icon="
+                        user.user.interests.includes(_id) ? '' : 'mdi-plus'
+                      "
+                      v-bind="props"
+                      @click="addToUserInterest(_id)"
+                    />
+                  </template>
+                </v-tooltip>
               </template>
             </v-card-text>
           </div>

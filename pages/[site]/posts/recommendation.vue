@@ -15,6 +15,7 @@ const recommendation = ref([]);
 const pagination = ref({});
 
 const getRecommendation = async () => {
+  console.log(user.user.id);
   await useAxios(`post/recommended/${user.user.id}`).then((res) => {
     recommendation.value = res.documents;
     pagination.value = res.pagination;

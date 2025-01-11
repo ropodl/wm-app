@@ -24,10 +24,10 @@ export const useUserStore = defineStore(
       navigateTo("/login", {
         replace: true,
       });
-      localStorage.removeItem("user-store");
       role.value = "";
       token.value = "";
       cookie.value = null;
+      localStorage.removeItem("user-store");
     }
 
     return {

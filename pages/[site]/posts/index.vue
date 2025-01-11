@@ -26,7 +26,6 @@ const getLatest = async (page, itemsPerPage = 100) => {
     },
   })
     .then((res) => {
-      console.log(res, page);
       latest.value = res.posts;
       pagination.value = res.pagination;
     })
@@ -56,6 +55,7 @@ const getLatest = async (page, itemsPerPage = 100) => {
               :src="image?.url"
             >
               <v-card
+                flat
                 height="150"
                 class="d-flex align-end"
                 :class="appearance.dark ? 'dark-overlay' : 'light-overlay'"

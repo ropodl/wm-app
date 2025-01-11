@@ -25,8 +25,8 @@ export const useAdminUserStore = defineStore(
       user.value = {};
       role.value = "";
       token.value = "";
-      localStorage.removeItem("admin-user-store");
       cookie.value = null;
+      localStorage.removeItem("admin-user-store");
     }
 
     return {

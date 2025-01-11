@@ -4,6 +4,17 @@ definePageMeta({
   layout: "admin",
   middleware: ["admin-auth"],
 });
+
+onMounted(() => {
+  getDahboardStats();
+});
+
+const stats_bar = ref({});
+const getDahboardStats = async () => {
+  await useAxios("/admin/dashboard").then((res) => {
+    stats_bar.value = res.stats_bar;
+  });
+};
 </script>
 <template>
   <v-container>
@@ -16,7 +27,9 @@ definePageMeta({
       <v-col cols="12" md="3">
         <v-card border flat>
           <v-card-text class="d-flex justify-space-between align-center pb-0">
-            <span class="text-h4 font-weight-bold">5</span>
+            <span class="text-h4 font-weight-bold">
+              {{ stats_bar.total_post }}
+            </span>
             <v-icon
               class="card-icon"
               color="primary"
@@ -29,7 +42,9 @@ definePageMeta({
       <v-col cols="12" md="3">
         <v-card border flat>
           <v-card-text class="d-flex justify-space-between align-center pb-0">
-            <span class="text-h4 font-weight-bold">5</span>
+            <span class="text-h4 font-weight-bold">
+              {{ stats_bar.total_interest }}
+            </span>
             <v-icon
               class="card-icon"
               color="primary"
@@ -42,7 +57,9 @@ definePageMeta({
       <v-col cols="12" md="3">
         <v-card border flat>
           <v-card-text class="d-flex justify-space-between align-center pb-0">
-            <span class="text-h4 font-weight-bold">5</span>
+            <span class="text-h4 font-weight-bold">
+              {{ stats_bar.total_forum }}
+            </span>
             <v-icon
               class="card-icon"
               color="primary"
@@ -55,7 +72,9 @@ definePageMeta({
       <v-col cols="12" md="3">
         <v-card border flat>
           <v-card-text class="d-flex justify-space-between align-center pb-0">
-            <span class="text-h4 font-weight-bold">5</span>
+            <span class="text-h4 font-weight-bold">
+              {{ stats_bar.total_thread }}
+            </span>
             <v-icon
               class="card-icon"
               color="primary"

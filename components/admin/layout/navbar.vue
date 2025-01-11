@@ -121,17 +121,7 @@ const search = ref(false);
           >
         </v-btn>
       </v-col>
-      <v-col cols="12" sm="4" md="4" class="pa-0">
-        <div class="d-flex justify-end">
-          <v-btn :ripple="false" variant="text" rounded="0" height="50">
-            <v-avatar>
-              <v-img
-                src="https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShaggyMullet&accessoriesType=Wayfarers&hairColor=SilverGray&facialHairType=MoustacheFancy&facialHairColor=BrownDark&clotheType=BlazerShirt&eyeType=Surprised&eyebrowType=FlatNatural&mouthType=Eating&skinColor=DarkBrown"
-              ></v-img>
-            </v-avatar>
-          </v-btn>
-        </div>
-      </v-col>
+      <v-col cols="12" sm="4" md="4" class="pa-0"> </v-col>
     </v-row>
   </v-app-bar>
   <lazy-common-shared-search-bar v-model="search" :navItems :profileItems />
