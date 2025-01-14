@@ -8,7 +8,6 @@ definePageMeta({
 });
 
 const headers = ref([
-  // { title: "Image", key: "image", sortable: false, width: 180 },
   {
     title: "Forum's Name",
     key: "name",
@@ -21,17 +20,31 @@ const headers = ref([
   },
 ]);
 
-onMounted(() => {
-  getAllForums();
+const items = ref([]);
+const loading = ref(true);
+const pagination = ref({
+  totalPage: 1,
+  totalItems: 0,
+  itemsPerPage: 10,
+  currentPage: 1,
 });
 
-const items = ref([]);
-const pagination = ref({});
-const getAllForums = async () => {
-  await useAxios("/forums").then((res) => {
-    items.value = res.forums;
-    pagination.value = res.pagination;
-  });
+const loadForums = async ({ page, itemsPerPage, sortBy }) => {
+  console.log(sortBy);
+  await useAxios("/forums", {
+    query: {
+      page,
+      itemsPerPage,
+      sortBy: sortBy.length ? sortBy : [{ order: "desc", key: "updatedAt" }],
+    },
+  })
+    .then((res) => {
+      items.value = res.forums;
+      pagination.value = res.pagination;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 
 const deleteItem = async (item, active) => {
@@ -58,8 +71,10 @@ const deleteItem = async (item, active) => {
           <v-data-table-server
             :headers
             :items
+            :loading
             :items-per-page="pagination.itemsPerPage"
             :items-length="pagination.totalPage"
+            @update:options="loadForums"
           >
             <template v-slot:item.action="{ item }">
               <v-btn

@@ -1,4 +1,6 @@
 <script setup>
+const apperance = useApperanceStore();
+
 const props = defineProps({
   title: { type: String, required: false, default: "Upload Image" },
   form: { type: Object, required: true },
@@ -19,7 +21,7 @@ const selectImage = ({ target }) => {
 </script>
 
 <template>
-  <v-card border flat class="mb-3">
+  <v-card border :density="apperance.density" flat class="mb-3">
     <v-card-title>{{ title }}</v-card-title>
     <v-divider></v-divider>
     <v-card-text

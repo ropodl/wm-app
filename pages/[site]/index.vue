@@ -15,7 +15,6 @@ definePageMeta({
             <h2>Welcome, {{ user.user.name }}</h2>
           </v-col>
         </v-row>
-
         <!-- Top Stats -->
         <v-row>
           <v-col md="3">

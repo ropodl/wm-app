@@ -6,7 +6,7 @@ const route = useRoute();
 
 definePageMeta({
   layout: "user",
-  middleware: ["user-auth"]
+  middleware: ["user-auth"],
 });
 
 onMounted(() => {
@@ -42,26 +42,24 @@ const submit = (isActive) => {
 </script>
 <template>
   <v-container>
-    <v-row>
+    <v-row align="center">
       <v-col cols="12" md="6" class="pb-0">
         <h1>Threads</h1>
       </v-col>
       <v-col cols="12" md="6" class="pb-0">
         <div class="d-flex">
           <v-spacer></v-spacer>
-          <v-dialog scrim="black" width="500">
+          <v-dialog scrim="black" width="450">
             <template v-slot:activator="{ props: activatorProps }">
-              <v-btn
-                v-bind="activatorProps"
-                text="Create New Thread"
-                variant="flat"
-              ></v-btn>
+              <v-btn v-bind="activatorProps" color="primary" variant="flat">
+                Create New
+              </v-btn>
             </template>
 
             <template v-slot:default="{ isActive }">
               <v-form @submit.prevent="submit(isActive)">
                 <v-card border title="Create New Thread">
-                  <v-card-text>
+                  <v-card-text class="pb-0">
                     <lazy-common-shared-field-label
                       >Title</lazy-common-shared-field-label
                     >

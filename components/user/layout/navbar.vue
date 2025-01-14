@@ -62,38 +62,59 @@ const breadcrumb = computed(() => {
 });
 </script>
 <template>
-  <v-app-bar app elevation="0" border="b" height="60">
-    <v-app-bar-nav-icon rounded="lg" @click="toggleDrawer" />
-    User Dashboard
-    <!-- <v-breadcrumbs :items="breadcrumb" class="text-decoration-none">
-      <template v-slot:prepend>
-        <v-icon size="small" icon="mdi-home-outline"></v-icon>
-      </template>
-    </v-breadcrumbs> -->
-    <v-spacer></v-spacer>
-    <!-- <v-btn icon="mdi-bell-outline" rounded="lg"></v-btn> -->
-    <v-tooltip
-      theme="light"
-      location="bottom"
-      :text="fullscreen.isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'"
-    >
-      <template v-slot:activator="{ props }">
-        <v-btn
-          v-bind="props"
-          icon
-          rounded="0"
-          height="50"
-          @click="toggleFullScreen"
-        >
-          <v-icon
-            :icon="`mdi-fullscreen${fullscreen.isFullscreen ? '-exit' : ''}`"
+  <v-app-bar
+    app
+    border="b"
+    color="rgba(var(--v-theme-background),0.8)"
+    elevation="0"
+    :density="apperance.density"
+    style="backdrop-filter: blur(8px)"
+  >
+    <v-row align="center" class="mx-2">
+      <v-col cols="12" sm="4" md="4" class="pa-0">
+        <v-app-bar-nav-icon
+          rounded="lg"
+          size="small"
+          @click="drawer = !drawer"
+        />
+        <v-btn rounded="0" height="50">CBWRP</v-btn>
+      </v-col>
+      <v-col cols="12" sm="4" md="4" class="pa-0"></v-col>
+      <v-col cols="12" sm="4" md="4" class="pa-0">
+        <div class="d-flex justify-end align-center">
+          <v-tooltip
+            theme="light"
+            location="bottom"
+            :text="
+              fullscreen.isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'
+            "
           >
-          </v-icon>
-        </v-btn>
-      </template>
-    </v-tooltip>
+            <template v-slot:activator="{ props }">
+              <v-btn
+                v-bind="props"
+                icon
+                rounded="0"
+                height="50"
+                @click="toggleFullScreen"
+              >
+                <v-icon
+                  :icon="`mdi-fullscreen${
+                    fullscreen.isFullscreen ? '-exit' : ''
+                  }`"
+                >
+                </v-icon>
+              </v-btn>
+            </template>
+          </v-tooltip>
+        </div>
+      </v-col>
+    </v-row>
   </v-app-bar>
-  <v-navigation-drawer v-model="drawer">
+  <v-navigation-drawer
+    v-model="drawer"
+    color="rgba(var(--v-theme-background),0.8)"
+    style="backdrop-filter: blur(8px)"
+  >
     <lazy-common-layout-navbar-nav-list class="pa-2" :nav-items="navItems" />
     <template v-slot:append>
       <v-list class="pa-2" :density="apperance.density">

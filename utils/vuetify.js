@@ -42,7 +42,7 @@ const vuetifyOpts = {
       color: "rgb(var(--v-theme-background))",
     },
     VTextField: {
-      density: "comfortable",
+      density: "compact",
       variant: "outlined",
     },
     VTextarea: {

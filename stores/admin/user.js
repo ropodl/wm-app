@@ -21,12 +21,11 @@ export const useAdminUserStore = defineStore(
       navigateTo("/login", {
         replace: true,
       });
-
-      user.value = {};
       role.value = "";
       token.value = "";
       cookie.value = null;
       localStorage.removeItem("admin-user-store");
+      localStorage.removeItem("routeHistory");
     }
 
     return {

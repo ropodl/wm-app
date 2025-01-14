@@ -23,21 +23,20 @@ const headers = [
 ];
 
 const items = ref([]);
+const loading = ref(true);
 const pagination = ref({
   totalPage: 1,
   totalItems: 0,
   itemsPerPage: 10,
   currentPage: 1,
 });
-const loading = ref(true);
 
 const loadPosts = async ({ page, itemsPerPage, sortBy }) => {
-  console.log(sortBy);
   useAxios("post/latest", {
     query: {
       page,
       itemsPerPage,
-      sortBy: [{ order: "desc", key: "updatedAt" }],
+      sortBy: sortBy.length ? sortBy : [{ order: "desc", key: "updatedAt" }],
     },
   }).then((res) => {
     items.value = res.posts;
@@ -54,7 +53,9 @@ const loadPosts = async ({ page, itemsPerPage, sortBy }) => {
       </v-col>
       <v-col cols="12" md="2">
         <div class="d-flex justify-end">
-          <v-btn variant="tonal" color="white" rounded="lg">New Post</v-btn>
+          <v-btn flat color="white" to="/admin/posts/create" rounded="lg"
+            >New Post</v-btn
+          >
         </div>
       </v-col>
     </v-row>

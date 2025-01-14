@@ -1,6 +1,7 @@
 <script setup>
 const admin = useAdminUserStore();
 const apperance = useApperanceStore();
+const fullscreen = useIsFullScreen();
 
 const drawer = ref(true);
 
@@ -89,10 +90,13 @@ const logout = () => {
 };
 
 const search = ref(false);
+
+const toggleFullScreen = () => {
+  fullscreen.value.toggle();
+};
 </script>
 <template>
   <v-app-bar
-    app
     border="b"
     color="rgba(var(--v-theme-background),0.8)"
     elevation="0"
@@ -121,11 +125,39 @@ const search = ref(false);
           >
         </v-btn>
       </v-col>
-      <v-col cols="12" sm="4" md="4" class="pa-0"> </v-col>
+      <v-col cols="12" sm="4" md="4" class="pa-0">
+        <div class="d-flex align-center justify-end">
+          <v-tooltip
+            theme="light"
+            location="bottom"
+            :text="
+              fullscreen.isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'
+            "
+          >
+            <template v-slot:activator="{ props }">
+              <v-btn
+                v-bind="props"
+                icon
+                rounded="0"
+                height="50"
+                @click="toggleFullScreen"
+              >
+                <v-icon
+                  :icon="`mdi-fullscreen${
+                    fullscreen.isFullscreen ? '-exit' : ''
+                  }`"
+                >
+                </v-icon>
+              </v-btn>
+            </template>
+          </v-tooltip>
+        </div>
+      </v-col>
     </v-row>
   </v-app-bar>
   <lazy-common-shared-search-bar v-model="search" :navItems :profileItems />
   <v-navigation-drawer
+    app
     v-model="drawer"
     color="rgba(var(--v-theme-background),0.8)"
     style="backdrop-filter: blur(8px)"

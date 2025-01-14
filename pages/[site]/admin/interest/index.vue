@@ -13,15 +13,22 @@ const headers = [
 ];
 
 const items = ref([]);
-const pagination = ref({});
+const pagination = ref({
+  totalPage: 1,
+  totalItems: 0,
+  itemsPerPage: 10,
+  currentPage: 1,
+});
 const loading = ref(true);
 
-onMounted(() => {
-  getInterests();
-});
-
-const getInterests = async () => {
-  const res = await useAxios("interest");
+const getInterests = async ({ page, itemsPerPage, sortBy }) => {
+  const res = await useAxios("interest", {
+    query: {
+      page,
+      itemsPerPage,
+      sortBy: sortBy.length ? sortBy : [{ order: "desc", key: "updatedAt" }],
+    },
+  });
   items.value = res.interests;
   pagination.value = res.pagination;
   loading.value = false;
@@ -30,18 +37,27 @@ const getInterests = async () => {
 <template>
   <v-container>
     <v-row justify="space-between">
-      <v-col cols="12">
+      <v-col cols="12" md="4">
         <div class="text-h4 font-weight-bold">All Interests</div>
+      </v-col>
+      <v-col cols="12" md="2">
+        <div class="d-flex justify-end">
+          <v-btn flat color="white" to="/admin/interest/create" rounded="lg"
+            >New Interest</v-btn
+          >
+        </div>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-data-table
+          <v-data-table-server
             :headers
             :items
             :loading
             :items-per-page="pagination.itemsPerPage"
+            :items-length="pagination.totalItems"
+            @update:options="getInterests"
           >
             <template v-slot:item.action="{ item }">
               <v-btn
@@ -61,7 +77,7 @@ const getInterests = async () => {
                 ></v-btn>
               </template>
             </template>
-          </v-data-table>
+          </v-data-table-server>
         </v-card>
       </v-col>
     </v-row>

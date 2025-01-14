@@ -27,9 +27,15 @@ const addToUserInterest = (id) => {
       user_id: `${user.user.id}`,
       interest_id: `${id}`,
     },
-  }).then((res) => {
-    setSnackbar(res.message, "success");
-  });
+  })
+    .then((res) => {
+      user.user.interests = res.interests;
+      setSnackbar(res.message, "success");
+    })
+    .catch((err) => {
+      console.log(err.response._data.error);
+      setSnackbar(err.response._data.error, "error");
+    });
 };
 </script>
 <template>
@@ -45,7 +51,6 @@ const addToUserInterest = (id) => {
             {{ user.user.interests }}
             <v-card-text>
               <template v-for="({ _id, title }, index) in post.tags" :key="_id">
-                <!-- {{ user.user.interests.includes(_id) }} -->
                 <v-tooltip
                   theme="light"
                   text="Click + to follow interests"

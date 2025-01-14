@@ -1,5 +1,7 @@
 <script setup>
 const user = useUserStore();
+const snackbar = useSnackbarStore();
+
 definePageMeta({
   layout: "user-settings",
   middleware: ["user-auth"],
@@ -10,7 +12,7 @@ const profileCompleteAlert = ref(true);
 const form = ref({
   name: "",
   user_name: "",
-  phone_no: "",
+  phone_number: "",
   email: "",
 });
 
@@ -33,7 +35,7 @@ const callProfileInfo = () => {
   useAxios(`/user/${user.user.id}`).then((res) => {
     form.value.name = res.name;
     form.value.user_name = res.user_name;
-    form.value.phone_no = res.phone_number;
+    form.value.phone_number = res.phone_number;
     form.value.email = res.email;
   });
 };
@@ -42,8 +44,14 @@ const passwordForm = ref({
   current: "",
   newer: "",
 });
-const submit = () => {
-  console.log("test");
+
+const submit = async () => {
+  await useAxios(`/user/${user.user.id}`, {
+    method: "PATCH",
+    body: form.value,
+  }).then((res) => {
+    snackbar.setSnackbar(res.message, "success");
+  });
 };
 </script>
 <template>
@@ -89,53 +97,57 @@ const submit = () => {
       </v-hover>
     </v-col>
     <v-col cols="12" md="9">
-      <v-row>
-        <v-col cols="12" md="6">
-          <lazy-common-shared-field-label
-            >Full Name</lazy-common-shared-field-label
-          >
-          <v-text-field
-            v-model="form.name"
-            persistent-hint
-            hint="e.g John Doe"
-            :rules="rules.name"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <lazy-common-shared-field-label
-            >User Name</lazy-common-shared-field-label
-          >
-          <v-text-field
-            v-model="form.user_name"
-            persistent-hint
-            hint="e.g john.doe"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <lazy-common-shared-field-label
-            >Phone Number</lazy-common-shared-field-label
-          >
-          <v-text-field
-            v-model="form.phone_no"
-            persistent-hint
-            hint="e.g 98XXXXXXXX"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <lazy-common-shared-field-label
-            >Email Address</lazy-common-shared-field-label
-          >
-          <v-text-field
-            v-model="form.email"
-            persistent-hint
-            hint="e.g john.doe@example.com"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" class="d-flex">
-          <v-spacer></v-spacer>
-          <v-btn color="primary" rounded="lg">Update Profile</v-btn>
-        </v-col>
-      </v-row>
+      <v-form @submit.prevent="submit">
+        <v-row>
+          <v-col cols="12" md="6">
+            <lazy-common-shared-field-label
+              >Full Name</lazy-common-shared-field-label
+            >
+            <v-text-field
+              v-model="form.name"
+              persistent-hint
+              hint="e.g John Doe"
+              :rules="rules.name"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <lazy-common-shared-field-label
+              >User Name</lazy-common-shared-field-label
+            >
+            <v-text-field
+              v-model="form.user_name"
+              persistent-hint
+              hint="e.g john.doe"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <lazy-common-shared-field-label
+              >Phone Number</lazy-common-shared-field-label
+            >
+            <v-text-field
+              v-model="form.phone_number"
+              persistent-hint
+              hint="e.g 98XXXXXXXX"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <lazy-common-shared-field-label
+              >Email Address</lazy-common-shared-field-label
+            >
+            <v-text-field
+              v-model="form.email"
+              persistent-hint
+              hint="e.g john.doe@example.com"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" class="d-flex">
+            <v-spacer></v-spacer>
+            <v-btn color="primary" type="submit" rounded="lg"
+              >Update Profile</v-btn
+            >
+          </v-col>
+        </v-row>
+      </v-form>
     </v-col>
   </v-row>
   <v-row>
@@ -246,7 +258,8 @@ const submit = () => {
                       <v-row>
                         <v-col cols="6" class="pt-0">
                           <v-btn
-                            block variant="tonal"
+                            block
+                            variant="tonal"
                             color="success"
                             @click="isActive.value = false"
                           >

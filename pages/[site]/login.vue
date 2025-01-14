@@ -78,20 +78,18 @@ const login = async () => {
     });
 };
 
-onMounted(() => {
-  if (user.user.id) {
-    console.log("user");
+onMounted(async () => {
+  await nextTick();
+  if (user.user.id && user.role === "user") {
     navigateTo("/", {
       replace: true,
-    })} else if (admin.user.id) {
-      console.log(admin.user,"admin");
-      navigateTo("/admin/", {
-        replace: true,
-      });
-    }
-    // console.log(user.user.id);
-    // console.log("hi");
-  });
+    });
+  } else if (admin.user.id && user.role === "admin") {
+    navigateTo("/admin/", {
+      replace: true,
+    });
+  }
+});
 </script>
 <template>
   <v-container class="fill-height">
@@ -109,6 +107,7 @@ onMounted(() => {
                 :loading
                 :disabled="loading"
                 :rules="rules.email"
+                density="compact"
               ></v-text-field>
               <lazy-common-shared-field-label
                 >Password</lazy-common-shared-field-label
@@ -120,11 +119,12 @@ onMounted(() => {
                 :append-inner-icon="show ? 'mdi-eye-off' : 'mdi-eye'"
                 :loading
                 :disabled="loading"
+                density="compact"
                 @click:append-inner="show = !show"
               ></v-text-field>
             </v-card-text>
             <v-card-actions>
-              <v-btn block color="primary" variant="tonal" type="submit"
+              <v-btn block variant="flat" color="primary" type="submit"
                 >Sign In</v-btn
               >
             </v-card-actions>
