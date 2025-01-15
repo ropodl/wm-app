@@ -9,8 +9,8 @@ definePageMeta({
 
 const headers = ref([
   {
-    title: "Forum's Name",
-    key: "name",
+    title: "Feedback Title",
+    key: "title",
   },
   {
     title: "Actions",
@@ -29,8 +29,9 @@ const pagination = ref({
   currentPage: 1,
 });
 
-const loadForums = async ({ page, itemsPerPage, sortBy }) => {
-  await useAxios("/forums", {
+const loadFeedback = async ({ page, itemsPerPage, sortBy }) => {
+  console.log(sortBy);
+  await useAxios("/feedback", {
     query: {
       page,
       itemsPerPage,
@@ -38,7 +39,7 @@ const loadForums = async ({ page, itemsPerPage, sortBy }) => {
     },
   })
     .then((res) => {
-      items.value = res.forums;
+      items.value = res.feedbacks;
       pagination.value = res.pagination;
     })
     .finally(() => {
@@ -52,7 +53,7 @@ const deleteItem = async (item, active) => {
     method: "DELETE",
   }).then((res) => {
     setSnackbar(res.message, "success");
-    loadForums();
+    loadFeedback();
     active.value = false;
   });
 };
@@ -61,7 +62,7 @@ const deleteItem = async (item, active) => {
   <v-container>
     <v-row>
       <v-col cols="12" md="4">
-        <div class="text-h4 font-weight-bold">All Forums</div>
+        <div class="text-h4 font-weight-bold">All Feedback</div>
       </v-col>
     </v-row>
     <v-row>
@@ -73,7 +74,7 @@ const deleteItem = async (item, active) => {
             :loading
             :items-per-page="pagination.itemsPerPage"
             :items-length="pagination.totalPage"
-            @update:options="loadForums"
+            @update:options="loadFeedback"
           >
             <template v-slot:item.action="{ item }">
               <v-btn
@@ -96,12 +97,12 @@ const deleteItem = async (item, active) => {
                     ></v-btn>
                   </template>
                   <template v-slot:default="{ isActive }">
-                    <v-card border flat title="Delete Forum">
-                      <v-card-text>
+                    <v-card border flat density="compact" title="Delete Forum">
+                      <v-card-text class="pb-0">
                         Are you sure, you want to delete forum with name<br />"<span
                           class="text-red"
                         >
-                          {{ item.name }}</span
+                          {{ item.title }}</span
                         >"?
                       </v-card-text>
                       <v-card-actions>

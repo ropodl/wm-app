@@ -63,7 +63,7 @@ const navItems = [
   {
     icon: "mdi-format-list-checks",
     title: "Users",
-    subtitle: "User Management",
+    subtitle: "User & Feedback",
     subitems: [
       {
         title: "All Users",
@@ -74,6 +74,11 @@ const navItems = [
         routes: "/admin/users/create",
       },
     ],
+  },
+  {
+    icon: "mdi-account",
+    title: "Feedback",
+    routes: "/admin/feedback",
   },
 ];
 
