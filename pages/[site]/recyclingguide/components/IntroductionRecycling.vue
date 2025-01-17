@@ -1,7 +1,8 @@
 <script setup>
-definePageMeta({});
+definePageMeta({
+  layout: "user",
+});
 </script>
-
 <template>
   <div class="recycling-container">
     <section class="recycling-intro">
