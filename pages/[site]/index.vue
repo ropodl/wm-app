@@ -21,7 +21,8 @@ definePageMeta({
             <v-card outlined>
               <v-card-title>Total R-waste Collection</v-card-title>
               <v-card-text>
-                <h3>50 kg</h3>
+                <!-- Display the fetched total waste -->
+                <h3>{{ totalWaste }} kg</h3>
                 <p>Total waste collected this month</p>
               </v-card-text>
             </v-card>
@@ -198,3 +199,30 @@ definePageMeta({
     </v-main>
   </v-app>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      totalWaste: 0, // Initial value for total waste
+    };
+  },
+  created() {
+    // this.fetchWasteData(); // Fetch data when the component is created
+  },
+  methods: {
+    // async fetchWasteData() {
+    //   try {
+    //     // Make an API call to the backend to fetch waste collection data
+    //     const response = await useAxios(
+    //       "http://localhost:3000/api/waste-collection"
+    //     );
+    //     // Update the totalWaste variable with the response data
+    //     this.totalWaste = response.data.total;
+    //   } catch (error) {
+    //     console.error("Error fetching waste data:", error);
+    //   }
+    // },
+  },
+};
+</script>

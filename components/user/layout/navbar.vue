@@ -20,6 +20,16 @@ const navItems = [
     title: "Forums",
     routes: "/forum",
   },
+  {
+    icon: "mdi-map-outline",
+    title: "Maps",
+    routes: "/maps",
+  },
+  {
+    icon: "mdi-chart-line",
+    title: "Analytic",
+    routes: "/analytic",
+  },
 ];
 
 const bottomNavItems = ref([
@@ -61,6 +71,7 @@ const breadcrumb = computed(() => {
   ];
 });
 </script>
+
 <template>
   <v-app-bar
     app
@@ -145,6 +156,7 @@ const breadcrumb = computed(() => {
     </template>
   </v-navigation-drawer>
 </template>
+
 <style lang="scss">
 a.v-breadcrumbs-item--link {
   text-decoration: none;
