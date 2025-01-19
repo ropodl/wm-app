@@ -42,7 +42,6 @@ const submit = async () => {
       method: "POST",
       body: form.value,
     }).then((res) => {
-      // console.log(res);
       setSnackbar(res.message, "success");
       formRef.value.reset();
     });

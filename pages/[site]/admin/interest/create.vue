@@ -1,7 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "admin",
-  middleware: ["admin-auth"]
+  middleware: ["admin-auth"],
 });
 
 const form = ref({
@@ -10,6 +10,13 @@ const form = ref({
   status: "Draft",
 });
 
+const formRules = {
+  title: [
+    (v) => !!v || "Interest Title is required",
+    (v) => (v && v.length > 3) || "Interest Title must be 3 characters or more",
+  ],
+};
+
 const formRef = ref(null);
 const submit = async () => {
   const { valid } = await formRef.value.validate();
@@ -17,7 +24,7 @@ const submit = async () => {
   if (valid) {
     await useAxios("interest", {
       method: "POST",
-      body: form.value
+      body: form.value,
     });
   }
 };
@@ -36,32 +43,12 @@ const submit = async () => {
             persistent-hint
             class="pb-3"
             hint="e.g Renewables, Non Renewables"
+            :rules="formRules.title"
           ></v-text-field>
           <lazy-common-shared-quill-editor v-model:content="form.description" />
         </v-col>
         <v-col cols="12" md="4">
-          <v-card border flat>
-            <v-card-title>Actions</v-card-title>
-            <v-divider></v-divider>
-            <v-card-text>
-              <ul class="list-style-none">
-                <li>Status: Draft</li>
-              </ul>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-row>
-                <v-col cols="6">
-                  <v-btn color="error" variant="tonal" block>Cancel</v-btn>
-                </v-col>
-                <v-col cols="6">
-                  <v-btn type="submit" color="primary" variant="tonal" block
-                    >Submit</v-btn
-                  >
-                </v-col>
-              </v-row>
-            </v-card-actions>
-          </v-card>
+          <lazy-common-shared-actions :form />
         </v-col>
       </v-row>
     </v-container>

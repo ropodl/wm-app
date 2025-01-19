@@ -50,34 +50,7 @@ const submit = async () => {
         </v-col>
         <v-col cols="12" md="4">
           <lazy-common-shared-image-upload v-model="form.image" :form />
-          <v-card border density="compact" flat class="mb-3">
-            <v-card-title>Actions</v-card-title>
-            <v-divider></v-divider>
-            <v-card-text>
-              <span class="font-weight-bold">Status:&nbsp;</span>
-              {{ form.status ? "Draft" : "Published" }}
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions class="d-flex">
-              <v-btn
-                color="warning"
-                class="px-4"
-                @click="form.status = 'Draft'"
-              >
-                Save as Draft
-              </v-btn>
-              <v-spacer></v-spacer>
-              <v-btn
-                type="submit"
-                color="primary"
-                variant="flat"
-                class="px-4"
-                @click="form.status = 'Published'"
-              >
-                {{ route.params.id ? "Update" : "Publish Now" }}
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+          <lazy-common-shared-actions :form />
         </v-col>
       </v-row>
     </v-container>

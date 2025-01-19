@@ -1,6 +1,5 @@
 <script setup>
 const admin = useAdminUserStore();
-const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "admin",
@@ -30,7 +29,6 @@ const pagination = ref({
 });
 
 const loadFeedback = async ({ page, itemsPerPage, sortBy }) => {
-  console.log(sortBy);
   await useAxios("/feedback", {
     query: {
       page,
@@ -45,17 +43,6 @@ const loadFeedback = async ({ page, itemsPerPage, sortBy }) => {
     .finally(() => {
       loading.value = false;
     });
-};
-
-const deleteItem = async (item, active) => {
-  console.log(item.id);
-  await useAxios(`/forums/${item.id}`, {
-    method: "DELETE",
-  }).then((res) => {
-    setSnackbar(res.message, "success");
-    loadFeedback();
-    active.value = false;
-  });
 };
 </script>
 <template>
@@ -77,53 +64,43 @@ const deleteItem = async (item, active) => {
             @update:options="loadFeedback"
           >
             <template v-slot:item.action="{ item }">
-              <v-btn
-                class="mr-1"
-                variant="text"
-                rounded="lg"
-                size="small"
-                icon="mdi-pencil"
-                :to="`/admin/forums/${item.id}`"
-              ></v-btn>
-              <template v-if="admin.user.role === 'admin'">
-                <v-dialog scrim="black" width="500">
-                  <template v-slot:activator="{ props: dialog }">
-                    <v-btn
-                      v-bind="dialog"
-                      variant="text"
-                      size="small"
-                      rounded="lg"
-                      icon="mdi-delete"
-                    ></v-btn>
-                  </template>
-                  <template v-slot:default="{ isActive }">
-                    <v-card border flat density="compact" title="Delete Forum">
-                      <v-card-text class="pb-0">
-                        Are you sure, you want to delete forum with name<br />"<span
-                          class="text-red"
-                        >
-                          {{ item.title }}</span
-                        >"?
-                      </v-card-text>
-                      <v-card-actions>
-                        <v-btn
-                          border
-                          class="px-6"
-                          text="Cancel"
-                          @click="isActive.value = false"
-                        ></v-btn>
-                        <v-btn
-                          variant="flat"
-                          color="primary"
-                          class="px-6"
-                          text="Continue"
-                          @click="deleteItem(item, isActive)"
-                        ></v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </template>
-                </v-dialog>
-              </template>
+              <v-dialog persistent scrim="black" width="500">
+                <template v-slot:activator="{ props: activatorProps }">
+                  <v-btn
+                    v-bind="activatorProps"
+                    variant="text"
+                    rounded="lg"
+                    size="small"
+                    icon="mdi-eye"
+                  ></v-btn>
+                </template>
+
+                <template v-slot:default="{ isActive }">
+                  <v-card :title="item.title">
+                    <v-card-text class="pb-0">
+                      Suggestions: {{ item.suggestions }}
+                      <br />
+                      UI : {{ item.ratings.ui }}
+                      <br />
+                      Navigation : {{ item.ratings.navigation }}
+                      <br />
+                      Performance : {{ item.ratings.performance }}
+                      <br />
+                      Content : {{ item.ratings.content }}
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        class="px-6"
+                        variant="flat"
+                        color="white"
+                        text="Close Dialog"
+                        @click="isActive.value = false"
+                      ></v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
             </template>
           </v-data-table-server>
         </v-card>

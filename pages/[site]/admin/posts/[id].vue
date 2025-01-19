@@ -1,9 +1,10 @@
 <script setup>
 const route = useRoute();
+const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "admin",
-  middleware: ["admin-auth"]
+  middleware: ["admin-auth"],
 });
 
 const form = ref({
@@ -23,7 +24,6 @@ const getInterests = async () => {
 
 onMounted(() => {
   useAxios(`/post/${route.params.id}`).then((res) => {
-    console.log(res);
     form.value = res;
   });
   getInterests();
@@ -35,16 +35,15 @@ const submit = async () => {
     const value = form.value[key];
     formData.append(key, value);
   }
-  console.log(formData);
   await useAxios(`post/${route.params.id}`, {
     method: "PATCH",
     body: formData,
   })
     .then((res) => {
-      console.log(res,'res');
+      setSnackbar(res.message, "success");
     })
     .catch((err) => {
-      console.log(err,'err');
+      console.log(err, "err");
     });
 };
 </script>
@@ -85,43 +84,7 @@ const submit = async () => {
         </v-col>
         <v-col cols="12" md="4">
           <lazy-common-shared-image-upload :form />
-          <v-card border flat class="mb-3">
-            <v-card-title>Actions</v-card-title>
-            <v-divider></v-divider>
-            <v-card-text>
-              <span class="font-weight-bold">Status:&nbsp;</span>
-              {{ form.status === "Published" ? "Published" : "Draft" }}
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-row>
-                <v-col cols="6">
-                  <v-btn
-                    block
-                    color="warning"
-                    height="40"
-                    class="text-capitalize"
-                    @click="form.status = 'Draft'"
-                  >
-                    Save as Draft
-                  </v-btn>
-                </v-col>
-                <v-col cols="6">
-                  <v-btn
-                    block
-                    type="submit"
-                    color="primary"
-                    height="40"
-                    variant="tonal"
-                    class="text-capitalize"
-                    @click="form.status = 'Published'"
-                  >
-                    {{ route.params.id ? "Update" : "Publish Now" }}
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-card-actions>
-          </v-card>
+          <lazy-common-shared-actions :form />
         </v-col>
       </v-row>
     </v-container>

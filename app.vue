@@ -23,14 +23,14 @@ onMounted(() => {
       <v-main>
         <NuxtPage />
       </v-main>
-      <v-snackbar
-        v-model="toast.show"
-        location="bottom right"
-        :color="toast.color"
-      >
-        {{ toast.text }}
-      </v-snackbar>
     </NuxtLayout>
+    <v-snackbar
+      v-model="toast.show"
+      location="bottom right"
+      :color="toast.color"
+    >
+      {{ toast.text }}
+    </v-snackbar>
   </v-app>
 </template>
 <style lang="scss">

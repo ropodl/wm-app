@@ -2,8 +2,8 @@
   <v-main>
     <NuxtLayout name="user" />
     <v-tabs grow>
-      <v-tab to="/posts">All</v-tab>
-      <v-tab to="/posts/recommendation">Test</v-tab>
+      <v-tab to="/posts">Latest</v-tab>
+      <v-tab to="/posts/recommendation">Recommended</v-tab>
     </v-tabs>
     <v-divider></v-divider>
     <v-container>

@@ -60,22 +60,22 @@ const navItems = [
     title: "Forum Settings",
     routes: "/admin/forums/settings",
   },
+  // {
+  //   icon: "mdi-format-list-checks",
+  //   title: "Users",
+  //   subitems: [
+  //     {
+  //       title: "All Users",
+  //       routes: "/admin/users",
+  //     },
+  //     {
+  //       title: "Add Users",
+  //       routes: "/admin/users/create",
+  //     },
+  //   ],
+  // },
   {
-    icon: "mdi-format-list-checks",
-    title: "Users",
-    subtitle: "User & Feedback",
-    subitems: [
-      {
-        title: "All Users",
-        routes: "/admin/users",
-      },
-      {
-        title: "Add Users",
-        routes: "/admin/users/create",
-      },
-    ],
-  },
-  {
+    subtitle: "Feedback",
     icon: "mdi-account",
     title: "Feedback",
     routes: "/admin/feedback",

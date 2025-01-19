@@ -9,6 +9,12 @@ definePageMeta({
 const headers = [
   { key: "title", title: "Title" },
   { key: "slug", title: "Slug" },
+  {
+    key: "status",
+    title: "Status",
+    sortable: false,
+    width: 100,
+  },
   { key: "action", title: "Actions", sortable: false, width: 150 },
 ];
 
@@ -59,6 +65,14 @@ const getInterests = async ({ page, itemsPerPage, sortBy }) => {
             :items-length="pagination.totalItems"
             @update:options="getInterests"
           >
+            <template v-slot:item.status="{ item }">
+              <v-chip
+                variant="text"
+                class="w-100 pa-0"
+                :color="item.status === 'Draft' ? 'warning' : 'success'"
+                >{{ item.status }}</v-chip
+              >
+            </template>
             <template v-slot:item.action="{ item }">
               <v-btn
                 class="mr-1"

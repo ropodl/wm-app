@@ -25,19 +25,9 @@ const navItems = [
     title: "Maps",
     routes: "/maps",
   },
-  {
-    icon: "mdi-chart-line",
-    title: "Analytic",
-    routes: "/analytic",
-  },
 ];
 
 const bottomNavItems = ref([
-  {
-    icon: "mdi-bullhorn-outline",
-    title: "Feedback",
-    to: "/feedback",
-  },
   {
     icon: "mdi-help-circle-outline",
     title: "Help",
@@ -49,29 +39,14 @@ const profileItems = ref([]);
 
 const drawer = ref(true);
 
-const toggleDrawer = () => {
-  drawer.value = !drawer.value;
-};
 const toggleFullScreen = () => {
   fullscreen.value.toggle();
 };
 
 const logout = () => {
-  console.log("log out");
   user.logOut();
 };
-
-const breadcrumb = computed(() => {
-  return [
-    {
-      title: "Home",
-      disabled: false,
-      to: "/",
-    },
-  ];
-});
 </script>
-
 <template>
   <v-app-bar
     app
@@ -129,6 +104,7 @@ const breadcrumb = computed(() => {
     <lazy-common-layout-navbar-nav-list class="pa-2" :nav-items="navItems" />
     <template v-slot:append>
       <v-list class="pa-2" :density="apperance.density">
+        <lazy-user-shared-feedback-form />
         <template v-for="{ icon, title, to } in bottomNavItems">
           <v-list-item
             color="primary"

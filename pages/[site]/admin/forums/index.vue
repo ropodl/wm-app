@@ -13,6 +13,12 @@ const headers = ref([
     key: "name",
   },
   {
+    key: "status",
+    title: "Status",
+    sortable: false,
+    width: 100,
+  },
+  {
     title: "Actions",
     key: "action",
     sortable: false,
@@ -29,13 +35,14 @@ const pagination = ref({
   currentPage: 1,
 });
 
-const loadForums = async ({ page, itemsPerPage, sortBy }) => {
+const loadForums = async (item) => {
+  console.log(item);
   await useAxios("/forums", {
-    query: {
-      page,
-      itemsPerPage,
-      sortBy: sortBy.length ? sortBy : [{ order: "desc", key: "updatedAt" }],
-    },
+    // query: {
+    //   page,
+    //   itemsPerPage,
+    //   sortBy: sortBy.length ? sortBy : [{ order: "desc", key: "updatedAt" }],
+    // },
   })
     .then((res) => {
       items.value = res.forums;
@@ -52,8 +59,8 @@ const deleteItem = async (item, active) => {
     method: "DELETE",
   }).then((res) => {
     setSnackbar(res.message, "success");
-    loadForums();
     active.value = false;
+    loadForums(pagination.currentPage, pagination.itemsPerPage, []);
   });
 };
 </script>
@@ -75,6 +82,14 @@ const deleteItem = async (item, active) => {
             :items-length="pagination.totalPage"
             @update:options="loadForums"
           >
+            <template v-slot:item.status="{ item }">
+              <v-chip
+                variant="text"
+                class="w-100 pa-0"
+                :color="item.status === 'Draft' ? 'warning' : 'success'"
+                >{{ item.status }}</v-chip
+              >
+            </template>
             <template v-slot:item.action="{ item }">
               <v-btn
                 class="mr-1"
