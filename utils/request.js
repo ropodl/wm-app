@@ -25,7 +25,7 @@ export const useAxios = async (url, opts = {}) => {
     });
     return res;
   } catch (err) {
-    console.error("Error fetching data:", err);
+    // console.error("Error fetching data:", err);
     throw err;
   }
 };

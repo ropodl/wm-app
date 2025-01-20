@@ -9,7 +9,7 @@ defineProps({
 });
 </script>
 <template>
-  <v-card border flat class="mb-3">
+  <v-card border flat class="mb-3 position-sticky" style="top: 60px">
     <v-card-title>Actions</v-card-title>
     <v-divider></v-divider>
     <v-card-text>
@@ -27,10 +27,10 @@ defineProps({
         Save as Draft
       </v-btn>
       <v-btn
-        type="submit"
-        color="white"
-        variant="flat"
+        color="primary"
         class="px-6 text-capitalize"
+        variant="flat"
+        type="submit"
         @click="form.status = 'Published'"
       >
         {{ route.params.id ? "Update" : "Publish Now" }}

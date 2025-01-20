@@ -151,9 +151,8 @@ const submit = async (isActive) => {
             ></v-btn>
             <v-btn
               type="submit"
-              variant="flat"
               class="px-6"
-              color="white"
+              color="priary"
               text="Submit"
             ></v-btn>
           </v-card-actions>

@@ -80,13 +80,13 @@ const loadFeedback = async ({ page, itemsPerPage, sortBy }) => {
                     <v-card-text class="pb-0">
                       Suggestions: {{ item.suggestions }}
                       <br />
-                      UI : {{ item.ratings.ui }}
+                      UI Rating: {{ item.ratings.ui }}
                       <br />
-                      Navigation : {{ item.ratings.navigation }}
+                      Navigation Rating: {{ item.ratings.navigation }}
                       <br />
-                      Performance : {{ item.ratings.performance }}
+                      Performance Rating: {{ item.ratings.performance }}
                       <br />
-                      Content : {{ item.ratings.content }}
+                      Content Rating: {{ item.ratings.content }}
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>

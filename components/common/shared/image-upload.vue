@@ -43,9 +43,9 @@ const selectImage = ({ target }) => {
               scrim="black"
             >
               <v-btn
-                flat
                 icon="mdi-close"
                 color="primary"
+                size="x-small"
                 rounded="lg"
                 @click="form.image = null"
               />

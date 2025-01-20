@@ -1,8 +1,8 @@
 <script setup>
 definePageMeta({
   layout: "lord",
-  auth: true
-})
+  auth: true,
+});
 
 const headers = [
   {
@@ -16,7 +16,7 @@ const headers = [
   {
     title: "Actions",
     value: "actions",
-    width: 130
+    width: 130,
   },
 ];
 
@@ -47,18 +47,15 @@ const callTenants = () => {
           <v-data-table :headers :items>
             <template #item.actions>
               <v-btn
-                size="small"
                 class="mr-3"
                 color="primary"
-                rounded="lg"
                 icon="mdi-pen"
-                variant="tonal"
+                variant="text"
               ></v-btn>
               <v-btn
-                size="small"
                 rounded="lg"
                 color="error"
-                variant="tonal"
+                variant="text"
                 icon="mdi-delete"
               ></v-btn>
             </template>

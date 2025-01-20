@@ -35,14 +35,13 @@ const pagination = ref({
   currentPage: 1,
 });
 
-const loadForums = async (item) => {
-  console.log(item);
+const loadForums = async ({ page, itemsPerPage, sortBy }) => {
   await useAxios("/forums", {
-    // query: {
-    //   page,
-    //   itemsPerPage,
-    //   sortBy: sortBy.length ? sortBy : [{ order: "desc", key: "updatedAt" }],
-    // },
+    query: {
+      page,
+      itemsPerPage,
+      sortBy: sortBy.length ? sortBy : [{ order: "desc", key: "updatedAt" }],
+    },
   })
     .then((res) => {
       items.value = res.forums;
@@ -53,14 +52,18 @@ const loadForums = async (item) => {
     });
 };
 
-const deleteItem = async (item, active) => {
+const deleteForum = async (item, active) => {
   console.log(item.id);
   await useAxios(`/forums/${item.id}`, {
     method: "DELETE",
   }).then((res) => {
     setSnackbar(res.message, "success");
     active.value = false;
-    loadForums(pagination.currentPage, pagination.itemsPerPage, []);
+    loadForums({
+      page: pagination.currentPage,
+      itemsPerPage: pagination.itemsPerPage,
+      sortBy: [],
+    });
   });
 };
 </script>
@@ -100,43 +103,12 @@ const deleteItem = async (item, active) => {
                 :to="`/admin/forums/${item.id}`"
               ></v-btn>
               <template v-if="admin.user.role === 'admin'">
-                <v-dialog scrim="black" width="500">
-                  <template v-slot:activator="{ props: dialog }">
-                    <v-btn
-                      v-bind="dialog"
-                      variant="text"
-                      size="small"
-                      rounded="lg"
-                      icon="mdi-delete"
-                    ></v-btn>
-                  </template>
-                  <template v-slot:default="{ isActive }">
-                    <v-card border flat title="Delete Forum">
-                      <v-card-text>
-                        Are you sure, you want to delete forum with name<br />"<span
-                          class="text-red"
-                        >
-                          {{ item.name }}</span
-                        >"?
-                      </v-card-text>
-                      <v-card-actions>
-                        <v-btn
-                          border
-                          class="px-6"
-                          text="Cancel"
-                          @click="isActive.value = false"
-                        ></v-btn>
-                        <v-btn
-                          variant="flat"
-                          color="primary"
-                          class="px-6"
-                          text="Continue"
-                          @click="deleteItem(item, isActive)"
-                        ></v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </template>
-                </v-dialog>
+                <lazy-common-layout-datatable-delete-dialog
+                  :item
+                  :title="item.name"
+                  type="forum"
+                  @remove="deleteForum"
+                />
               </template>
             </template>
           </v-data-table-server>

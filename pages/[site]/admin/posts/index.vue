@@ -1,5 +1,7 @@
 <script setup>
 const admin = useAdminUserStore();
+const { setSnackbar } = useSnackbarStore();
+
 definePageMeta({
   layout: "admin",
   middleware: ["admin-auth"],
@@ -38,10 +40,28 @@ const loadPosts = async ({ page, itemsPerPage, sortBy }) => {
       itemsPerPage,
       sortBy: sortBy.length ? sortBy : [{ order: "desc", key: "updatedAt" }],
     },
+  })
+    .then((res) => {
+      items.value = res.posts;
+      pagination.value = res.pagination;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+};
+
+const deletePost = async (item, active) => {
+  await useAxios(`post/${item.id}`, {
+    method: "DELETE",
   }).then((res) => {
-    items.value = res.posts;
-    pagination.value = res.pagination;
-    loading.value = false;
+    console.log(res);
+    setSnackbar(res.message, "success");
+    active.value = false;
+    loadPosts({
+      page: pagination.currentPage,
+      itemsPerPage: pagination.itemsPerPage,
+      sortBy: [],
+    });
   });
 };
 </script>
@@ -53,9 +73,9 @@ const loadPosts = async ({ page, itemsPerPage, sortBy }) => {
       </v-col>
       <v-col cols="12" md="2">
         <div class="d-flex justify-end">
-          <v-btn flat color="white" to="/admin/posts/create" rounded="lg"
-            >New Post</v-btn
-          >
+          <v-btn color="primary" variant="flat" to="/admin/posts/create">
+            New Post
+          </v-btn>
         </div>
       </v-col>
     </v-row>
@@ -88,12 +108,12 @@ const loadPosts = async ({ page, itemsPerPage, sortBy }) => {
                 :to="`/admin/posts/${item.id}`"
               ></v-btn>
               <template v-if="admin.user.role === 'admin'">
-                <v-btn
-                  variant="text"
-                  rounded="lg"
-                  size="small"
-                  icon="mdi-delete"
-                ></v-btn>
+                <lazy-common-layout-datatable-delete-dialog
+                  :item
+                  :title="item.title"
+                  type="post"
+                  @remove="deletePost"
+                />
               </template>
             </template>
           </v-data-table-server>

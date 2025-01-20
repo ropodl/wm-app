@@ -71,6 +71,7 @@ const submit = async () => {
             item-value="id"
             item-title="title"
             variant="outlined"
+            density="compact"
             :items="tags.interests"
           />
           <lazy-common-shared-field-label

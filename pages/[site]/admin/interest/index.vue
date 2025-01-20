@@ -1,5 +1,6 @@
 <script setup>
 const admin = useAdminUserStore();
+const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "admin",
@@ -27,7 +28,7 @@ const pagination = ref({
 });
 const loading = ref(true);
 
-const getInterests = async ({ page, itemsPerPage, sortBy }) => {
+const loadInterests = async ({ page, itemsPerPage, sortBy }) => {
   const res = await useAxios("interest", {
     query: {
       page,
@@ -39,6 +40,25 @@ const getInterests = async ({ page, itemsPerPage, sortBy }) => {
   pagination.value = res.pagination;
   loading.value = false;
 };
+
+const deleteInterest = async (item, active) => {
+  await useAxios(`interest/${item.id}`, {
+    method: "DELETE",
+  })
+    .then((res) => {
+      console.log(res);
+      setSnackbar(res.message, "success");
+      active.value = false;
+      loadInterests({
+        page: pagination.currentPage,
+        itemsPerPage: pagination.itemsPerPage,
+        sortBy: [],
+      });
+    })
+    .catch((err) => {
+      setSnackbar(err.response._data.error, "error");
+    });
+};
 </script>
 <template>
   <v-container>
@@ -48,9 +68,9 @@ const getInterests = async ({ page, itemsPerPage, sortBy }) => {
       </v-col>
       <v-col cols="12" md="2">
         <div class="d-flex justify-end">
-          <v-btn flat color="white" to="/admin/interest/create" rounded="lg"
-            >New Interest</v-btn
-          >
+          <v-btn color="primary" to="/admin/interest/create">
+            New Interest
+          </v-btn>
         </div>
       </v-col>
     </v-row>
@@ -63,7 +83,7 @@ const getInterests = async ({ page, itemsPerPage, sortBy }) => {
             :loading
             :items-per-page="pagination.itemsPerPage"
             :items-length="pagination.totalItems"
-            @update:options="getInterests"
+            @update:options="loadInterests"
           >
             <template v-slot:item.status="{ item }">
               <v-chip
@@ -83,12 +103,12 @@ const getInterests = async ({ page, itemsPerPage, sortBy }) => {
                 :to="`/admin/interest/${item.id}`"
               ></v-btn>
               <template v-if="admin.user.role === 'admin'">
-                <v-btn
-                  variant="text"
-                  rounded="lg"
-                  size="small"
-                  icon="mdi-delete"
-                ></v-btn>
+                <lazy-common-layout-datatable-delete-dialog
+                  :item
+                  :title="item.title"
+                  type="interest"
+                  @remove="deleteInterest"
+                />
               </template>
             </template>
           </v-data-table-server>

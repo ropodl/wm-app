@@ -1,4 +1,6 @@
 <script setup>
+const { setSnackbar } = useSnackbarStore();
+
 definePageMeta({
   layout: "admin",
   middleware: ["admin-auth"],
@@ -25,7 +27,15 @@ const submit = async () => {
     await useAxios("interest", {
       method: "POST",
       body: form.value,
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        setSnackbar("Interest created successfully", "success");
+        navigateTo(`/admin/interest/${res.id}`);
+      })
+      .catch((err) => {
+        setSnackbar(err.response._data.error, "error");
+      });
   }
 };
 </script>

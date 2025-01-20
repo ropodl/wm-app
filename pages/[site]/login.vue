@@ -124,9 +124,9 @@ onMounted(async () => {
               ></v-text-field>
             </v-card-text>
             <v-card-actions>
-              <v-btn block variant="flat" color="primary" type="submit"
-                >Sign In</v-btn
-              >
+              <v-btn block variant="flat" color="primary" type="submit">
+                Sign In
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-form>

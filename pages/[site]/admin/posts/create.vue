@@ -1,5 +1,4 @@
 <script setup>
-const route = useRoute();
 const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
@@ -66,6 +65,7 @@ const submit = async () => {
             item-value="id"
             multiple
             variant="outlined"
+            density="compact"
             :items="interests.interests"
           />
           <lazy-common-shared-field-label
