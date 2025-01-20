@@ -60,6 +60,21 @@ const navItems = [
     title: "Forum Moderation",
     routes: "/admin/forums/moderation",
   },
+  {
+    icon: "mdi-map-search-outline",
+    title: "Recycling Centers",
+    subtitle: "Recycling Centers",
+    subitems: [
+      {
+        title: "All Centers",
+        routes: "/admin/map",
+      },
+      {
+        title: "Add Center",
+        routes: "/admin/map/create",
+      },
+    ],
+  },
   // {
   //   icon: "mdi-format-list-checks",
   //   title: "Users",
