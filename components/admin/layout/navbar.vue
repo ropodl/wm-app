@@ -57,8 +57,8 @@ const navItems = [
   },
   {
     icon: "mdi-cog-outline",
-    title: "Forum Settings",
-    routes: "/admin/forums/settings",
+    title: "Forum Moderation",
+    routes: "/admin/forums/moderation",
   },
   // {
   //   icon: "mdi-format-list-checks",

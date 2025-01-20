@@ -60,7 +60,7 @@ const submit = async (isActive) => {
 };
 </script>
 <template>
-  <v-dialog scrollable max-width="500" scrim="black">
+  <v-dialog persistent scrollable max-width="500" height="80vh" scrim="black">
     <template v-slot:activator="{ props: activatorProps }">
       <v-list-item
         v-bind="activatorProps"
@@ -72,7 +72,7 @@ const submit = async (isActive) => {
     </template>
     <template v-slot:default="{ isActive }">
       <v-form ref="formRef" @submit.prevent="submit(isActive)">
-        <v-card border flat title="Feedback">
+        <v-card flat title="Feedback">
           <v-card-text>
             <lazy-common-shared-field-label
               >Suggestions</lazy-common-shared-field-label
@@ -90,13 +90,15 @@ const submit = async (isActive) => {
             <v-number-input
               v-model="form.ratings.ui"
               variant="outlined"
-              control-variant="outlined"
+              control-variant="default"
               :rules="formRules.ui"
               :min="1"
               :max="5"
+              rounded="lg"
               persistent-hint
               hint="Out of 5"
               class="mb-3"
+              type="text"
             ></v-number-input>
             <lazy-common-shared-field-label>
               Navigation Ratings
@@ -141,18 +143,14 @@ const submit = async (isActive) => {
               class="mb-3"
             ></v-number-input>
           </v-card-text>
-          <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
             <v-btn
               class="px-6"
-              text="Cancel"
-              @click="isActive.value = false"
-            ></v-btn>
-            <v-btn
+              color="primary"
+              variant="flat"
               type="submit"
-              class="px-6"
-              color="priary"
               text="Submit"
             ></v-btn>
           </v-card-actions>

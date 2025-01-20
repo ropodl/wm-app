@@ -69,9 +69,14 @@ const deleteForum = async (item, active) => {
 </script>
 <template>
   <v-container>
-    <v-row>
+    <v-row justify="space-between" align="center">
       <v-col cols="12" md="4">
         <div class="text-h4 font-weight-bold">All Forums</div>
+      </v-col>
+      <v-col cols="12" md="4">
+        <div class="d-flex justify-end">
+          <v-btn color="primary" to="/admin/forums/create"> New Forum </v-btn>
+        </div>
       </v-col>
     </v-row>
     <v-row>
