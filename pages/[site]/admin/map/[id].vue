@@ -8,27 +8,57 @@ definePageMeta({
 });
 
 const form = ref({
-  title: "",
-  description: "",
+  name: "",
+  iframe: "",
   status: "Draft",
 });
+
+const formRules = {
+  name: [
+    (v) => !!v || "Recycling Center's Name is required",
+    (v) =>
+      (v && v.length > 3) ||
+      "Recycling Center's Name must be 3 characters or more",
+  ],
+  iframe: [
+    (v) => !!v || "Iframe is required",
+    (v) => (v && v.length > 3) || "Iframe must be 3 characters or more",
+  ],
+};
 
 const formRef = ref(null);
 const submit = async () => {
   const { valid } = await formRef.value.validate();
 
   if (valid) {
-    await useAxios(`interest/${route.params.id}`, {
-      method: "PATCH",
+    await useAxios("map", {
+      method: "POST",
       body: form.value,
-    }).then((res) => {
-      setSnackbar(res.message, "success");
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        setSnackbar("Recycling Center created successfully", "success");
+        navigateTo(`/admin/map/${res.id}`);
+      })
+      .catch((err) => {
+        setSnackbar(err.response._data.error, "error");
+      });
   }
 };
 
+const filterEmbedSource = (item) => {
+  if (
+    !item.trim().startsWith(`<iframe src="https://www.google.com/maps/embed?`)
+  ) {
+    form.value.iframe = "";
+    return;
+  }
+  const srcMatch = item.match(/src="([^"]*)"/);
+  form.value.iframe = srcMatch ? srcMatch[1] : null;
+};
+
 onMounted(() => {
-  useAxios(`interest/${route.params.id}`).then((res) => {
+  useAxios(`map/${route.params.id}`).then((res) => {
     form.value = res;
   });
 });
@@ -38,17 +68,28 @@ onMounted(() => {
     <v-container>
       <v-row>
         <v-col cols="12">
-          <h1>Add Interest</h1>
+          <div class="text-h4 font-weight-bold">Edit Recycling Center</div>
         </v-col>
         <v-col cols="12" md="8">
-          <lazy-common-shared-field-label>Title</lazy-common-shared-field-label>
+          <lazy-common-shared-field-label>Name</lazy-common-shared-field-label>
           <v-text-field
-            v-model="form.title"
+            v-model="form.name"
             persistent-hint
-            class="pb-3"
-            hint="e.g Renewables, Non Renewables"
+            class="mb-3"
+            hint="e.g Plastic Sewa, Khali sisi"
+            :rules="formRules.name"
           ></v-text-field>
-          <lazy-common-shared-quill-editor v-model:content="form.description" />
+          <lazy-common-shared-field-label
+            >Embed source</lazy-common-shared-field-label
+          >
+          <v-textarea
+            v-model="form.iframe"
+            persistent-hint
+            class="mb-3"
+            hint="Copy embed html from google maps, we'll do the magic"
+            :rules="formRules.iframe"
+            @update:model-value="filterEmbedSource"
+          ></v-textarea>
         </v-col>
         <v-col cols="12" md="4">
           <lazy-common-shared-actions :form />
