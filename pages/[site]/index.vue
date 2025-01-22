@@ -15,13 +15,61 @@ definePageMeta({
             <h2>Welcome, {{ user.user.name }}</h2>
           </v-col>
         </v-row>
-        <!-- Top Stats -->
         <v-row>
+          <v-col cols="12" md="3">
+            <v-card border flat>
+              <v-card-text
+                class="d-flex justify-space-between align-center pb-0"
+              >
+                <span class="text-h4 font-weight-bold">2</span>
+                <v-icon
+                  class="card-icon"
+                  color="primary"
+                  icon="mdi-note-outline"
+                ></v-icon>
+              </v-card-text>
+              <v-card-text class="text-h6 pt-0"
+                >Subscribed Interest</v-card-text
+              >
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="3">
+            <v-card border flat>
+              <v-card-text
+                class="d-flex justify-space-between align-center pb-0"
+              >
+                <span class="text-h4 font-weight-bold">3</span>
+                <v-icon
+                  class="card-icon"
+                  color="primary"
+                  icon="mdi-note-outline"
+                ></v-icon>
+              </v-card-text>
+              <v-card-text class="text-h6 pt-0"> Threads Created </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="3">
+            <v-card border flat>
+              <v-card-text
+                class="d-flex justify-space-between align-center pb-0"
+              >
+                <span class="text-h4 font-weight-bold">14</span>
+                <v-icon
+                  class="card-icon"
+                  color="primary"
+                  icon="mdi-note-outline"
+                ></v-icon>
+              </v-card-text>
+              <v-card-text class="text-h6 pt-0">Thread Comments</v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+        <!-- Top Stats -->
+        <!-- <v-row>
           <v-col md="3">
             <v-card outlined>
               <v-card-title>Total R-waste Collection</v-card-title>
               <v-card-text>
-                <!-- Display the fetched total waste -->
                 <h3>{{ totalWaste }} kg</h3>
                 <p>Total waste collected this month</p>
               </v-card-text>
@@ -55,10 +103,10 @@ definePageMeta({
               </v-card-text>
             </v-card>
           </v-col>
-        </v-row>
+        </v-row> -->
 
         <!-- Action Buttons -->
-        <v-row>
+        <!-- <v-row>
           <v-col md="4">
             <v-btn
               block
@@ -121,9 +169,9 @@ definePageMeta({
               >View Feedback</v-btn
             >
           </v-col>
-        </v-row>
+        </v-row> -->
 
-        <v-row>
+        <!-- <v-row>
           <v-col md="4">
             <v-card outlined>
               <v-card-title>Scheduled Recycling Actions</v-card-title>
@@ -166,10 +214,10 @@ definePageMeta({
               </v-card-text>
             </v-card>
           </v-col>
-        </v-row>
+        </v-row> -->
 
         <!-- Bottom Stats -->
-        <v-row>
+        <!-- <v-row>
           <v-col md="3">
             <v-card class="text-center" outlined>
               <h3>R-waste Collection</h3>
@@ -194,7 +242,7 @@ definePageMeta({
               <p>50</p>
             </v-card>
           </v-col>
-        </v-row>
+        </v-row> -->
       </v-container>
     </v-main>
   </v-app>

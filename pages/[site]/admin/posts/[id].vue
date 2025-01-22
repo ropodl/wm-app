@@ -43,7 +43,7 @@ const submit = async () => {
       setSnackbar(res.message, "success");
     })
     .catch((err) => {
-      console.log(err, "err");
+      setSnackbar(err.response._data.error, "error");
     });
 };
 </script>

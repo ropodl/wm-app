@@ -36,7 +36,7 @@ const submit = async () => {
     body: formData,
   })
     .then((res) => {
-      setSnackbar("Post created successfully");
+      setSnackbar("Post created successfully", "success");
       navigateTo(`/admin/posts/${res.id}`);
     })
     .catch((err) => {

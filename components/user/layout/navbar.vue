@@ -28,11 +28,11 @@ const navItems = [
 ];
 
 const bottomNavItems = ref([
-  {
-    icon: "mdi-help-circle-outline",
-    title: "Help",
-    to: "/help",
-  },
+  // {
+  //   icon: "mdi-help-circle-outline",
+  //   title: "Help",
+  //   to: "/help",
+  // },
 ]);
 
 const profileItems = ref([]);

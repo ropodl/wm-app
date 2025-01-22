@@ -85,5 +85,45 @@ const getDahboardStats = async () => {
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="12" md="6">
+        <v-card>
+          <v-card-title>Posts</v-card-title>
+          <v-divider></v-divider>
+          <v-data-table
+            style="background-color: transparent"
+            :items="[
+              {
+                title: 'Simple way to recycle as a working person',
+                status: 'Draft',
+              },
+              {
+                title: '5 ways to find know more about recycling manners',
+                status: 'Draft',
+              },
+            ]"
+          ></v-data-table>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-card>
+          <v-card-title>Interests</v-card-title>
+          <v-divider></v-divider>
+          <v-data-table
+            style="background-color: transparent"
+            :items="[
+              {
+                title: 'Simple way to recycle as a working person',
+                status: 'Draft',
+              },
+              {
+                title: '5 ways to find know more about recycling manners',
+                status: 'Draft',
+              },
+            ]"
+          ></v-data-table>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>

@@ -4,18 +4,35 @@ definePageMeta({
   middleware: ["admin-auth"],
 });
 
+const id = ref("");
 const form = ref({
-  positiveWords: [],
-  negativeWords: [],
-  spamWords: [],
+  positive: [],
+  negative: [],
+  spam: [],
 });
+
+onMounted(() => {
+  getModeration();
+});
+
+const getModeration = () => {
+  useAxios("/admin/moderation").then((res) => {
+    id.value = res.id;
+    form.value.positive = res.positive;
+    form.value.negative = res.negative;
+    form.value.spam = res.spam;
+  });
+};
 
 const submit = () => {
   console.log("this");
-};
-
-const removePositiveSelection = (index) => {
-  form.value.positiveWords.splice(index, 1);
+  useAxios("/admin/moderation", {
+    method: id.value ? "PATCH" : "POST",
+    body: form.value,
+  }).then((res) => {
+    console.log(res);
+    getModeration();
+  });
 };
 </script>
 <template>
@@ -32,7 +49,7 @@ const removePositiveSelection = (index) => {
             Positive Words
           </lazy-common-shared-field-label>
           <v-combobox
-            v-model.trim="form.positiveWords"
+            v-model.trim="form.positive"
             variant="outlined"
             chips
             multiple
@@ -41,12 +58,7 @@ const removePositiveSelection = (index) => {
             hint="Press enter for new item"
           >
             <template v-slot:chip="{ item, index }">
-              <v-chip
-                rounded="lg"
-                size="large"
-                closable
-                @click:close="removePositiveSelection(index)"
-              >
+              <v-chip rounded="lg" size="large" closable>
                 {{ item.title }}
               </v-chip>
             </template>
@@ -55,7 +67,7 @@ const removePositiveSelection = (index) => {
             Negative Words
           </lazy-common-shared-field-label>
           <v-combobox
-            v-model.trim="form.negativeWords"
+            v-model.trim="form.negative"
             variant="outlined"
             chips
             multiple
@@ -64,12 +76,7 @@ const removePositiveSelection = (index) => {
             hint="Press enter for new item"
           >
             <template v-slot:chip="{ item, index }">
-              <v-chip
-                rounded="lg"
-                size="large"
-                closable
-                @click:close="removePositiveSelection(index)"
-              >
+              <v-chip rounded="lg" size="large" closable>
                 {{ item.title }}
               </v-chip>
             </template>
@@ -78,7 +85,7 @@ const removePositiveSelection = (index) => {
             Spam Words
           </lazy-common-shared-field-label>
           <v-combobox
-            v-model.trim="form.spamWords"
+            v-model.trim="form.spam"
             variant="outlined"
             chips
             multiple
@@ -86,19 +93,14 @@ const removePositiveSelection = (index) => {
             hint="Press enter for new item"
           >
             <template v-slot:chip="{ item, index }">
-              <v-chip
-                rounded="lg"
-                size="large"
-                closable
-                @click:close="removePositiveSelection(index)"
-              >
+              <v-chip rounded="lg" size="large" closable>
                 {{ item.title }}
               </v-chip>
             </template>
           </v-combobox>
         </v-col>
         <v-col>
-          <v-btn color="primary" class="px-6">Submit</v-btn>
+          <v-btn type="submit" color="primary" class="px-6">Submit</v-btn>
         </v-col>
       </v-row>
     </v-container>
