@@ -48,7 +48,7 @@ const addToUserInterest = (id) => {
         >
           <div>
             <v-card-text class="text-h4 pb-0">{{ post.title }}</v-card-text>
-            {{ user.user.interests }}
+            <!-- {{ user.user.interests }} -->
             <!-- <v-card-text>
               <template v-for="({ _id, title }, index) in post.tags" :key="_id">
                 <v-tooltip
