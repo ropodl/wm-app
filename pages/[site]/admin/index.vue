@@ -6,13 +6,16 @@ definePageMeta({
 });
 
 onMounted(() => {
-  getDahboardStats();
+  getDashboardStats();
 });
 
 const stats_bar = ref({});
-const getDahboardStats = async () => {
+const latest_posts = ref({});
+const getDashboardStats = async () => {
   await useAxios("/admin/dashboard").then((res) => {
     stats_bar.value = res.stats_bar;
+    latest_posts.value = res.latest_posts;
+    // latest_interest.value = res.latest_interest;
   });
 };
 </script>
@@ -91,17 +94,12 @@ const getDahboardStats = async () => {
           <v-card-title>Posts</v-card-title>
           <v-divider></v-divider>
           <v-data-table
+            hover
+            density="comfortable"
             style="background-color: transparent"
-            :items="[
-              {
-                title: 'Simple way to recycle as a working person',
-                status: 'Draft',
-              },
-              {
-                title: '5 ways to find know more about recycling manners',
-                status: 'Draft',
-              },
-            ]"
+            :headers="[{ title: 'Title', key: 'title', sortable: false }]"
+            :items="latest_posts.documents"
+            hide-default-footer
           ></v-data-table>
         </v-card>
       </v-col>
@@ -121,6 +119,7 @@ const getDahboardStats = async () => {
                 status: 'Draft',
               },
             ]"
+            hide-default-footer
           ></v-data-table>
         </v-card>
       </v-col>

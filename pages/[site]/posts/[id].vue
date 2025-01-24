@@ -48,28 +48,33 @@ const addToUserInterest = (id) => {
         >
           <div>
             <v-card-text class="text-h4 pb-0">{{ post.title }}</v-card-text>
-            {{ user.user.interests }}
-            <!-- <v-card-text>
-              <template v-for="({ _id, title }, index) in post.tags" :key="_id">
-                <v-tooltip
-                  theme="light"
-                  text="Click + to follow interests"
-                  location="top"
+            <!-- {{ user.user.interests }} -->
+            <v-card-text>
+              <template v-if="user.user?.interests.length">
+                <template
+                  v-for="({ _id, title }, index) in post.tags"
+                  :key="_id"
                 >
-                  <template v-slot:activator="{ props }">
-                    <v-chip
-                      :text="title"
-                      :class="post.tags.length - 1 <= index + 1 ? 'mr-3' : ''"
-                      :append-icon="
-                        user.user.interests.includes(_id) ? '' : 'mdi-plus'
-                      "
-                      v-bind="props"
-                      @click="addToUserInterest(_id)"
-                    />
-                  </template>
-                </v-tooltip>
+                  <v-tooltip
+                    theme="light"
+                    text="Click + to follow interests"
+                    location="top"
+                  >
+                    <template v-slot:activator="{ props }">
+                      <v-chip
+                        :text="title"
+                        :class="post.tags.length - 1 <= index + 1 ? 'mr-3' : ''"
+                        :append-icon="
+                          user.user.interests.includes(_id) ? '' : 'mdi-plus'
+                        "
+                        v-bind="props"
+                        @click="addToUserInterest(_id)"
+                      />
+                    </template>
+                  </v-tooltip>
+                </template>
               </template>
-            </v-card-text> -->
+            </v-card-text>
           </div>
         </div>
       </v-img>

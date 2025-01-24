@@ -120,21 +120,27 @@ const toggleFullScreen = () => {
     border="b"
     color="rgba(var(--v-theme-background),0.8)"
     elevation="0"
-    :density="apperance.density"
+    height="50"
     style="backdrop-filter: blur(8px)"
   >
-    <v-row align="center" class="mx-2">
-      <v-col cols="12" sm="4" md="4" class="pa-0">
+    <v-row align="center" justify="space-between" class="mx-2">
+      <v-col cols="4" sm="4" md="4" class="pa-0">
         <v-app-bar-nav-icon
-          rounded="lg"
-          size="small"
+          rounded="0"
+          height="50"
           @click="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <v-btn rounded="0" height="50">CBWRP</v-btn>
       </v-col>
-      <v-col cols="12" sm="4" md="4" class="pa-0">
-        <v-btn border :ripple="false" height="35" @click="search = true">
-          <span class="mr-12">Search...</span>
+      <v-col cols="4" sm="4" md="4" class="pa-0">
+        <v-btn
+          border
+          :ripple="false"
+          height="40"
+          width="100%"
+          @click="search = true"
+        >
+          <span>Search...</span>
           <v-card-text class="d-flex align-center pe-0 py-0">
             <v-icon
               class="mr-1"
@@ -145,7 +151,7 @@ const toggleFullScreen = () => {
           >
         </v-btn>
       </v-col>
-      <v-col cols="12" sm="4" md="4" class="pa-0">
+      <v-col cols="4" sm="4" md="4" class="pa-0">
         <div class="d-flex align-center justify-end">
           <v-tooltip
             theme="light"
@@ -171,6 +177,18 @@ const toggleFullScreen = () => {
               </v-btn>
             </template>
           </v-tooltip>
+          <!-- <v-menu>
+            <template v-slot:activator="{ props }">
+              <v-btn rounded="0" height="50" color="primary" v-bind="props">
+                Activator slot
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title>This is a test</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu> -->
         </div>
       </v-col>
     </v-row>

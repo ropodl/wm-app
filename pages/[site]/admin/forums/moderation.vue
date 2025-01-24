@@ -30,7 +30,6 @@ const submit = () => {
     method: id.value ? "PATCH" : "POST",
     body: form.value,
   }).then((res) => {
-    console.log(res);
     getModeration();
   });
 };

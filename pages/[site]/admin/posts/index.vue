@@ -13,6 +13,7 @@ const headers = [
     key: "status",
     title: "Status",
     sortable: false,
+    align: "center",
     width: 100,
   },
   {
@@ -20,7 +21,7 @@ const headers = [
     title: "Actions",
     sortable: false,
     align: "center",
-    width: 140,
+    width: 160,
   },
 ];
 
@@ -99,6 +100,36 @@ const deletePost = async (item, active) => {
               >
             </template>
             <template v-slot:item.action="{ item }">
+              <v-dialog scrim="black" width="500">
+                <template v-slot:activator="{ props: activatorProps }">
+                  <v-btn
+                    v-bind="activatorProps"
+                    class="mr-1"
+                    variant="text"
+                    rounded="lg"
+                    size="small"
+                    icon="mdi-eye"
+                  ></v-btn>
+                </template>
+                <template v-slot:default="{ isActive }">
+                  <v-card title="Dialog">
+                    <v-card-text>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                    </v-card-text>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+
+                      <v-btn
+                        text="Close Dialog"
+                        @click="isActive.value = false"
+                      ></v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
               <v-btn
                 class="mr-1"
                 variant="text"
