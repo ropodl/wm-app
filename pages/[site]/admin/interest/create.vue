@@ -50,12 +50,19 @@ const submit = async () => {
           <lazy-common-shared-field-label>Title</lazy-common-shared-field-label>
           <v-text-field
             v-model="form.title"
-            persistent-hint
             class="pb-3"
+            persistent-hint
             hint="e.g Renewables, Non Renewables"
             :rules="formRules.title"
           ></v-text-field>
-          <lazy-common-shared-quill-editor v-model:content="form.description" />
+          <lazy-common-shared-field-label>
+            Description
+          </lazy-common-shared-field-label>
+          <v-textarea
+            v-model="form.description"
+            persistent-hint
+            hint="Define the meaning of the interest"
+          />
         </v-col>
         <v-col cols="12" md="4">
           <lazy-common-shared-actions :form />

@@ -31,14 +31,13 @@ const submit = async () => {
   const { valid } = await formRef.value.validate();
 
   if (valid) {
-    await useAxios("map", {
-      method: "POST",
+    await useAxios(`admin/map/${route.params.id}`, {
+      method: "PATCH",
       body: form.value,
     })
       .then((res) => {
         console.log(res);
-        setSnackbar("Recycling Center created successfully", "success");
-        navigateTo(`/admin/map/${res.id}`);
+        setSnackbar(res.message, "success");
       })
       .catch((err) => {
         setSnackbar(err.response._data.error, "error");
@@ -58,7 +57,7 @@ const filterEmbedSource = (item) => {
 };
 
 onMounted(() => {
-  useAxios(`map/${route.params.id}`).then((res) => {
+  useAxios(`admin/map/${route.params.id}`).then((res) => {
     form.value = res;
   });
 });

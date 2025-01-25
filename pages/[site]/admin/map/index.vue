@@ -29,7 +29,7 @@ const pagination = ref({
 const loading = ref(true);
 
 const loadMaps = async ({ page, itemsPerPage, sortBy }) => {
-  const res = await useAxios("map", {
+  const res = await useAxios("admin/map", {
     query: {
       page,
       itemsPerPage,

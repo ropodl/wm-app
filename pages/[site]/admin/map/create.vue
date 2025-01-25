@@ -30,7 +30,7 @@ const submit = async () => {
   const { valid } = await formRef.value.validate();
 
   if (valid) {
-    await useAxios("map", {
+    await useAxios("admin/map", {
       method: "POST",
       body: form.value,
     })

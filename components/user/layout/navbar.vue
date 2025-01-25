@@ -2,7 +2,6 @@
 const user = useUserStore();
 const route = useRoute();
 const apperance = useApperanceStore();
-const fullscreen = useIsFullScreen();
 
 const navItems = [
   {

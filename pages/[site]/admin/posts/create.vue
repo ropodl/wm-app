@@ -31,7 +31,7 @@ const submit = async () => {
     const value = form.value[key];
     formData.append(key, value);
   }
-  await useAxios("post", {
+  await useAxios("/admin/post", {
     method: "POST",
     body: formData,
   })

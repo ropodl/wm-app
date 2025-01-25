@@ -47,15 +47,18 @@ const submit = async (isActive) => {
   const { valid } = await formRef.value.validate();
 
   if (valid) {
-    await useAxios("feedback/create", {
+    await useAxios("user/feedback/create", {
       method: "POST",
       body: form.value,
-    }).then((res) => {
-      // console.log(res);
-      setSnackbar(res.message, "success");
-      formRef.value.reset();
-      isActive.value = false;
-    });
+    })
+      .then((res) => {
+        setSnackbar(res.message, "success");
+        formRef.value.reset();
+        isActive.value = false;
+      })
+      .catch((err) => {
+        setSnackbar(err.response._data.error, "error");
+      });
   }
 };
 </script>

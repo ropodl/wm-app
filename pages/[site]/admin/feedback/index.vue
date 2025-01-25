@@ -1,5 +1,5 @@
 <script setup>
-const admin = useAdminUserStore();
+const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "admin",
@@ -29,7 +29,7 @@ const pagination = ref({
 });
 
 const loadFeedback = async ({ page, itemsPerPage, sortBy }) => {
-  await useAxios("/feedback", {
+  await useAxios("admin/feedback", {
     query: {
       page,
       itemsPerPage,
@@ -39,6 +39,9 @@ const loadFeedback = async ({ page, itemsPerPage, sortBy }) => {
     .then((res) => {
       items.value = res.feedbacks;
       pagination.value = res.pagination;
+    })
+    .catch((err) => {
+      setSnackbar(err.response._data.error, "error");
     })
     .finally(() => {
       loading.value = false;

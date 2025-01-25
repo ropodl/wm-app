@@ -35,7 +35,7 @@ const pagination = ref({
 });
 
 const loadPosts = async ({ page, itemsPerPage, sortBy }) => {
-  useAxios("post/latest", {
+  useAxios("admin/post/latest", {
     query: {
       page,
       itemsPerPage,

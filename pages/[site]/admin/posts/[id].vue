@@ -23,7 +23,7 @@ const getInterests = async () => {
 };
 
 onMounted(() => {
-  useAxios(`/post/${route.params.id}`).then((res) => {
+  useAxios(`/admin/post/${route.params.id}`).then((res) => {
     form.value = res;
   });
   getInterests();
