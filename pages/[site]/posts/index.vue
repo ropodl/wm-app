@@ -4,7 +4,7 @@ definePageMeta({
   middleware: ["user-auth"],
 });
 
-const appearance = useApperanceStore();
+const goTo = useGoTo();
 
 const latest = ref([]);
 const pagination = ref({
@@ -19,6 +19,9 @@ onMounted(() => {
 });
 
 const getLatest = async () => {
+  goTo({
+    offsetTop: 0,
+  });
   await useAxios("user/post/", {
     query: {
       page: pagination.value.currentPage,
