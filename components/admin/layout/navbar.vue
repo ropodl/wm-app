@@ -1,7 +1,5 @@
 <script setup>
 const admin = useAdminUserStore();
-const apperance = useApperanceStore();
-const fullscreen = useIsFullScreen();
 
 const drawer = ref(true);
 
@@ -115,7 +113,7 @@ const home = ref("/admin/");
 </script>
 <template>
   <lazy-common-layout-navbar-appbar
-    :drawer
+    v-model="drawer"
     :home
     :user="admin.user"
     :items="profileItems"

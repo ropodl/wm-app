@@ -49,7 +49,7 @@ const home = ref("/");
 </script>
 <template>
   <lazy-common-layout-navbar-appbar
-    :drawer
+    v-model="drawer"
     :home
     :user="user.user"
     :items="profileItems"

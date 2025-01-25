@@ -2,7 +2,7 @@
 const fullscreen = useIsFullScreen();
 // const user = userAdm;
 
-const drawer = defineModel("drawer");
+const drawer = defineModel();
 
 const toggleFullScreen = () => {
   fullscreen.value.toggle();
