@@ -100,7 +100,7 @@ const deletePost = async (item, active) => {
               >
             </template>
             <template v-slot:item.action="{ item }">
-              <v-dialog scrim="black" width="500">
+              <v-dialog scrollable scrim="black" width="500">
                 <template v-slot:activator="{ props: activatorProps }">
                   <v-btn
                     v-bind="activatorProps"
@@ -112,16 +112,15 @@ const deletePost = async (item, active) => {
                   ></v-btn>
                 </template>
                 <template v-slot:default="{ isActive }">
-                  <v-card title="Dialog">
-                    <v-card-text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </v-card-text>
-
+                  <v-card>
+                    <v-img cover height="200" :src="item.image?.url"></v-img>
+                    <v-card-title class="pb-0"
+                      >Title: {{ item.title }}</v-card-title
+                    >
+                    <v-card-text class="pb-0">{{ item.excerpt }}</v-card-text>
+                    <v-card-text v-html="item.content"></v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-
                       <v-btn
                         text="Close Dialog"
                         @click="isActive.value = false"

@@ -10,14 +10,14 @@ defineProps({
 </script>
 <template>
   <v-list>
-    <template v-for="navitem in navItems">
-      <template v-if="navitem.subtitle">
+    <template v-for="{ icon, title, subtitle, routes, subitems } in navItems">
+      <template v-if="subtitle">
         <v-list-subheader>
-          {{ navitem.subtitle }}
+          {{ subtitle }}
         </v-list-subheader>
       </template>
-      <template v-if="navitem.subitems">
-        <v-list-group :prepend-icon="navitem.icon">
+      <template v-if="subitems">
+        <v-list-group :prepend-icon="icon">
           <template v-slot:activator="{ props }">
             <!-- with dropdown -->
             <v-list-item
@@ -25,12 +25,12 @@ defineProps({
               rounded="lg"
               v-bind="props"
             >
-              <v-list-item-title>
-                {{ navitem.title }}
+              <v-list-item-title title="asd">
+                {{ title }}
               </v-list-item-title>
             </v-list-item>
           </template>
-          <template v-for="subitem in navitem.subitems">
+          <template v-for="subitem in subitems">
             <template v-if="subitem.miniitems">
               <v-list-group>
                 <template v-slot:activator="{ props }">
@@ -83,13 +83,13 @@ defineProps({
           color="primary"
           :density="apperance.density"
           rounded="lg"
-          :to="navitem.routes"
+          :to="routes"
         >
           <template v-slot:prepend>
-            <v-icon :icon="navitem['icon']"></v-icon>
+            <v-icon :icon="icon"></v-icon>
           </template>
           <v-list-item-title>
-            {{ navitem.title }}
+            {{ title }}
           </v-list-item-title>
         </v-list-item>
       </template>

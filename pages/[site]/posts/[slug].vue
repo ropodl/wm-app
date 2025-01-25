@@ -11,11 +11,7 @@ definePageMeta({
 
 const post = ref({});
 onMounted(() => {
-  useAxios(`/post/${route.params.id}`, {
-    query: {
-      populate: true,
-    },
-  }).then((res) => {
+  useAxios(`user/post/${route.params.slug}`).then((res) => {
     post.value = res;
   });
 });
@@ -41,38 +37,32 @@ const addToUserInterest = (id) => {
 <template>
   <v-card border="b" flat rounded="0" height="450">
     <template v-if="post.image?.url">
-      <v-img cover :src="post.image.url" :alt="post.image.name">
+      <v-img cover :src="post.image.url" :alt="post.image?.name">
         <div
           class="d-flex align-end h-100"
           :class="appearance.dark ? 'dark-overlay' : 'light-overlay'"
         >
           <div>
-            <v-card-text class="text-h4 pb-0">{{ post.title }}</v-card-text>
-            <!-- {{ user.user.interests }} -->
+            <v-card-text class="text-h5 pb-0">{{ post.title }}</v-card-text>
             <v-card-text>
-              <template v-if="user.user?.interests.length">
-                <template
-                  v-for="({ _id, title }, index) in post.tags"
-                  :key="_id"
+              <template v-for="({ _id, title }, index) in post.tags" :key="_id">
+                <v-chip
+                  :text="title"
+                  class="mb-1"
+                  :class="post.tags.length - 1 > index ? 'mr-1' : ''"
+                  :append-icon="
+                    user.user?.interests.includes(_id) ? '' : 'mdi-plus'
+                  "
+                  @click="addToUserInterest(_id)"
                 >
+                  {{ title }}
                   <v-tooltip
+                    activator="parent"
                     theme="light"
                     text="Click + to follow interests"
                     location="top"
-                  >
-                    <template v-slot:activator="{ props }">
-                      <v-chip
-                        :text="title"
-                        :class="post.tags.length - 1 <= index + 1 ? 'mr-3' : ''"
-                        :append-icon="
-                          user.user.interests.includes(_id) ? '' : 'mdi-plus'
-                        "
-                        v-bind="props"
-                        @click="addToUserInterest(_id)"
-                      />
-                    </template>
-                  </v-tooltip>
-                </template>
+                  />
+                </v-chip>
               </template>
             </v-card-text>
           </div>
@@ -82,6 +72,11 @@ const addToUserInterest = (id) => {
   </v-card>
   <v-container>
     <v-row>
+      <template v-if="post.excerpt">
+        <v-col cols="12" class="text-h5 font-weight-thin">
+          {{ post.excerpt }}
+        </v-col>
+      </template>
       <v-col cols="12">
         <template v-if="post.content">
           <lazy-common-shared-dynamic-content :content="post.content" />

@@ -22,17 +22,17 @@ const navItems = [
   },
   {
     icon: "mdi-map-outline",
-    title: "Maps",
+    title: "Recycling Centers",
     routes: "/maps",
   },
 ];
 
 const bottomNavItems = ref([
-  // {
-  //   icon: "mdi-help-circle-outline",
-  //   title: "Help",
-  //   to: "/help",
-  // },
+  {
+    icon: "mdi-cog-outline",
+    title: "Settings",
+    to: "/settings",
+  },
 ]);
 
 const profileItems = ref([
@@ -71,6 +71,7 @@ const home = ref("/");
             :prepend-icon="icon"
             :title
             :to
+            :active="route.fullPath.includes(to)"
           />
         </template>
       </v-list>
