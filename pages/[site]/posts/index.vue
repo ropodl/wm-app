@@ -33,7 +33,6 @@ const getLatest = async () => {
     .then((res) => {
       latest.value = res.posts;
       pagination.value = res.pagination;
-      console.log(pagination.value);
     })
     .catch((err) => {
       console.log(err);
@@ -52,7 +51,7 @@ const getLatest = async () => {
     </template>
     <template v-else-if="latest.length">
       <template v-for="{ title, image, slug } in latest">
-        <v-col cols="12" md="4">
+        <v-col cols="12" sm="6" md="4">
           <v-hover v-slot="{ isHovering, props }">
             <v-card
               border

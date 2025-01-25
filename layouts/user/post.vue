@@ -17,7 +17,11 @@ const pages = ref([
     <NuxtLayout name="user" />
     <v-container>
       <v-row>
-        <v-col class="pb-0" cols="12">
+        <v-col
+          cols="12"
+          class="pb-0 position-sticky"
+          style="top: 45px; z-index: 1"
+        >
           <v-card class="pa-1" style="width: max-content">
             <v-tabs density="compact" hide-slider rounded="lg">
               <template v-for="{ title, to } in pages">

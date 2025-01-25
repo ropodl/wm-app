@@ -12,18 +12,31 @@ onMounted(() => {
 });
 
 const recommendation = ref([]);
+const loading = ref(true);
 const pagination = ref({
   totalPage: 1,
   totalItems: 0,
-  itemsPerPage: 9,
+  itemsPerPage: 100,
   currentPage: 1,
 });
 
 const getRecommendation = async () => {
-  await useAxios(`user/post/recommended/`).then((res) => {
-    recommendation.value = res.documents;
-    pagination.value = res.pagination;
-  });
+  await useAxios(`user/post/recommendation`, {
+    query: {
+      page: pagination.value.currentPage,
+      itemsPerPage: pagination.value.itemsPerPage,
+    },
+  })
+    .then((res) => {
+      recommendation.value = res.documents;
+      pagination.value = res.pagination;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 </script>
 <template>
@@ -34,10 +47,8 @@ const getRecommendation = async () => {
       </v-col>
     </template>
     <template v-else-if="recommendation.length">
-      <template
-        v-for="{ post: { title, image, slug }, similarity } in recommendation"
-      >
-        <v-col cols="12" md="4">
+      <template v-for="{ title, image, slug, similarity } in recommendation">
+        <v-col cols="12" sm="6" md="4">
           <v-hover v-slot="{ isHovering, props }">
             <v-card
               border
@@ -79,14 +90,15 @@ const getRecommendation = async () => {
           </v-hover>
         </v-col>
       </template>
-      <v-col cols="12">
+      <!-- not working as intended -->
+      <!-- <v-col cols="12">
         <v-pagination
           v-model="pagination.currentPage"
           :length="pagination.totalPage"
-          @update:model-value="getLatest"
+          @update:model-value="getRecommendation"
           density="compact"
         ></v-pagination>
-      </v-col>
+      </v-col> -->
     </template>
     <template v-else>
       <v-col cols="12">
