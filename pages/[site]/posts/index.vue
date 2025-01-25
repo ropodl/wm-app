@@ -8,26 +8,27 @@ const appearance = useApperanceStore();
 
 const latest = ref([]);
 const pagination = ref({
-  totalPage: "",
-  totalItems: "",
-  itemsPerPage: "",
-  currentPage: "",
+  totalPage: 1,
+  totalItems: 0,
+  itemsPerPage: 9,
+  currentPage: 1,
 });
 
 onMounted(() => {
   getLatest();
 });
 
-const getLatest = async (page, itemsPerPage = 100) => {
-  await useAxios("post/latest", {
+const getLatest = async () => {
+  await useAxios("user/post/", {
     query: {
-      page,
-      per_page: itemsPerPage,
+      page: pagination.value.currentPage,
+      itemsPerPage: pagination.value.itemsPerPage,
     },
   })
     .then((res) => {
       latest.value = res.posts;
       pagination.value = res.pagination;
+      console.log(pagination.value);
     })
     .catch((err) => {
       console.log(err);
@@ -36,7 +37,7 @@ const getLatest = async (page, itemsPerPage = 100) => {
 </script>
 <template>
   <v-row>
-    <template v-for="({ title, image, id }, index) in latest">
+    <template v-for="{ title, image, id } in latest">
       <v-col cols="12" md="4">
         <v-hover v-slot="{ isHovering, props }">
           <v-card
@@ -50,22 +51,33 @@ const getLatest = async (page, itemsPerPage = 100) => {
             <v-img
               cover
               rounded="sm"
-              height="150"
+              height="250"
+              class="align-end"
               :class="isHovering ? 'zoom-image' : ''"
               :src="image?.url"
             >
               <v-card
-                flat
-                height="150"
-                class="d-flex align-end"
-                :class="appearance.dark ? 'dark-overlay' : 'light-overlay'"
+                border="t"
+                class="blur"
+                color="rgba(var(--v-theme-background),0.8)"
+                rounded="0"
               >
-                <v-card-text class="font-weight-bold">{{ title }}</v-card-text>
+                <v-card-text class="font-weight-bold">
+                  {{ title }}
+                </v-card-text>
               </v-card>
             </v-img>
           </v-card>
         </v-hover>
       </v-col>
     </template>
+    <v-col cols="12">
+      <v-pagination
+        v-model="pagination.currentPage"
+        :length="pagination.totalPage"
+        @update:model-value="getLatest"
+        density="compact"
+      ></v-pagination>
+    </v-col>
   </v-row>
 </template>

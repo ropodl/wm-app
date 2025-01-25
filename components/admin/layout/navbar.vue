@@ -111,88 +111,26 @@ const logout = () => {
 
 const search = ref(false);
 
-const toggleFullScreen = () => {
-  fullscreen.value.toggle();
-};
+const home = ref("/admin/");
 </script>
 <template>
-  <v-app-bar
-    border="b"
-    color="rgba(var(--v-theme-background),0.8)"
-    elevation="0"
-    height="50"
-    style="backdrop-filter: blur(8px)"
+  <lazy-common-layout-navbar-appbar
+    :drawer
+    :home
+    :user="admin.user"
+    :items="profileItems"
+    @logout="logout"
   >
-    <v-row align="center" justify="space-between" class="mx-2">
-      <v-col cols="4" sm="4" md="4" class="pa-0">
-        <v-app-bar-nav-icon
-          rounded="0"
-          height="50"
-          @click="drawer = !drawer"
-        ></v-app-bar-nav-icon>
-        <v-btn rounded="0" height="50">CBWRP</v-btn>
-      </v-col>
-      <v-col cols="4" sm="4" md="4" class="pa-0">
-        <v-btn
-          border
-          :ripple="false"
-          height="40"
-          width="100%"
-          @click="search = true"
+    <template v-slot:middle>
+      <v-btn block border :ripple="false" height="40" @click="search = true">
+        <span>Search...</span>
+        <v-card-text class="d-flex align-center pe-0 py-0">
+          <v-icon class="mr-1" size="small" icon="mdi-apple-keyboard-command" />
+          + k</v-card-text
         >
-          <span>Search...</span>
-          <v-card-text class="d-flex align-center pe-0 py-0">
-            <v-icon
-              class="mr-1"
-              size="small"
-              icon="mdi-apple-keyboard-command"
-            />
-            + k</v-card-text
-          >
-        </v-btn>
-      </v-col>
-      <v-col cols="4" sm="4" md="4" class="pa-0">
-        <div class="d-flex align-center justify-end">
-          <v-tooltip
-            theme="light"
-            location="bottom"
-            :text="
-              fullscreen.isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'
-            "
-          >
-            <template v-slot:activator="{ props }">
-              <v-btn
-                v-bind="props"
-                icon
-                rounded="0"
-                height="50"
-                @click="toggleFullScreen"
-              >
-                <v-icon
-                  :icon="`mdi-fullscreen${
-                    fullscreen.isFullscreen ? '-exit' : ''
-                  }`"
-                >
-                </v-icon>
-              </v-btn>
-            </template>
-          </v-tooltip>
-          <!-- <v-menu>
-            <template v-slot:activator="{ props }">
-              <v-btn rounded="0" height="50" color="primary" v-bind="props">
-                Activator slot
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>This is a test</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu> -->
-        </div>
-      </v-col>
-    </v-row>
-  </v-app-bar>
+      </v-btn>
+    </template>
+  </lazy-common-layout-navbar-appbar>
   <lazy-common-shared-search-bar v-model="search" :navItems :profileItems />
   <v-navigation-drawer
     app
@@ -201,13 +139,5 @@ const toggleFullScreen = () => {
     style="backdrop-filter: blur(8px)"
   >
     <lazy-common-layout-navbar-nav-list class="pa-2" :nav-items="navItems" />
-    <template v-slot:append>
-      <v-divider></v-divider>
-      <lazy-common-layout-navbar-profile-dropdown
-        :user="admin.user"
-        :items="profileItems"
-        @logout="logout"
-      />
-    </template>
   </v-navigation-drawer>
 </template>

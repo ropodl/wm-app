@@ -1,7 +1,7 @@
 <script setup>
 definePageMeta({
-  layout: "user-forum",
-  middleware: ["user-auth"]
+  layout: "user",
+  middleware: ["user-auth"],
 });
 
 onMounted(() => {
@@ -18,39 +18,46 @@ const getAllForums = () => {
 };
 </script>
 <template>
-  <v-row>
-    <template v-for="{ name, id, image } in forums">
-      <v-col cols="12" md="6">
-        <v-hover #default="{ isHovering, props }">
-          <v-card
-            v-bind="props"
-            border
-            flat
-            rounded="lg"
-            height="100"
-            :to="`/forum/${id}`"
-          >
-            <v-img
-              cover
-              :class="isHovering ? 'zoom-image' : ''"
-              :src="image?.url"
-              :alt="image?.name"
-            >
-              <v-overlay
-                :model-value="true"
-                contained
-                persistent
-                no-click-animation
-                class="align-end"
-                scrim="black"
-              >
-                <v-card-title>{{ name }}</v-card-title>
-              </v-overlay>
-            </v-img>
-          </v-card>
-        </v-hover>
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <h1>Forums</h1>
       </v-col>
-    </template>
-  </v-row>
+    </v-row>
+    <v-row>
+      <template v-for="{ name, id, image } in forums">
+        <v-col cols="12" md="4">
+          <v-hover #default="{ isHovering, props }">
+            <v-card
+              v-bind="props"
+              border
+              flat
+              color="transparent"
+              :to="`/forum/${id}`"
+              :ripple="false"
+            >
+              <v-img
+                cover
+                rounded="lg"
+                height="200"
+                class="align-end"
+                :class="isHovering ? 'zoom-image' : ''"
+                :src="image?.url"
+                :alt="image?.name"
+              >
+                <v-card
+                  border="t"
+                  class="blur"
+                  color="rgba(var(--v-theme-background),0.8)"
+                  rounded="0"
+                >
+                  <v-card-text>{{ name }}</v-card-text>
+                </v-card>
+              </v-img>
+            </v-card>
+          </v-hover>
+        </v-col>
+      </template>
+    </v-row>
+  </v-container>
 </template>
-<style></style>

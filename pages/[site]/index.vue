@@ -12,7 +12,7 @@ definePageMeta({
       <v-container fluid>
         <v-row>
           <v-col>
-            <h2>Welcome, {{ user.user.name }}</h2>
+            <h1>Welcome, {{ user.user.name }}</h1>
           </v-col>
         </v-row>
         <v-row>

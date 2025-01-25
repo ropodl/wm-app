@@ -71,4 +71,8 @@ onMounted(() => {
     rgba(var(--v-theme-surface), 0.9)
   ) !important;
 }
+
+.blur {
+  backdrop-filter: blur(8px);
+}
 </style>
