@@ -96,12 +96,14 @@ onMounted(async () => {
     <v-row justify="center" align="center">
       <v-col cols="12" md="4">
         <v-form ref="formRef" @submit.prevent="submit">
-          <v-card-title class="text-center px-0">Login</v-card-title>
-          <v-card border flat>
+          <v-card-title class="px-0">
+            <h3>Login</h3>
+          </v-card-title>
+          <v-card border flat class="mb-3">
             <v-card-text class="pb-0">
-              <lazy-common-shared-field-label
-                >Email Address</lazy-common-shared-field-label
-              >
+              <lazy-common-shared-field-label>
+                Email Address
+              </lazy-common-shared-field-label>
               <v-text-field
                 v-model="form.email"
                 :loading
@@ -129,6 +131,9 @@ onMounted(async () => {
               </v-btn>
             </v-card-actions>
           </v-card>
+          <span class="d-flex justify-center"
+            >New here? &nbsp;<nuxt-link to="signup">Sign Up</nuxt-link>
+          </span>
         </v-form>
       </v-col>
     </v-row>
