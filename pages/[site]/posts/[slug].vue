@@ -47,7 +47,6 @@ const removeFromUserInterest = (id) => {
       setSnackbar(res.message, "success");
     })
     .catch((err) => {
-      console.log(err.response._data.error);
       setSnackbar(err.response._data.error, "error");
     });
 };

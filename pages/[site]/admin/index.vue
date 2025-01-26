@@ -11,11 +11,12 @@ onMounted(() => {
 
 const stats_bar = ref({});
 const latest_posts = ref({});
+const latest_interests = ref({});
 const getDashboardStats = async () => {
   await useAxios("/admin/dashboard").then((res) => {
     stats_bar.value = res.stats_bar;
     latest_posts.value = res.latest_posts;
-    // latest_interest.value = res.latest_interest;
+    latest_interests.value = res.latest_interest;
   });
 };
 </script>
@@ -97,7 +98,10 @@ const getDashboardStats = async () => {
             hover
             density="comfortable"
             style="background-color: transparent"
-            :headers="[{ title: 'Title', key: 'title', sortable: false }]"
+            :headers="[
+              { title: 'Title', key: 'title', sortable: false },
+              { title: 'Status', key: 'status', sortable: false },
+            ]"
             :items="latest_posts.documents"
             hide-default-footer
           ></v-data-table>
@@ -108,17 +112,14 @@ const getDashboardStats = async () => {
           <v-card-title>Interests</v-card-title>
           <v-divider></v-divider>
           <v-data-table
+            hover
+            density="comfortable"
             style="background-color: transparent"
-            :items="[
-              {
-                title: 'Simple way to recycle as a working person',
-                status: 'Draft',
-              },
-              {
-                title: '5 ways to find know more about recycling manners',
-                status: 'Draft',
-              },
+            :headers="[
+              { title: 'Title', key: 'title', sortable: false },
+              { title: 'Status', key: 'status', sortable: false },
             ]"
+            :items="latest_interests.documents"
             hide-default-footer
           ></v-data-table>
         </v-card>

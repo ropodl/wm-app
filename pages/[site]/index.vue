@@ -5,6 +5,17 @@ definePageMeta({
   layout: "user",
   middleware: ["user-auth"],
 });
+
+onMounted(() => {
+  getDashboardStats();
+});
+
+const stats_bar = ref("");
+const getDashboardStats = async () => {
+  await useAxios("/user/dashboard").then((res) => {
+    stats_bar.value = res.stats_bar;
+  });
+};
 </script>
 <template>
   <v-app>
@@ -21,7 +32,9 @@ definePageMeta({
               <v-card-text
                 class="d-flex justify-space-between align-center pb-0"
               >
-                <span class="text-h4 font-weight-bold">2</span>
+                <span class="text-h4 font-weight-bold">
+                  {{ user.user.interests.length }}
+                </span>
                 <v-icon
                   class="card-icon"
                   color="primary"
@@ -38,7 +51,7 @@ definePageMeta({
               <v-card-text
                 class="d-flex justify-space-between align-center pb-0"
               >
-                <span class="text-h4 font-weight-bold">3</span>
+                <span class="text-h4 font-weight-bold"> </span>
                 <v-icon
                   class="card-icon"
                   color="primary"
