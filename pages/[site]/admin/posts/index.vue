@@ -100,7 +100,7 @@ const deletePost = async (item, active) => {
               >
             </template>
             <template v-slot:item.action="{ item }">
-              <v-dialog scrollable scrim="black" width="500">
+              <!-- <v-dialog scrollable scrim="black" width="500">
                 <template v-slot:activator="{ props: activatorProps }">
                   <v-btn
                     v-bind="activatorProps"
@@ -128,7 +128,7 @@ const deletePost = async (item, active) => {
                     </v-card-actions>
                   </v-card>
                 </template>
-              </v-dialog>
+              </v-dialog> -->
               <v-btn
                 class="mr-1"
                 variant="text"
