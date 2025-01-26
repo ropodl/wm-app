@@ -9,7 +9,6 @@ definePageMeta({
 
 const headers = [
   { title: "Name", key: "name" },
-  { title: "Slug", key: "slug" },
   {
     title: "Status",
     key: "status",

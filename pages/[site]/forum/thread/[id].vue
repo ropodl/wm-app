@@ -103,7 +103,7 @@ const downvote = async () => {
           <v-card-text class="pb-0 pa-0 d-flex align-center">
             <template v-if="thread.author?.image">
               <v-avatar class="mr-3">
-                <v-img :src="thread.author?.image.url"></v-img>
+                <v-img :src="thread.author?.image?.url"></v-img>
               </v-avatar>
             </template>
             <span class="mr-3">
@@ -164,13 +164,13 @@ const downvote = async () => {
               <v-col cols="12" class="pb-0">
                 <v-card>
                   <v-card-text class="pb-0 d-flex align-center">
-                    <template v-if="author.image">
+                    <template v-if="author?.image">
                       <v-avatar class="mr-3">
-                        <v-img :src="author?.image.url"></v-img>
+                        <v-img :src="author.image?.url"></v-img>
                       </v-avatar>
                     </template>
                     <span class="mr-3">
-                      {{ author.name }}
+                      {{ author?.name }}
                     </span>
                     <span>.</span>
                     <span class="ml-3">
