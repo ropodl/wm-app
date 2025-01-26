@@ -1,13 +1,11 @@
 <script setup>
 const user = useUserStore();
-const snackbar = useSnackbarStore();
+const { setSnackbar } = useSnackbarStore();
 
 definePageMeta({
   layout: "user-settings",
   middleware: ["user-auth"],
 });
-
-const profileCompleteAlert = ref(true);
 
 const form = ref({
   name: "",
@@ -44,13 +42,18 @@ const passwordForm = ref({
   current: "",
   newer: "",
 });
+const confirm = ref("");
 
 const changePassword = ref({
   current: [
     (v) => !!v || "Current Password is required",
     (v) => (v && v.length > 5) || "Password must be 5 or more characters",
   ],
-  confirm,
+  confirm: [
+    (v) => !!v || "Confirm Password is required",
+    (v) => (v && v.length > 5) || "Password must be 5 or more characters",
+    (v) => v === passwordForm.value.newer || "Passwords do not match",
+  ],
 });
 
 const submit = async () => {
@@ -61,24 +64,45 @@ const submit = async () => {
     snackbar.setSnackbar(res.message, "success");
   });
 };
+// upload profile pic
+const uploadProfilePicture = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  await useAxios(`user/${user.user.id}/picture`, {
+    method: "PATCH",
+    body: formData,
+  })
+    .then((res) => {
+      console.log(user.user.image);
+      user.user.image = res.image;
+    })
+    .catch((err) => {
+      console.error("Failed to upload image:", err);
+    });
+};
+// password update
+const passwordRef = ref(null);
+const changePasswordRequest = async (isActive) => {
+  const { valid } = await passwordRef.value.validate();
+  if (valid)
+    await useAxios(`user/${user.user.id}/password`, {
+      method: "PATCH",
+      body: passwordForm.value,
+    })
+      .then((res) => {
+        setSnackbar(res.message, "success");
+        isActive.value = false;
+      })
+      .catch((err) => {
+        setSnackbar(err.response._data.error, "error");
+      });
+};
 </script>
 <template>
-  <v-row>
-    <template v-if="profileCompleteAlert">
-      <v-col cols="12" class="pb-0">
-        <v-alert color="error" closable variant="tonal" density="compact">
-          Please complete your profile.
-          <template #close>
-            <v-btn
-              icon="mdi-close"
-              variant="tonal"
-              @click="profileCompleteAlert = !profileCompleteAlert"
-            ></v-btn>
-          </template>
-        </v-alert>
-      </v-col>
-    </template>
-  </v-row>
   <v-row>
     <v-col cols="12" class="px-0 pb-0">
       <v-card-title class="pt-0">Profile</v-card-title>
@@ -91,16 +115,27 @@ const submit = async () => {
           v-bind="props"
           style="position: sticky; top: 70px"
         >
-          <v-img :src="user.user?.image?.url">
+          <v-img cover height="180" :src="user.user?.image?.url">
             <v-overlay
               :model-value="isHovering"
               contained
               scrim="black"
               content-class="h-100 w-100 d-flex align-center justify-center"
             >
-              <v-btn color="gray" icon="mdi-cloud-upload"></v-btn>
+              <v-btn
+                color="gray"
+                icon="mdi-cloud-upload"
+                @click="$refs.fileInput.click()"
+              ></v-btn>
             </v-overlay>
           </v-img>
+          <input
+            type="file"
+            ref="fileInput"
+            style="display: none"
+            accept="image/*"
+            @change="uploadProfilePicture"
+          />
         </v-card>
       </v-hover>
     </v-col>
@@ -170,7 +205,7 @@ const submit = async () => {
               unlock sudo?</v-list-item-subtitle
             >
             <template v-slot:append>
-              <v-dialog persistent scrim="black" width="400">
+              <v-dialog persistent scrollable scrim="black" width="400">
                 <template v-slot:activator="{ props: activatorProps }">
                   <v-btn
                     v-bind="activatorProps"
@@ -182,8 +217,11 @@ const submit = async () => {
                   >
                 </template>
                 <template v-slot:default="{ isActive }">
-                  <v-card title="Change Password">
-                    <v-form @submit.prevent="submit">
+                  <v-form
+                    ref="passwordRef"
+                    @submit.prevent="changePasswordRequest(isActive)"
+                  >
+                    <v-card title="Change Password">
                       <v-card-text class="pb-0">
                         <lazy-common-shared-field-label>
                           Current Password
@@ -223,14 +261,14 @@ const submit = async () => {
                           text="Save"
                         ></v-btn>
                       </v-card-actions>
-                    </v-form>
-                  </v-card>
+                    </v-card>
+                  </v-form>
                 </template>
               </v-dialog>
             </template>
           </v-list-item>
         </v-list>
-        <v-divider></v-divider>
+        <!-- <v-divider></v-divider>
         <v-list>
           <v-list-item>
             <v-list-item-title>Delete Account</v-list-item-title>
@@ -291,7 +329,7 @@ const submit = async () => {
               </v-dialog>
             </template>
           </v-list-item>
-        </v-list>
+        </v-list> -->
       </v-card>
     </v-col>
   </v-row>
