@@ -18,7 +18,7 @@ const form = ref({
 
 const interests = ref([]);
 const getInterests = async () => {
-  interests.value = await useAxios("interest");
+  interests.value = await useAxios("interest?itemsPerPage=100");
 };
 
 onMounted(() => {
