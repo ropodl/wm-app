@@ -45,6 +45,14 @@ const passwordForm = ref({
   newer: "",
 });
 
+const changePassword = ref({
+  current: [
+    (v) => !!v || "Current Password is required",
+    (v) => (v && v.length > 5) || "Password must be 5 or more characters",
+  ],
+  confirm,
+});
+
 const submit = async () => {
   await useAxios(`/user/${user.user.id}`, {
     method: "PATCH",
@@ -177,43 +185,43 @@ const submit = async () => {
                   <v-card title="Change Password">
                     <v-form @submit.prevent="submit">
                       <v-card-text class="pb-0">
-                        <lazy-common-shared-field-label
-                          >Current Password</lazy-common-shared-field-label
-                        >
+                        <lazy-common-shared-field-label>
+                          Current Password
+                        </lazy-common-shared-field-label>
                         <v-text-field
                           v-model="passwordForm.current"
+                          :rules="changePassword.current"
                         ></v-text-field>
-                        <lazy-common-shared-field-label
-                          >New Password</lazy-common-shared-field-label
-                        >
+                        <lazy-common-shared-field-label>
+                          New Password
+                        </lazy-common-shared-field-label>
                         <v-text-field
                           v-model="passwordForm.newer"
+                          :rules="changePassword.current"
                         ></v-text-field>
                         <lazy-common-shared-field-label
                           >Confirm New Password</lazy-common-shared-field-label
                         >
-                        <v-text-field></v-text-field>
+                        <v-text-field
+                          v-model="confirm"
+                          :rules="changePassword.confirm"
+                        ></v-text-field>
                       </v-card-text>
                       <v-card-actions>
-                        <v-row>
-                          <v-col cols="6" class="pt-0">
-                            <v-btn
-                              block
-                              color="error"
-                              text="Cancel"
-                              @click="isActive.value = false"
-                            ></v-btn>
-                          </v-col>
-                          <v-col cols="6" class="pt-0">
-                            <v-btn
-                              block
-                              type="submit"
-                              variant="tonal"
-                              color="primary"
-                              text="Save"
-                            ></v-btn>
-                          </v-col>
-                        </v-row>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          variant="text"
+                          class="px-6"
+                          text="Cancel"
+                          @click="isActive.value = false"
+                        ></v-btn>
+                        <v-btn
+                          type="submit"
+                          variant="flat"
+                          color="primary"
+                          class="px-6"
+                          text="Save"
+                        ></v-btn>
                       </v-card-actions>
                     </v-form>
                   </v-card>

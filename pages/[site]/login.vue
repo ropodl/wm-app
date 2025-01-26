@@ -16,7 +16,7 @@ const form = ref({
 const rules = ref({
   email: [
     (v) => !!v || "Email is required",
-    (v) => (v && v.length >= 3) || "Email must be less than 3 characters",
+    (v) => (v && v.length >= 3) || "Email must be more than 3 characters",
     (v) =>
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         v

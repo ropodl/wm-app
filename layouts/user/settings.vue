@@ -21,16 +21,20 @@ const settings = ref([
       <v-row>
         <v-col cols="12" md="3">
           <v-card border flat class="position-sticky" style="top: 70px">
-            <v-list class="py-0" :density="apperance.density">
+            <v-tabs
+              class="py-0"
+              direction="vertical"
+              :density="apperance.density"
+            >
               <template v-for="{ icon, title, to } in settings">
-                <v-list-item
+                <v-tab
                   color="primary"
-                  :title
+                  :text="title"
                   :prepend-icon="icon"
                   :to
-                ></v-list-item>
+                ></v-tab>
               </template>
-            </v-list>
+            </v-tabs>
           </v-card>
         </v-col>
         <v-col cols="12" md="9">
