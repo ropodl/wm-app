@@ -13,7 +13,7 @@ onMounted(() => {
 const stats_bar = ref("");
 const getDashboardStats = async () => {
   await useAxios("/user/dashboard").then((res) => {
-    stats_bar.value = res.stats_bar;
+    stats_bar.value = res;
   });
 };
 </script>
@@ -33,7 +33,7 @@ const getDashboardStats = async () => {
                 class="d-flex justify-space-between align-center pb-0"
               >
                 <span class="text-h4 font-weight-bold">
-                  {{ user.user.interests.length }}
+                  {{ stats_bar.total_interests }}
                 </span>
                 <v-icon
                   class="card-icon"
@@ -51,14 +51,16 @@ const getDashboardStats = async () => {
               <v-card-text
                 class="d-flex justify-space-between align-center pb-0"
               >
-                <span class="text-h4 font-weight-bold"> </span>
+                <span class="text-h4 font-weight-bold">{{
+                  stats_bar.total_threads
+                }}</span>
                 <v-icon
                   class="card-icon"
                   color="primary"
                   icon="mdi-note-outline"
                 ></v-icon>
               </v-card-text>
-              <v-card-text class="text-h6 pt-0"> Threads Created </v-card-text>
+              <v-card-text class="text-h6 pt-0">Threads Created</v-card-text>
             </v-card>
           </v-col>
           <v-col cols="12" md="3">
@@ -66,7 +68,9 @@ const getDashboardStats = async () => {
               <v-card-text
                 class="d-flex justify-space-between align-center pb-0"
               >
-                <span class="text-h4 font-weight-bold">14</span>
+                <span class="text-h4 font-weight-bold">{{
+                  stats_bar.total_comments
+                }}</span>
                 <v-icon
                   class="card-icon"
                   color="primary"

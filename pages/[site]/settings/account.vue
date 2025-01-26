@@ -61,7 +61,7 @@ const submit = async () => {
     method: "PATCH",
     body: form.value,
   }).then((res) => {
-    snackbar.setSnackbar(res.message, "success");
+    setSnackbar(res.message, "success");
   });
 };
 // upload profile pic
@@ -82,6 +82,7 @@ const uploadProfilePicture = async (e) => {
     })
     .catch((err) => {
       console.error("Failed to upload image:", err);
+      setSnackbar("Failed to upload image:", "error");
     });
 };
 // password update
