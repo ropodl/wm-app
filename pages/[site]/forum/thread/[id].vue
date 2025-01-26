@@ -94,13 +94,6 @@ const downvote = async () => {
       downVoteLoading.value = false;
     });
 };
-
-const upvoteComment = () => {
-  console.log("comment");
-};
-const downvoteComment = () => {
-  console.log("comment");
-};
 </script>
 <template>
   <v-container>
@@ -127,7 +120,13 @@ const downvoteComment = () => {
           <v-card-text class="px-0" v-html="thread.content"></v-card-text>
           <v-card-actions class="px-0">
             <v-btn class="px-6" @click="upvote">
-              <v-icon start icon="mdi-thumb-up-outline"></v-icon>
+              <v-icon
+                start
+                :color="
+                  thread.upvote?.by.includes(user.user.id) ? 'secondary' : ''
+                "
+                icon="mdi-thumb-up-outline"
+              ></v-icon>
               {{ thread.upvote?.count }}
             </v-btn>
             <v-btn class="px-6" @click="downvote">
@@ -179,7 +178,7 @@ const downvoteComment = () => {
                     </span>
                   </v-card-text>
                   <v-card-text class="pt-3">{{ content }}</v-card-text>
-                  <v-card-actions class="pt-0">
+                  <!-- <v-card-actions class="pt-0">
                     <v-btn class="px-6" @click="upvoteComment">
                       <v-icon start icon="mdi-thumb-up-outline"></v-icon> 230
                     </v-btn>
@@ -187,7 +186,7 @@ const downvoteComment = () => {
                       <v-icon start icon="mdi-thumb-down-outline"></v-icon>
                       230
                     </v-btn>
-                  </v-card-actions>
+                  </v-card-actions> -->
                 </v-card>
               </v-col>
             </template>

@@ -94,9 +94,9 @@ const submit = (isActive) => {
               <v-form @submit.prevent="submit(isActive)">
                 <v-card border title="Create New Thread">
                   <v-card-text class="pb-0">
-                    <lazy-common-shared-field-label
-                      >Title</lazy-common-shared-field-label
-                    >
+                    <lazy-common-shared-field-label>
+                      Title
+                    </lazy-common-shared-field-label>
                     <v-text-field
                       v-model="form.title"
                       persistent-hint
@@ -133,7 +133,6 @@ const submit = (isActive) => {
         </v-col>
       </template>
       <template v-else-if="threads.length">
-        {{ threads }}
         <template
           v-for="{
             id,
