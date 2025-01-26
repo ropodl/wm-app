@@ -19,7 +19,7 @@ const form = ref({
 
 const tags = ref([]);
 const getInterests = async () => {
-  tags.value = await useAxios("interest");
+  tags.value = await useAxios("interest?itemsPerPage=100");
 };
 
 onMounted(() => {

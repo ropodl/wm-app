@@ -47,9 +47,9 @@ const submit = () => {
     query: {
       author_id: user.user.id,
     },
-  }).then((res) => {
+  }).then(async (res) => {
     commentRef.value.reset();
-    getThreadComments();
+    await getThreadComments();
     setSnackbar(res.message, "success");
   });
 };
