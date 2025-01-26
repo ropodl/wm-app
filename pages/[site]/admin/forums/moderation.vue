@@ -1,4 +1,6 @@
 <script setup>
+const { setSnackbar } = useSnackbarStore();
+
 definePageMeta({
   layout: "admin",
   middleware: ["admin-auth"],
@@ -31,6 +33,7 @@ const submit = () => {
     body: form.value,
   }).then((res) => {
     getModeration();
+    setSnackbar(res.message, "success");
   });
 };
 </script>
