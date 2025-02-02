@@ -105,8 +105,8 @@ const changePasswordRequest = async (isActive) => {
 </script>
 <template>
   <v-row>
-    <v-col cols="12" class="px-0 pb-0">
-      <v-card-title class="pt-0">Profile</v-card-title>
+    <v-col cols="12">
+      <h1>Account Settings</h1>
     </v-col>
     <v-col cols="12" md="3">
       <v-hover #default="{ props, isHovering }">

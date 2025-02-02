@@ -1,12 +1,15 @@
 <script setup>
 const runtimeConfig = useRuntimeConfig();
 const { setSnackbar } = useSnackbarStore();
+const { coords, error, pause, resume } = useGeolocation();
 
 const form = ref({
   name: "",
   user_name: "",
   email: "",
   password: "",
+  longitude: null,
+  latitude: null,
 });
 
 const confirm = ref("");
@@ -42,9 +45,13 @@ const formRef = ref(null);
 const loading = ref(false);
 
 const submit = async () => {
+  resume();
   const { valid } = await formRef.value.validate();
 
   if (valid) {
+    resume();
+    form.value.latitude = coords.value.latitude;
+    form.value.longitude = coords.value.longitude;
     useAxios(`${runtimeConfig.public.api}auth/signup`, {
       method: "POST",
       body: form.value,
@@ -55,9 +62,16 @@ const submit = async () => {
       })
       .catch((err) => {
         setSnackbar(err.response._data.error, "error");
+      })
+      .finally(() => {
+        pause();
       });
   }
 };
+
+watch(error, (val) => {
+  setSnackbar(val.message, "error");
+});
 </script>
 <template>
   <v-container class="fill-height">

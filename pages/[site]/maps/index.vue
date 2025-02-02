@@ -39,6 +39,10 @@ const selectCenter = (center) => {
   searchQuery.value = center.name;
   searchResults.value = [];
 };
+
+onMounted(() => {
+  searchCenters();
+});
 </script>
 <template>
   <div class="fill-height position-relative" style="overflow: hidden">

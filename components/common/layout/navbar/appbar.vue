@@ -71,18 +71,28 @@ const emits = defineEmits(["logout"]);
             </template>
           </v-tooltip>
           <v-menu attach location-strategy="connected">
-            <template v-slot:activator="{ props }">
-              <v-list-item
-                density="comfortable"
-                rounded="0"
-                lines="one"
-                width="200"
-                height="50"
-                v-bind="props"
-                :prepend-avatar="user.image?.url"
-                :title="user.name"
-                :subtitle="user.email"
-              ></v-list-item>
+            <template v-slot:activator="{ props: menu }">
+              <v-hover #default="{ isHovering, props: hover }">
+                <v-list-item
+                  density="comfortable"
+                  rounded="0"
+                  lines="one"
+                  width="200"
+                  height="50"
+                  v-bind="{ ...menu, ...hover }"
+                  :title="user.name"
+                  :subtitle="user.email"
+                >
+                  <template #prepend>
+                    <v-avatar rounded="lg">
+                      <v-img
+                        :class="isHovering ? 'zoom-image' : ''"
+                        :src="user.image?.url"
+                      ></v-img>
+                    </v-avatar>
+                  </template>
+                </v-list-item>
+              </v-hover>
             </template>
             <v-list border variant="flat" density="compact" class="py-0">
               <template v-if="items">

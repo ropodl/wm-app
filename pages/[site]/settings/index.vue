@@ -9,6 +9,9 @@ definePageMeta({
 <template>
   <v-row>
     <v-col cols="12">
+      <h1>Apperance Settings</h1>
+    </v-col>
+    <v-col cols="12">
       <v-card border flat>
         <v-list>
           <v-list-item
