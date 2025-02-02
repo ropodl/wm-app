@@ -158,7 +158,14 @@ const downvote = async () => {
           </template>
           <template v-else-if="comments.length">
             <template
-              v-for="{ id, author, content, updatedAt } in comments"
+              v-for="{
+                id,
+                author,
+                content,
+                updatedAt,
+                isSpam,
+                sentiment,
+              } in comments"
               :key="id"
             >
               <v-col cols="12" class="pb-0">
@@ -176,17 +183,26 @@ const downvote = async () => {
                     <span class="ml-3">
                       {{ formatTimeAgo(new Date(updatedAt)) }}
                     </span>
+                    <v-spacer></v-spacer>
+                    <template v-if="isSpam">
+                      <v-chip
+                        color="error"
+                        rounded="lg"
+                        class="position-absolute top-0 right-0 rounded-t-0 rounded-e-0"
+                      >
+                        {{ isSpam ? "spam" : "" }}
+                      </v-chip>
+                    </template>
+                    <template v-if="sentiment && sentiment !== 'spam'">
+                      <v-chip
+                        rounded="lg"
+                        class="position-absolute bottom-0 right-0 rounded-b-0 rounded-e-0"
+                      >
+                        {{ sentiment }}
+                      </v-chip>
+                    </template>
                   </v-card-text>
                   <v-card-text class="pt-3">{{ content }}</v-card-text>
-                  <!-- <v-card-actions class="pt-0">
-                    <v-btn class="px-6" @click="upvoteComment">
-                      <v-icon start icon="mdi-thumb-up-outline"></v-icon> 230
-                    </v-btn>
-                    <v-btn class="px-6" @click="downvoteComment">
-                      <v-icon start icon="mdi-thumb-down-outline"></v-icon>
-                      230
-                    </v-btn>
-                  </v-card-actions> -->
                 </v-card>
               </v-col>
             </template>

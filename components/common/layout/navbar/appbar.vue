@@ -70,7 +70,7 @@ const emits = defineEmits(["logout"]);
               </v-btn>
             </template>
           </v-tooltip>
-          <v-menu>
+          <v-menu attach location-strategy="connected">
             <template v-slot:activator="{ props }">
               <v-list-item
                 density="comfortable"
@@ -84,12 +84,13 @@ const emits = defineEmits(["logout"]);
                 :subtitle="user.email"
               ></v-list-item>
             </template>
-            <v-list border density="compact" class="py-0">
+            <v-list border variant="flat" density="compact" class="py-0">
               <template v-if="items">
                 <template v-for="{ icon, title, to } in items">
                   <v-list-item :prepend-icon="icon" :title :to />
                 </template>
               </template>
+              <v-divider></v-divider>
               <v-list-item
                 prepend-icon="mdi-power"
                 title="Log Out"

@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-  layout: "user-post",
+  layout: "user",
   middleware: ["user-auth"],
 });
 
@@ -43,66 +43,73 @@ const getLatest = async () => {
 };
 </script>
 <template>
-  <v-row>
-    <template v-if="loading">
+  <v-container>
+    <v-row>
       <v-col cols="12">
-        <v-progress-circular indeterminate></v-progress-circular>
+        <h1>Latest Posts</h1>
       </v-col>
-    </template>
-    <template v-else-if="latest.length">
-      <template v-for="{ title, image, slug } in latest">
-        <v-col cols="12" sm="6" md="4">
-          <v-hover v-slot="{ isHovering, props }">
-            <v-card
-              border
-              flat
-              color="transparent"
-              :to="`/posts/${slug}`"
-              :ripple="false"
-              v-bind="props"
-            >
-              <v-img
-                cover
-                rounded="sm"
-                height="250"
-                class="align-end"
-                :class="isHovering ? 'zoom-image' : ''"
-                :src="image?.url"
-                :alt="image?.name"
-              >
-                <v-card
-                  border="t"
-                  class="blur"
-                  color="rgba(var(--v-theme-background),0.8)"
-                  rounded="0"
-                >
-                  <v-card-text
-                    class="font-weight-bold pb-0 mb-3"
-                    :class="isHovering ? 'line-all' : 'line-two'"
-                  >
-                    {{ title }}
-                  </v-card-text>
-                </v-card>
-              </v-img>
-            </v-card>
-          </v-hover>
+    </v-row>
+    <v-row>
+      <template v-if="loading">
+        <v-col cols="12">
+          <v-progress-circular indeterminate></v-progress-circular>
         </v-col>
       </template>
-      <v-col cols="12">
-        <v-pagination
-          v-model="pagination.currentPage"
-          :length="pagination.totalPage"
-          @update:model-value="getLatest"
-          density="compact"
-        ></v-pagination>
-      </v-col>
-    </template>
-    <template v-else>
-      <v-col cols="12">
-        <v-card text="Sorry but no post are available right now"></v-card>
-      </v-col>
-    </template>
-  </v-row>
+      <template v-else-if="latest.length">
+        <template v-for="{ title, image, slug } in latest">
+          <v-col cols="12" sm="6" md="4">
+            <v-hover v-slot="{ isHovering, props }">
+              <v-card
+                border
+                flat
+                color="transparent"
+                :to="`/posts/${slug}`"
+                :ripple="false"
+                v-bind="props"
+              >
+                <v-img
+                  cover
+                  rounded="sm"
+                  height="250"
+                  class="align-end"
+                  :class="isHovering ? 'zoom-image' : ''"
+                  :src="image?.url"
+                  :alt="image?.name"
+                >
+                  <v-card
+                    border="t"
+                    class="blur"
+                    color="rgba(var(--v-theme-background),0.8)"
+                    rounded="0"
+                  >
+                    <v-card-text
+                      class="font-weight-bold pb-0 mb-3"
+                      :class="isHovering ? 'line-all' : 'line-two'"
+                    >
+                      {{ title }}
+                    </v-card-text>
+                  </v-card>
+                </v-img>
+              </v-card>
+            </v-hover>
+          </v-col>
+        </template>
+        <v-col cols="12">
+          <v-pagination
+            v-model="pagination.currentPage"
+            :length="pagination.totalPage"
+            @update:model-value="getLatest"
+            density="compact"
+          ></v-pagination>
+        </v-col>
+      </template>
+      <template v-else>
+        <v-col cols="12">
+          <v-card text="Sorry but no post are available right now"></v-card>
+        </v-col>
+      </template>
+    </v-row>
+  </v-container>
 </template>
 <style lang="scss" scoped>
 .line-two {

@@ -58,6 +58,11 @@ const navItems = [
     title: "Forum Moderation",
     routes: "/admin/forums/moderation",
   },
+  // {
+  //   icon: "mdi-message-question-outline",
+  //   title: "Spam Moderation",
+  //   routes: "/admin/forums/spam",
+  // },
   {
     icon: "mdi-map-search-outline",
     title: "Recycling Centers",
