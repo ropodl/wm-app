@@ -41,11 +41,10 @@ const loadMaps = async ({ page, itemsPerPage, sortBy }) => {
 };
 
 const deleteMap = async (item, active) => {
-  await useAxios(`map/${item.id}`, {
+  await useAxios(`/admin/map/${item.id}`, {
     method: "DELETE",
   })
     .then((res) => {
-      console.log(res);
       setSnackbar(res.message, "success");
       active.value = false;
       loadMaps({

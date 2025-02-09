@@ -35,7 +35,7 @@ const submit = async () => {
     const value = form.value[key];
     formData.append(key, value);
   }
-  await useAxios(`post/${route.params.id}`, {
+  await useAxios(`/admin/post/${route.params.id}`, {
     method: "PATCH",
     body: formData,
   })

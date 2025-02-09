@@ -118,20 +118,20 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="position-relative w-100 h-100" style="overflow: hidden">
+  <div class="d-flex fill-height">
     <v-card
-      class="position-absolute blur"
       color="rgba(var(--v-theme-background),0.8)"
-      rounded="lg"
-      border
-      width="400"
-      style="top: 10px; right: 10px"
+      rounded="0"
+      border="e"
+      flat
+      class="fill-height"
+      style="min-width: 300px; width: 300px; max-width: 300px"
     >
       <v-card border="b" rounded="0" color="transparent">
         <v-form @submit.prevent="searchCenters">
-          <v-autocomplete
+          <!-- :items="searchResults" -->
+          <v-text-field
             v-model="searchQuery"
-            :items="searchResults"
             item-title="name"
             item-value="iframe"
             flat
@@ -139,7 +139,6 @@ onMounted(() => {
             clearable
             focused
             autofocus
-            border="b"
             autocomplete="off"
             density="comfortable"
             bg-color="transparent"
@@ -151,17 +150,36 @@ onMounted(() => {
             :loading="loading"
             @update:modelValue="handleSelection"
           >
-            <template #item="{ props, item }">
-              {{ item.displayDistance?.value }}
-              <v-list-item
-                v-bind="props"
-                :title="item.raw.title"
-                :subtitle="item.raw.displayDistance?.value"
-              ></v-list-item>
-            </template>
-          </v-autocomplete>
+            <!-- <template #item="{ props, item }">
+              {{ item.displayDistance?.value }} -->
+          </v-text-field>
         </v-form>
+        <!-- </template> -->
       </v-card>
+      <template v-if="searchResults.length">
+        <v-list
+          density="default"
+          style="background-color: transparent; height: calc(100vh - 100px)"
+        >
+          <template v-for="item in searchResults">
+            <v-list-item
+              lines="three"
+              density="default"
+              bg-color="transparent"
+              @click="handleSelection(item.iframe)"
+            >
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
+              <v-list-item-subtitle>
+                Distance: {{ item.displayDistance?.value }}
+                {{ item.displayDistance?.unit }}<br />
+                Longitude: {{ item.longitude }}<br />
+                Latitude: {{ item.latitude }}
+              </v-list-item-subtitle>
+            </v-list-item>
+            <v-divider></v-divider>
+          </template>
+        </v-list>
+      </template>
     </v-card>
     <iframe
       v-if="currentIframe"
