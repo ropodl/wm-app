@@ -1,107 +1,7 @@
-<!-- <script setup>
-import { ref, computed, watchEffect } from "vue";
-import { useDebounceFn } from "@vueuse/core";
-
-definePageMeta({
-  layout: "user",
-  middleware: ["user-auth"],
-});
-
-const currentIframe = ref("");
-const searchQuery = ref("");
-const searchResults = ref([]);
-const loading = ref(false);
-
-// Debounced search function
-const searchCenters = useDebounceFn(async () => {
-  if (!searchQuery.value.trim()) {
-    searchResults.value = [];
-    return;
-  }
-
-  try {
-    loading.value = true;
-    const res = await useAxios.get(
-      `user/map/search?query=${searchQuery.value.trim()}`
-    );
-    searchResults.value = res.data || [];
-  } catch (error) {
-    searchResults.value = [];
-    console.error("Search error:", error);
-  } finally {
-    loading.value = false;
-  }
-}, 500);
-
-// Computed property to check if results exist
-const hasResults = computed(() => searchResults.value.length > 0);
-
-// Watch search query changes
-watchEffect(() => {
-  searchCenters();
-});
-
-// Select a recycling center
-const selectCenter = (center) => {
-  currentIframe.value = center.iframe;
-  searchQuery.value = center.name;
-  searchResults.value = [];
-};
-</script>
-
-<template>
-  <div class="d-flex fill-height">
-    <v-card border="e" rounded="0" class="fill-height" width="300"> </v-card>
-    <div class="fill-height position-relative" style="overflow: hidden">
-      <iframe
-        v-if="currentIframe"
-        :src="currentIframe"
-        style="border: 0"
-        allowfullscreen
-        loading="lazy"
-        class="w-100 h-100"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
-    </div>
-  </div>
-  <!-- previous -->
-<!-- <v-card
-    border
-    class="position-absolute"
-    style="top: 10px; right: 10px; z-index: 9999; width: 300px"
-  >
-    <v-form @submit.prevent="searchCenters">
-      <v-text-field
-        v-model.trim="searchQuery"
-        variant="solo"
-        placeholder="Search for recycling center"
-        autofocus
-        autocomplete="off"
-        hide-details
-        prepend-inner-icon="mdi-magnify"
-        clearable
-        :loading="loading"
-        @click:clear="searchResults = []"
-      />
-    </v-form>
-
-    Search Results
-    <template v-if="hasResults">
-      <v-divider></v-divider>
-      <v-list density="compact">
-        <v-list-item
-          v-for="result in searchResults"
-          :key="result.slug"
-          :title="result.name"
-          @click="selectCenter(result)"
-        ></v-list-item>
-      </v-list>
-    </template>
-  </v-card>
-</template> -->
 <script setup>
-// import { ref, computed, watchEffect, onMounted } from "vue";
+// import { ref, watchEffect, onMounted } from "vue";
 import { useDebounceFn } from "@vueuse/core";
+// import useAxios from "@/composables/useAxios"; // Ensure this is correctly imported
 
 definePageMeta({
   layout: "user",
@@ -121,8 +21,27 @@ const pagination = ref({
   totalPages: 1,
 });
 
+// Function to select a center
+const handleSelection = (iframe) => {
+  const selected = searchResults.value.find((item) => item.iframe === iframe);
+  if (selected) {
+    currentIframe.value = selected.iframe;
+    searchQuery.value = selected.name;
+  }
+};
+
+// Set the default center to the nearest one
+const setDefaultCenter = () => {
+  if (nearestCenter.value) {
+    selectCenter(nearestCenter.value);
+  } else if (searchResults.value.length) {
+    selectCenter(searchResults.value[0]);
+  }
+};
+
 // Get user's location
 const fetchUserLocation = () => {
+  loading.value = true;
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -132,6 +51,7 @@ const fetchUserLocation = () => {
       },
       (error) => {
         console.error("Geolocation error:", error);
+        loading.value = false;
       }
     );
   }
@@ -141,21 +61,22 @@ const fetchUserLocation = () => {
 const fetchNearestCenters = async () => {
   if (!userLocation.value.lat || !userLocation.value.long) return;
 
-  loading.value = true;
-  await useAxios(
-    `user/map/search?lat=${userLocation.value.lat}&long=${userLocation.value.long}&page=${pagination.value.page}`
-  )
-    .then((res) => {
-      nearestCenter.value = res.nearestCenter || null;
-      searchResults.value = res.relatedCenters || [];
-      pagination.value.totalPages = res.pagination.totalPages;
-    })
-    .catch((error) => {
-      console.error("Error fetching centers:", error);
-    })
-    .finally(() => {
-      loading.value = false;
-    });
+  try {
+    loading.value = true;
+    const res = await useAxios(
+      `user/map/search?lat=${userLocation.value.lat}&long=${userLocation.value.long}&page=${pagination.value.page}`
+    );
+
+    nearestCenter.value = res.nearestCenter || null;
+    searchResults.value = res.relatedCenters || [];
+    pagination.value.totalPages = res.pagination.totalPages;
+
+    setDefaultCenter(); // Ensure the first center is selected by default
+  } catch (error) {
+    console.error("Error fetching centers:", error);
+  } finally {
+    loading.value = false;
+  }
 };
 
 // Debounced search function
@@ -174,6 +95,7 @@ const searchCenters = useDebounceFn(async () => {
     );
 
     searchResults.value = res.relatedCenters || [];
+    setDefaultCenter(); // Ensure default center after search
   } catch (error) {
     console.error("Search error:", error);
   } finally {
@@ -181,74 +103,74 @@ const searchCenters = useDebounceFn(async () => {
   }
 }, 500);
 
-watchEffect(() => {
-  searchCenters();
-});
-
+// Select center function
 const selectCenter = (center) => {
   currentIframe.value = center.iframe;
   searchQuery.value = center.name;
 };
 
+watchEffect(() => {
+  searchCenters();
+});
+
 onMounted(() => {
   fetchUserLocation();
 });
 </script>
-
 <template>
-  <div class="fill-height position-relative" style="overflow: hidden">
+  <div class="position-relative w-100 h-100" style="overflow: hidden">
+    <v-card
+      class="position-absolute blur"
+      color="rgba(var(--v-theme-background),0.8)"
+      rounded="lg"
+      border
+      width="400"
+      style="top: 10px; right: 10px"
+    >
+      <v-card border="b" rounded="0" color="transparent">
+        <v-form @submit.prevent="searchCenters">
+          <v-autocomplete
+            v-model="searchQuery"
+            :items="searchResults"
+            item-title="name"
+            item-value="iframe"
+            flat
+            hide-details
+            clearable
+            focused
+            autofocus
+            border="b"
+            autocomplete="off"
+            density="comfortable"
+            bg-color="transparent"
+            persistent-clear
+            placeholder="Search for recycling center"
+            prepend-inner-icon="mdi-magnify"
+            rounded="0"
+            variant="solo"
+            :loading="loading"
+            @update:modelValue="handleSelection"
+          >
+            <template #item="{ props, item }">
+              {{ item.displayDistance?.value }}
+              <v-list-item
+                v-bind="props"
+                :title="item.raw.title"
+                :subtitle="item.raw.displayDistance?.value"
+              ></v-list-item>
+            </template>
+          </v-autocomplete>
+        </v-form>
+      </v-card>
+    </v-card>
     <iframe
       v-if="currentIframe"
       :src="currentIframe"
       style="border: 0"
       allowfullscreen
+      class="fill-height w-100 h-100"
       loading="lazy"
-      class="w-100 h-100"
       referrerpolicy="no-referrer-when-downgrade"
     ></iframe>
-
-    <v-card
-      border
-      class="position-absolute"
-      style="top: 10px; right: 10px; z-index: 9999; width: 300px"
-    >
-      <v-form @submit.prevent="searchCenters">
-        <v-text-field
-          v-model.trim="searchQuery"
-          variant="solo"
-          placeholder="Search for recycling center"
-          autofocus
-          autocomplete="off"
-          hide-details
-          prepend-inner-icon="mdi-magnify"
-          clearable
-          :loading="loading"
-          @click:clear="searchResults = []"
-        />
-      </v-form>
-
-      <template v-if="nearestCenter">
-        <v-divider></v-divider>
-        <v-list density="compact">
-          <v-list-item
-            class="font-weight-bold"
-            :title="nearestCenter.name + ' (Nearest)'"
-            @click="selectCenter(nearestCenter)"
-          ></v-list-item>
-        </v-list>
-      </template>
-
-      <template v-if="searchResults.length">
-        <v-divider></v-divider>
-        <v-list density="compact">
-          <v-list-item
-            v-for="result in searchResults"
-            :key="result.id"
-            :title="result.name"
-            @click="selectCenter(result)"
-          ></v-list-item>
-        </v-list>
-      </template>
-    </v-card>
   </div>
 </template>
