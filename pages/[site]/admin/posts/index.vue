@@ -52,10 +52,9 @@ const loadPosts = async ({ page, itemsPerPage, sortBy }) => {
 };
 
 const deletePost = async (item, active) => {
-  await useAxios(`post/${item.id}`, {
+  await useAxios(`/admin/post/${item.id}`, {
     method: "DELETE",
   }).then((res) => {
-    console.log(res);
     setSnackbar(res.message, "success");
     active.value = false;
     loadPosts({
