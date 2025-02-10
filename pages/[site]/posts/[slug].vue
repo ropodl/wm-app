@@ -109,7 +109,7 @@ const removeFromUserInterest = (id) => {
           {{ post.excerpt }}
         </v-col>
       </template>
-      <v-col cols="12" md="8">
+      <v-col cols="12">
         <template v-if="post.content">
           <lazy-common-shared-dynamic-content :content="post.content" />
         </template>
@@ -119,7 +119,9 @@ const removeFromUserInterest = (id) => {
           <v-col cols="12">
             <h1>Similar Posts</h1>
           </v-col>
-          <template v-for="{ title, image, slug } in recommendation">
+          <template
+            v-for="{ title, image, slug, similarity } in recommendation.posts"
+          >
             <v-col cols="12" md="3">
               <v-hover v-slot="{ isHovering, props }">
                 <v-card
@@ -150,7 +152,7 @@ const removeFromUserInterest = (id) => {
                         class="font-weight-bold pb-0 mb-3"
                         :class="isHovering ? 'line-all' : 'line-two'"
                       >
-                        {{ title }}
+                        {{ title }}--{{ similarity }}
                       </v-card-text>
                     </v-card>
                   </v-img>

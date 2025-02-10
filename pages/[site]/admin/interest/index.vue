@@ -46,7 +46,6 @@ const deleteInterest = async (item, active) => {
     method: "DELETE",
   })
     .then((res) => {
-      console.log(res);
       setSnackbar(res.message, "success");
       active.value = false;
       loadInterests({

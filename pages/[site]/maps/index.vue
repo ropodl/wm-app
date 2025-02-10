@@ -71,7 +71,7 @@ const fetchNearestCenters = async () => {
     searchResults.value = res.relatedCenters || [];
     pagination.value.totalPages = res.pagination.totalPages;
 
-    setDefaultCenter(); // Ensure the first center is selected by default
+    // setDefaultCenter(); // Ensure the first center is selected by default
   } catch (error) {
     console.error("Error fetching centers:", error);
   } finally {
@@ -129,7 +129,6 @@ onMounted(() => {
     >
       <v-card border="b" rounded="0" color="transparent">
         <v-form @submit.prevent="searchCenters">
-          <!-- :items="searchResults" -->
           <v-text-field
             v-model="searchQuery"
             item-title="name"
@@ -149,12 +148,8 @@ onMounted(() => {
             variant="solo"
             :loading="loading"
             @update:modelValue="handleSelection"
-          >
-            <!-- <template #item="{ props, item }">
-              {{ item.displayDistance?.value }} -->
-          </v-text-field>
+          ></v-text-field>
         </v-form>
-        <!-- </template> -->
       </v-card>
       <template v-if="searchResults.length">
         <v-list
