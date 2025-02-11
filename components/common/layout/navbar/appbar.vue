@@ -37,7 +37,7 @@ const emits = defineEmits(["logout"]);
     <v-row align="center" class="mx-2">
       <v-col cols="12" sm="4" md="4" class="pa-0">
         <v-app-bar-nav-icon rounded="0" height="50" @click="drawer = !drawer" />
-        <v-btn rounded="0" height="50" :to="home">CDWRP</v-btn>
+        <v-btn rounded="0" height="50" :to="home">CDWRIP</v-btn>
         <slot name="left"></slot>
       </v-col>
       <v-col cols="12" sm="4" md="4" class="pa-0">
