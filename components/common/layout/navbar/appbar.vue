@@ -1,6 +1,5 @@
 <script setup>
 const fullscreen = useIsFullScreen();
-// const user = userAdm;
 
 const drawer = defineModel();
 
