@@ -59,50 +59,61 @@ const removeFromUserInterest = (id) => {
 };
 </script>
 <template>
-  <v-card border="b" flat rounded="0" height="450">
-    <template v-if="post.image?.url">
-      <v-img cover :src="post.image.url" :alt="post.image?.name">
-        <div
-          class="d-flex align-end h-100"
-          :class="appearance.dark ? 'dark-overlay' : 'light-overlay'"
-        >
-          <div>
-            <v-card-text class="text-h5 pb-0">{{ post.title }}</v-card-text>
-            <v-card-text>
-              <template v-for="({ _id, title }, index) in post.tags" :key="_id">
-                <v-chip
-                  :text="title"
-                  class="mb-1"
-                  :class="post.tags.length - 1 > index ? 'mr-1' : ''"
-                  :append-icon="
-                    user.user?.interests.includes(_id)
-                      ? 'mdi-minus'
-                      : 'mdi-plus'
-                  "
-                  @click="
-                    user.user?.interests.includes(_id)
-                      ? removeFromUserInterest(_id)
-                      : addToUserInterest(_id)
-                  "
-                >
-                  {{ title }}
-                  <template>
-                    <v-tooltip
-                      activator="parent"
-                      theme="light"
-                      text="Click + to follow interests"
-                      location="top"
-                    />
-                  </template>
-                </v-chip>
-              </template>
-            </v-card-text>
-          </div>
-        </div>
-      </v-img>
-    </template>
-  </v-card>
   <v-container>
+    <v-row>
+      <v-col cols="12">
+        <v-card border flat rounded="lg" height="350">
+          <template v-if="post.image?.url">
+            <v-img cover :src="post.image.url" :alt="post.image?.name">
+              <div
+                class="d-flex align-end h-100"
+                :class="appearance.dark ? 'dark-overlay' : 'light-overlay'"
+              >
+                <div>
+                  <v-card-text class="text-h5 pb-0">{{
+                    post.title
+                  }}</v-card-text>
+                  <v-card-text>
+                    <template
+                      v-for="({ _id, title }, index) in post.tags"
+                      :key="_id"
+                    >
+                      <v-chip
+                        border
+                        variant="text"
+                        :text="title"
+                        class="mb-1"
+                        :class="post.tags.length - 1 > index ? 'mr-1' : ''"
+                        :append-icon="
+                          user.user?.interests.includes(_id)
+                            ? 'mdi-minus'
+                            : 'mdi-plus'
+                        "
+                        @click="
+                          user.user?.interests.includes(_id)
+                            ? removeFromUserInterest(_id)
+                            : addToUserInterest(_id)
+                        "
+                      >
+                        {{ title }}
+                        <template>
+                          <v-tooltip
+                            activator="parent"
+                            theme="light"
+                            text="Click + to follow interests"
+                            location="top"
+                          />
+                        </template>
+                      </v-chip>
+                    </template>
+                  </v-card-text>
+                </div>
+              </div>
+            </v-img>
+          </template>
+        </v-card>
+      </v-col>
+    </v-row>
     <v-row>
       <template v-if="post.excerpt">
         <v-col cols="12" class="text-h5 font-weight-thin">

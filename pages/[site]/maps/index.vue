@@ -1,7 +1,8 @@
 <script setup>
-// import { ref, watchEffect, onMounted } from "vue";
 import { useDebounceFn } from "@vueuse/core";
-// import useAxios from "@/composables/useAxios"; // Ensure this is correctly imported
+
+const { setSnackbar } = useSnackbarStore();
+const { coords, locatedAt, error, resume, pause } = useGeolocation();
 
 definePageMeta({
   layout: "user",
@@ -38,10 +39,10 @@ const setDefaultCenter = () => {
     selectCenter(searchResults.value[0]);
   }
 };
-
 // Get user's location
 const fetchUserLocation = () => {
   loading.value = true;
+  console.log(coords);
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -50,7 +51,9 @@ const fetchUserLocation = () => {
         fetchNearestCenters();
       },
       (error) => {
-        console.error("Geolocation error:", error);
+        // console.error("Geolocation error:", error);
+        setSnackbar(`Geolocation error: ${error}`, "error");
+
         loading.value = false;
       }
     );
@@ -95,7 +98,7 @@ const searchCenters = useDebounceFn(async () => {
     );
 
     searchResults.value = res.relatedCenters || [];
-    setDefaultCenter(); // Ensure default center after search
+    // setDefaultCenter(); // Ensure default center after search
   } catch (error) {
     console.error("Search error:", error);
   } finally {
@@ -148,19 +151,35 @@ onMounted(() => {
             variant="solo"
             :loading="loading"
             @update:modelValue="handleSelection"
+            @click:clear="fetchNearestCenters"
           ></v-text-field>
         </v-form>
       </v-card>
-      <template v-if="searchResults.length">
+      <v-list lines="two">
+        <v-list-item title="Your Location">
+          <v-list-item-subtitle>
+            Longitude: {{ userLocation.long }}<br />
+            Latitude: {{ userLocation.lat }}
+          </v-list-item-subtitle>
+        </v-list-item>
+      </v-list>
+      <template v-if="loading">
+        <v-divider></v-divider>
+        <v-card class="border-e-0" rounded="0" text="Loading..."></v-card>
+        <v-divider></v-divider>
+      </template>
+      <template v-else-if="searchResults.length">
+        <v-divider></v-divider>
         <v-list
+          class="py-0"
           density="default"
-          style="background-color: transparent; height: calc(100vh - 100px)"
+          bg-color="transparent"
+          style="height: calc(100vh - 200px)"
         >
           <template v-for="item in searchResults">
             <v-list-item
               lines="three"
               density="default"
-              bg-color="transparent"
               @click="handleSelection(item.iframe)"
             >
               <v-list-item-title>{{ item.name }}</v-list-item-title>
@@ -174,6 +193,15 @@ onMounted(() => {
             <v-divider></v-divider>
           </template>
         </v-list>
+      </template>
+      <template v-else>
+        <v-divider></v-divider>
+        <v-card
+          class="border-e-0"
+          rounded="0"
+          text="Search resulted to nothing."
+        ></v-card>
+        <v-divider></v-divider>
       </template>
     </v-card>
     <iframe
